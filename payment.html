@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Inquiry Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.form-container {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+    transition: all 0.3s ease;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-header h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.form-header p {
+    color: #7f8c8d;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.form-group input,
+.form-group textarea,
+.phone-input select {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #e0e6ed;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s;
+    background-color: #f8fafc;
+}
+
+.phone-input {
+    display: flex;
+    gap: 10px;
+}
+
+.phone-input select {
+    width: 120px;
+    padding: 14px 10px;
+    background-color: #f8fafc;
+    cursor: pointer;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.phone-input select:focus {
+    border-color: #3498db;
+    outline: none;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 5px;
+    min-height: 20px;
+}
+
+.form-footer {
+    margin-top: 30px;
+}
+
+#submitBtn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(to right, #3498db, #2c3e50);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s;
+}
+
+#submitBtn:hover {
+    background: linear-gradient(to right, #2980b9, #1a252f);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1);
+}
+
+#submitBtn:active {
+    transform: translateY(0);
+}
+
+#submitBtn:disabled {
+    background: #95a5a6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#formMessage {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    display: none;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.privacy-notice {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+    font-size: 14px;
+    color: #5a6c7d;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 25px;
+        margin: 10px;
+    }
+
+    .form-header h1 {
+        font-size: 24px;
+    }
+
+    .phone-input {
+        flex-direction: column;
+    }
+
+    .phone-input select {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .form-header h1 {
+        font-size: 22px;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .form-group label {
+        font-size: 15px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .phone-input select {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    #submitBtn {
+        padding: 14px;
+        font-size: 16px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h1><i class="fas fa-contact"></i>Contact for Payment</h1>
+            <p>Have questions about payments? Fill out the form below and we'll get back to you.</p>
+        </div>
+
+        <form id="paymentForm">
+            <div class="form-group">
+                <label for="username"><i class="fas fa-user"></i> Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                <div class="error-message" id="username-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <div class="error-message" id="email-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp Number</label>
+                <div class="phone-input">
+                    <select id="countryCode" name="countryCode">
+                        <option value="+880">+880 (BD)</option>
+                        <option value="+95">+95 (MM)</option>
+                        <option value="+91">+91 (IND)</option>
+                        <option value="+60">+60 (MY)</option>
+                        <option value="+971">+971 (UAE)</option>
+                        <option value="+86">+86 (KSA)</option>
+                        <option value="+66">+66 (Thai)</option>
+                        <option value="+977">+977 (NP)</option>
+                    </select>
+                    <input type="tel" id="whatsapp" name="whatsapp" placeholder="Enter your WhatsApp number" required>
+                </div>
+                <div class="error-message" id="whatsapp-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="question"><i class="fas fa-question-circle"></i> Your Question</label>
+                <textarea id="question" name="question" placeholder="Please describe your payment-related question here..." rows="5" required></textarea>
+                <div class="error-message" id="question-error"></div>
+            </div>
+
+            <div class="form-footer">
+                <button type="submit" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i> Send Inquiry
+                </button>
+                <div id="formMessage"></div>
+            </div>
+        </form>
+
+        <div class="privacy-notice">
+            <p><i class="fas fa-shield-alt"></i> Your information is secure and will only be used to respond to your inquiry.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+<script>
+    // Google Apps Script Web App URL - You'll need to update this after deploying
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxznv5ljSlNPQcpjD6kq3pD4IpLF7coa0uJv8aksRSBCAcsTgFyp63dS_QOfNGpsJWJ/exec';
+
+// Form validation and submission
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('paymentForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formMessage = document.getElementById('formMessage');
+
+    // Format WhatsApp number
+    function formatWhatsAppNumber(countryCode, number) {
+        // Remove all non-digit characters
+        const cleaned = number.replace(/\D/g, '');
+        return countryCode + cleaned;
+    }
+
+    // Validate email
+    function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    // Validate phone number
+    function validatePhoneNumber(phone) {
+        const phoneRegex = /^[0-9]{8,15}$/;
+        return phoneRegex.test(phone.replace(/\D/g, ''));
+    }
+
+    // Show error message
+    function showError(fieldId, message) {
+        const errorElement = document.getElementById(fieldId + '-error');
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+        document.getElementById(fieldId).style.borderColor = '#e74c3c';
+    }
+
+    // Clear error message
+    function clearError(fieldId) {
+        const errorElement = document.getElementById(fieldId + '-error');
+        errorElement.textContent = '';
+        errorElement.style.display = 'none';
+        document.getElementById(fieldId).style.borderColor = '#e0e6ed';
+    }
+
+    // Show form message
+    function showFormMessage(message, type) {
+        formMessage.textContent = message;
+        formMessage.className = type + '-message';
+        formMessage.style.display = 'block';
+        
+        if (type === 'success') {
+            form.reset();
+            setTimeout(() => {
+                formMessage.style.display = 'none';
+            }, 5000);
+        }
+    }
+
+    // Validate form
+    function validateForm() {
+        let isValid = true;
+        
+        const username = document.getElementById('username').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const whatsapp = document.getElementById('whatsapp').value.trim();
+        const question = document.getElementById('question').value.trim();
+        
+        // Validate username
+        if (username.length < 3) {
+            showError('username', 'Username must be at least 3 characters');
+            isValid = false;
+        } else {
+            clearError('username');
+        }
+        
+        // Validate email
+        if (!validateEmail(email)) {
+            showError('email', 'Please enter a valid email address');
+            isValid = false;
+        } else {
+            clearError('email');
+        }
+        
+        // Validate WhatsApp number
+        if (!validatePhoneNumber(whatsapp)) {
+            showError('whatsapp', 'Please enter a valid phone number (8-15 digits)');
+            isValid = false;
+        } else {
+            clearError('whatsapp');
+        }
+        
+        // Validate question
+        if (question.length < 10) {
+            showError('question', 'Please provide more details (minimum 10 characters)');
+            isValid = false;
+        } else {
+            clearError('question');
+        }
+        
+        return isValid;
+    }
+
+    // Handle form submission
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+            return;
+        }
+        
+        // Disable submit button
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        
+        // Get form data
+        const formData = {
+            username: document.getElementById('username').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            countryCode: document.getElementById('countryCode').value,
+            whatsapp: document.getElementById('whatsapp').value.trim(),
+            question: document.getElementById('question').value.trim(),
+            timestamp: new Date().toISOString(),
+            formattedWhatsApp: formatWhatsAppNumber(
+                document.getElementById('countryCode').value,
+                document.getElementById('whatsapp').value.trim()
+            )
+        };
+        
+        try {
+            // Send data to Google Apps Script
+            const response = await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Important for Google Apps Script
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(formData)
+            });
+            
+            // Since we use 'no-cors', we won't get a response back
+            // Show success message
+            showFormMessage('Thank you! Your payment inquiry has been submitted successfully. We\'ll contact you shortly.', 'success');
+            
+        } catch (error) {
+            console.error('Error:', error);
+            showFormMessage('There was an error submitting your form. Please try again.', 'error');
+        } finally {
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Inquiry';
+        }
+    });
+
+    // Real-time validation
+    const inputs = ['username', 'email', 'whatsapp', 'question'];
+    inputs.forEach(inputId => {
+        const input = document.getElementById(inputId);
+        if (input) {
+            input.addEventListener('blur', function() {
+                validateForm();
+            });
+            
+            input.addEventListener('input', function() {
+                clearError(inputId);
+            });
+        }
+    });
+
+    // Auto-format WhatsApp number
+    document.getElementById('whatsapp').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 0) {
+            // Format as (XXX) XXX-XXXX for US numbers
+            const countryCode = document.getElementById('countryCode').value;
+            if (countryCode === '+1' && value.length <= 10) {
+                if (value.length > 6) {
+                    value = value.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+                } else if (value.length > 3) {
+                    value = value.replace(/(\d{3})(\d{3})/, '($1) $2');
+                } else if (value.length > 0) {
+                    value = value.replace(/(\d{3})/, '($1');
+                }
+            }
+        }
+        e.target.value = value;
+    });
+});
+</script>
+</html>

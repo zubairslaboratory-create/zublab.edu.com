@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZubLab.com</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #1a5fb4;
+            --secondary-color: #26a269;
+            --accent-color: #e5a50a;
+            --dark-color: #241f31;
+            --light-color: #f6f5f4;
+            --text-color: #333;
+            --text-light: #666;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --border-radius: 10px;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+            direction: ltr;
+            overflow-x: hidden;
+            font-family: Arif Noor Muzhary;
+        }
+        
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Introduction Section */
+        .intro {
+            padding: 3rem 0;
+            background-color: white;
+            margin: 2rem auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 1000px;
+        }
+
+        .intro-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .intro-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .intro-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .script-sample {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+            border: 2px solid var(--accent-color);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            background-color: #fff9e6;
+        }
+
+        /* Alphabet Grid */
+        .alphabet-section {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--dark-color);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .alphabet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .letter-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid var(--primary-color);
+            position: relative;
+        }
+
+        .letter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .hanifi-letter {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arif Noor Muzhary;
+        }
+
+        .letter-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            color: var(--dark-color);
+            font-family: Arif Noor Muzhary;
+        }
+        
+
+        .letter-transcription {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .letter-example {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #eee;
+        }
+
+        /* Pronunciation Button */
+        .pronounce-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-color);
+            color: var(--dark-color);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .pronounce-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .pronounce-btn.playing {
+            background: var(--secondary-color);
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(38, 162, 105, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(38, 162, 105, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(38, 162, 105, 0); }
+        }
+
+        /* Pronunciation Guide */
+        .pronunciation-guide {
+            background: #f0f7ff;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .pronunciation-guide h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .pronunciation-guide ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .pronunciation-guide li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .pronunciation-guide li:before {
+            content: "•";
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+
+        /* Audio Section */
+        .audio-section {
+            padding: 3rem 0;
+            background-color: #f0f7ff;
+            margin: 2rem 0;
+            border-radius: var(--border-radius);
+        }
+
+        .audio-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .audio-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .audio-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .audio-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .audio-description {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            min-height: 60px;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .audio-player audio {
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        .play-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        .play-btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .play-btn.playing {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+        }
+
+        /* Script Info */
+        .script-info {
+            padding: 3rem 0;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin: 2rem auto;
+            max-width: 1000px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .info-card h3 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card h3 i {
+            color: var(--secondary-color);
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .secondary-btn {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .accent-btn {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .copyright {
+            margin-top: 1.5rem;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .alphabet-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 1rem;
+            }
+            
+            .hanifi-letter {
+                font-size: 2.5rem;
+                height: 60px;
+            }
+            
+            .intro-content, .info-grid {
+                flex-direction: column;
+            }
+            
+            .script-sample {
+                font-size: 2rem;
+            }
+            
+            .audio-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .alphabet-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .letter-card {
+                padding: 1rem;
+            }
+            
+            .hanifi-letter {
+                font-size: 2rem;
+                height: 50px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+            
+            .audio-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Animation for letters */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .letter-card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        h2{
+            font-family: Arif Noor Muzhary;
+        }
+
+        /* Stagger animation for grid items */
+        .alphabet-grid .letter-card:nth-child(1) { animation-delay: 0.1s; }
+        .alphabet-grid .letter-card:nth-child(2) { animation-delay: 0.2s; }
+        .alphabet-grid .letter-card:nth-child(3) { animation-delay: 0.3s; }
+        .alphabet-grid .letter-card:nth-child(4) { animation-delay: 0.4s; }
+        .alphabet-grid .letter-card:nth-child(5) { animation-delay: 0.5s; }
+        .alphabet-grid .letter-card:nth-child(6) { animation-delay: 0.6s; }
+        .alphabet-grid .letter-card:nth-child(7) { animation-delay: 0.7s; }
+        .alphabet-grid .letter-card:nth-child(8) { animation-delay: 0.8s; }
+        .alphabet-grid .letter-card:nth-child(9) { animation-delay: 0.9s; }
+        .alphabet-grid .letter-card:nth-child(10) { animation-delay: 1.0s; }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>Rohingya Hanifi Script Alphabet</h1>
+                <p class="subtitle">Explore the unique writing system developed for the Rohingya language, with pronunciation for all letters.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Introduction Section -->
+    <section class="intro">
+        <div class="container">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2>About the Hanifi Rohingya Script</h2>
+                    <p>The Hanifi Rohingya script was developed in the 1980s by the Rohingya Language Committee under the guidance of Maulana Mohammed Hanif, giving the script its name "Hanifi" [citation:2]. This script was created to provide the Rohingya people with a unique writing system that reflects their own culture and history [citation:2].</p>
+                    <p>The script has an Arabic flavor, reflecting the Rohingya religion and history, as they trace their descent to Arab traders and other groups who have been in the region for generations [citation:2]. It is written right-to-left and is considered one of the most attractive invented scripts for a living language in recent times [citation:4].</p>
+                    <p>Today, the script is taught in Rohingya community schools in refugee camps, with an estimated 25,000 children learning it in Bangladesh alone [citation:2].</p>
+                </div>
+                <div class="intro-image">
+                    <div class="script-sample" dir="rtl">
+                     <h2 class="ro">الاركلان</h2>
+                    </div>
+                    <p><em>Sample of Hanifi Rohingya script writing</em></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Alphabet Grid Section -->
+    <section class="alphabet-section">
+        <div class="container">
+            <h2 class="section-title">Hanifi Rohingya Alphabet with Pronunciation</h2>
+            <p style="text-align: center; margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                Click the speaker icon <i class="fas fa-volume-up" style="color: var(--accent-color);"></i> next to each letter to hear its pronunciation. The Hanifi Rohingya script represents consonants and vowels in linear series, with floating diacritics used as modifiers.
+            </p>
+            
+            <!-- Pronunciation Guide -->
+            <div class="pronunciation-guide">
+                <h3><i class="fas fa-info-circle"></i> Pronunciation Guide</h3>
+                <ul>
+                    <li><strong>Click the speaker icon</strong> on any letter card to hear its pronunciation</li>
+                    <li><strong>Use "Play All Pronunciation" button</strong> to hear all letters in sequence</li>
+                    <li><strong>IPA symbols</strong> are provided to help with accurate pronunciation</li>
+                    <li><strong>Example words</strong> show how each letter is used in context</li>
+                </ul>
+            </div>
+            
+            <div class="alphabet-grid" id="alphabetGrid">
+                <!-- Alphabet letters will be generated by JavaScript -->
+            </div>
+            
+            <div class="controls">
+                <button class="primary-btn" id="showAllBtn">
+                    <i class="fas fa-eye"></i> Show All Letters
+                </button>
+                <button class="secondary-btn" id="playAllPronunciationBtn">
+                    <i class="fas fa-volume-up"></i> Play All Pronunciation
+                </button>
+                <button class="accent-btn" id="toggleViewBtn">
+                    <i class="fas fa-exchange-alt"></i> Toggle View
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audio Section -->
+    <section class="audio-section">
+        <div class="container">
+            <h2 class="section-title">Listen to Rohingya Language Sounds</h2>
+            
+            <div class="audio-container">
+                <!-- Audio 1: Alphabet Recitation -->
+                <div class="audio-card">
+                    <div class="audio-icon">
+                        <i class="fas fa-microphone-alt"></i>
+                    </div>
+                    <h3 class="audio-title">Alphabet Recitation</h3>
+                    <div class="audio-description">
+                        Listen to the pronunciation of Hanifi Rohingya letters as recited by native speakers. This audio helps learners understand the correct pronunciation of each character.
+                    </div>
+                    <div class="audio-player">
+                        <audio id="alphabetAudio" controls>
+                            <source src="alphabet.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                    <button class="play-btn" id="playAlphabetBtn">
+                        <i class="fas fa-play-circle"></i> Play Recitation
+                    </button>
+                </div>
+                
+                <!-- Audio 2: Traditional Song -->
+                <div class="audio-card">
+                    <div class="audio-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3 class="audio-title">Traditional Song</h3>
+                    <div class="audio-description">
+                        A traditional Rohingya song performed in the native language. Experience the musical heritage and cultural expression through this authentic recording.
+                    </div>
+                    <div class="audio-player">
+                        <audio id="songAudio" controls>
+                            <source src="nation.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                    <button class="play-btn" id="playSongBtn">
+                        <i class="fas fa-play-circle"></i> Play Song
+                    </button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; max-width: 800px; margin: 2rem auto 0;">
+                <p><strong>Note:</strong> These are placeholder audio files. In a complete implementation, you would replace these with actual recordings of Rohingya alphabet recitation and traditional songs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Script Information -->
+    <section class="script-info">
+        <div class="container">
+            <h2 class="section-title">About the Script & Font</h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-history"></i> Historical Development</h3>
+                    <p>The Hanifi Rohingya script was developed in the 1980s to create a unique writing system for the Rohingya language. Before this, Rohingya had been written in Latin, Arabic, Urdu and Burmese scripts [citation:2].</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-font"></i> Digital Fonts</h3>
+                    <p>Muhammad Noor developed the first digital fonts for Hanifi Rohingya in the early 2000s, creating two typefaces known as "Noories kuna leka" and "Noories Guwaiiyya leka" [citation:6]. The font you mentioned, 'Arif Noor Muzhary', appears to be part of this font development tradition.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-language"></i> Language Preservation</h3>
+                    <p>Despite persecution and displacement, the Rohingya community continues to teach their language and script. There are about 50 Rohingya community schools in Bangladesh refugee camps teaching the Hanifi script [citation:2].</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-universal-access"></i> Unicode Standard</h3>
+                    <p>The Hanifi Rohingya script was added to the Unicode Standard in 2018 (version 11.0) in the range U+10D00–U+10D3F. This allows it to be used digitally across different platforms and devices [citation:6].</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3>Rohingya Hanifi Script Project</h3>
+                <p>Educational resource for learning about the Hanifi Rohingya alphabet and script</p>
+                
+                <div class="footer-links">
+                    <a href="#"><i class="fas fa-book"></i> Learn More</a>
+                    <a href="#"><i class="fas fa-download"></i> Download Fonts</a>
+                    <a href="#"><i class="fas fa-headphones"></i> Audio Resources</a>
+                    <a href="#"><i class="fas fa-info-circle"></i> About Rohingya</a>
+                </div>
+                
+                <div class="copyright">
+                    <p>&copy; 2023 Rohingya Language Education Project. This site is for educational purposes.</p>
+                    <p>Hanifi Rohingya script information sourced from Endangered Alphabets Project and related resources [citation:2][citation:4][citation:6].</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced alphabet data with IPA pronunciation and example words
+        const alphabetData = [
+            { letter: "𐴀", name: "Aa", transcription: "aa", ipa: "/a/", pronunciation: "a", example: "Initial vowel carrier", audioId: "audio-a" },
+            { letter: "𐴁", name: "Ba", transcription: "B", ipa: "/ba/", pronunciation: "b", example: "Like Arabic ب", audioId: "audio-b" },
+            { letter: "𐴂", name: "Pa", transcription: "P", ipa: "/p/", pronunciation: "p", example: "P sound", audioId: "audio-p" },
+            { letter: "𐴃", name: "Tha", transcription: "T", ipa: "/t̪/", pronunciation: "t (dental)", example: "Dental T", audioId: "audio-t" },
+            { letter: "𐴄", name: "Tta", transcription: "Ṭ", ipa: "/ʈ/", pronunciation: "ṭ (retroflex)", example: "Retroflex T", audioId: "audio-tt" },
+            { letter: "𐴅", name: "Ja", transcription: "J", ipa: "/ɟ/", pronunciation: "j", example: "J sound", audioId: "audio-j" },
+            { letter: "𐴆", name: "Cha", transcription: "C", ipa: "/c/", pronunciation: "ch", example: "Ch sound", audioId: "audio-ch" },
+            { letter: "𐴇", name: "Ha", transcription: "H", ipa: "/h/", pronunciation: "h", example: "Heavy H", audioId: "audio-h" },
+            { letter: "𐴈", name: "Kha", transcription: "Kh", ipa: "/x/", pronunciation: "kh", example: "Like Arabic خ", audioId: "audio-kh" },
+            { letter: "𐴉", name: "Fa", transcription: "F", ipa: "/f/", pronunciation: "f", example: "F sound", audioId: "audio-f" },
+            { letter: "𐴊", name: "Da", transcription: "D", ipa: "/d̪/", pronunciation: "d (dental)", example: "Dental D", audioId: "audio-d" },
+            { letter: "𐴋", name: "Dda", transcription: "Ḍ", ipa: "/ɖ/", pronunciation: "ḍ (retroflex)", example: "Retroflex D", audioId: "audio-dd" },
+            { letter: "𐴌", name: "Ra", transcription: "R", ipa: "/r/", pronunciation: "r", example: "R sound", audioId: "audio-r" },
+            { letter: "𐴍", name: "Rra", transcription: "Ṛ", ipa: "/ɽ/", pronunciation: "ṛ (retroflex)", example: "Retroflex R", audioId: "audio-rr" },
+            { letter: "𐴎", name: "Za", transcription: "Z", ipa: "/z/", pronunciation: "z", example: "Z sound", audioId: "audio-z" },
+            { letter: "𐴏", name: "Sa", transcription: "S", ipa: "/s/", pronunciation: "s", example: "S sound", audioId: "audio-s" },
+            { letter: "𐴐", name: "Sha", transcription: "Sh", ipa: "/ʃ/", pronunciation: "sh", example: "Sh sound", audioId: "audio-sh" },
+            { letter: "𐴑", name: "Ka", transcription: "K", ipa: "/k/", pronunciation: "k", example: "K sound", audioId: "audio-k" },
+            { letter: "𐴒", name: "Ga", transcription: "G", ipa: "/g/", pronunciation: "g", example: "G sound", audioId: "audio-g" },
+            { letter: "𐴓", name: "La", transcription: "L", ipa: "/l/", pronunciation: "l", example: "L sound", audioId: "audio-l" },
+            { letter: "𐴔", name: "Ma", transcription: "M", ipa: "/m/", pronunciation: "m", example: "M sound", audioId: "audio-m" },
+            { letter: "𐴕", name: "Na", transcription: "N", ipa: "/n/", pronunciation: "n", example: "N sound", audioId: "audio-n" },
+            { letter: "𐴖", name: "Wa", transcription: "W", ipa: "/w/", pronunciation: "w", example: "W sound", audioId: "audio-w" },
+            { letter: "𐴗", name: "Kinna Wa", transcription: "Ñ", ipa: "/ɲ/", pronunciation: "ñ (nasal)", example: "Nasal sound", audioId: "audio-ñ" },
+            { letter: "𐴘", name: "Ya", transcription: "Y", ipa: "/j/", pronunciation: "y", example: "Y sound", audioId: "audio-y" },
+            { letter: "𐴙", name: "Kinna Ya", transcription: "Ny", ipa: "/ɲ/", pronunciation: "ny", example: "Palatal nasal", audioId: "audio-ny" },
+            { letter: "𐴚", name: "Nga", transcription: "V", ipa: "/v/", pronunciation: "v", example: "V sound", audioId: "audio-v" },
+            { letter: "𐴛", name: "Naiya", transcription: "Ts", ipa: "/t͡s/", pronunciation: "ts", example: "Ts sound", audioId: "audio-ts" }
+        ];
+
+        // Vowels and diacritics data with pronunciation
+        const vowelsData = [
+            { letter: "لا", name: "Aafor", transcription: "-", ipa: "-", pronunciation: "silent", example: "No vowel marker", audioId: "audio-sakin" },
+            { letter: "ؤ", name: "Efor", transcription: "◌ّ", ipa: "gemination", pronunciation: "doubled consonant", example: "Consonant doubler", audioId: "audio-shadda" },
+            { letter: "ئئ", name: "Ufor", transcription: "a", ipa: "/a/", pronunciation: "a (short)", example: "Short a", audioId: "audio-vowel-a" },
+            { letter: "ء", name: "Aefor", transcription: "i", ipa: "/i/", pronunciation: "i (short)", example: "Short i", audioId: "audio-vowel-i" },
+            { letter: "ذ", name: "Ofor", transcription: "i", ipa: "/i/", pronunciation: "i (short)", example: "Short i", audioId: "audio-vowel-i" },
+            { letter: "]", name: "Nahorna", transcription: "i", ipa: "/i/", pronunciation: "i (short)", example: "Short i", audioId: "audio-vowel-i" },
+            { letter: "𐴤", name: "Haarbai", transcription: "u", ipa: "/u/", pronunciation: "u (short)", example: "Short u", audioId: "audio-vowel-u" },
+            { letter: "𐴥", name: "Tela", transcription: "i", ipa: "/i/", pronunciation: "i (short)", example: "Short i", audioId: "audio-vowel-i" },
+            { letter: "𐴦", name: "Tana", transcription: "u", ipa: "/u/", pronunciation: "u (short)", example: "Short u", audioId: "audio-vowel-u" },
+            { letter: "𐴧", name: "Tossi", transcription: "e", ipa: "/e/", pronunciation: "e (short)", example: "Short e", audioId: "audio-vowel-e" },
+        ];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            const alphabetGrid = document.getElementById('alphabetGrid');
+            const showAllBtn = document.getElementById('showAllBtn');
+            const playAllPronunciationBtn = document.getElementById('playAllPronunciationBtn');
+            const toggleViewBtn = document.getElementById('toggleViewBtn');
+            const playAlphabetBtn = document.getElementById('playAlphabetBtn');
+            const playSongBtn = document.getElementById('playSongBtn');
+            const alphabetAudio = document.getElementById('alphabetAudio');
+            const songAudio = document.getElementById('songAudio');
+            
+            // Create audio elements for each letter
+            const audioElements = {};
+            
+            let showingAll = false;
+            let currentView = 'consonants';
+            let isAlphabetPlaying = false;
+            let isSongPlaying = false;
+            let pronunciationQueue = [];
+            let isPlayingAll = false;
+            
+            // Function to create a synthetic pronunciation audio
+            function createPronunciationAudio(text) {
+                const audio = new Audio();
+                
+                // For demonstration, we'll use Web Speech API if available
+                // Otherwise we'll create placeholder audio
+                if ('speechSynthesis' in window) {
+                    // Using Web Speech API for pronunciation
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.8;
+                    
+                    // Store utterance for later use
+                    audio._utterance = utterance;
+                }
+                
+                return audio;
+            }
+            
+            // Function to render alphabet cards
+            function renderAlphabet(data) {
+                alphabetGrid.innerHTML = '';
+                
+                data.forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'letter-card';
+                    card.style.animationDelay = `${(index % 10) * 0.1}s`;
+                    card.dataset.letter = item.letter;
+                    card.dataset.audioId = item.audioId;
+                    
+                    card.innerHTML = `
+                        <button class="pronounce-btn" data-letter="${item.letter}">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        <div class="hanifi-letter">${item.letter}</div>
+                        <div class="letter-name">${item.name}</div>
+                        <div class="letter-transcription">${item.transcription} <span style="color: var(--accent-color);">${item.ipa}</span></div>
+                        <div class="letter-example">${item.example}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-light); margin-top: 0.5rem;">
+                            Pronunciation: <strong>${item.pronunciation}</strong>
+                        </div>
+                    `;
+                    
+                    alphabetGrid.appendChild(card);
+                    
+                    // Create audio element for this letter if not already created
+                    if (!audioElements[item.letter]) {
+                        audioElements[item.letter] = createPronunciationAudio(item.name);
+                    }
+                });
+                
+                // Add event listeners to pronunciation buttons
+                document.querySelectorAll('.pronounce-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const letter = this.dataset.letter;
+                        playLetterPronunciation(letter, this);
+                    });
+                });
+            }
+            
+            // Function to play pronunciation of a single letter
+            function playLetterPronunciation(letter, button) {
+                // Stop any currently playing pronunciation
+                stopAllPronunciation();
+                
+                // If Web Speech API is available, use it
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(letter);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.7;
+                    
+                    // Find the letter data for pronunciation text
+                    const letterData = [...alphabetData, ...vowelsData].find(l => l.letter === letter);
+                    const pronunciationText = letterData ? `"${letterData.name}", ${letterData.pronunciation}` : `Letter ${letter}`;
+                    
+                    const nameUtterance = new SpeechSynthesisUtterance(pronunciationText);
+                    nameUtterance.lang = 'en-US';
+                    nameUtterance.rate = 0.8;
+                    
+                    // Add visual feedback
+                    if (button) {
+                        button.classList.add('playing');
+                        button.innerHTML = '<i class="fas fa-volume-up"></i>';
+                        
+                        nameUtterance.onend = function() {
+                            button.classList.remove('playing');
+                        };
+                    }
+                    
+                    // Speak the letter name and pronunciation
+                    speechSynthesis.speak(nameUtterance);
+                } else {
+                    // Fallback: show alert with pronunciation
+                    const letterData = [...alphabetData, ...vowelsData].find(l => l.letter === letter);
+                    if (letterData) {
+                        alert(`Letter: ${letter}\nName: ${letterData.name}\nPronunciation: ${letterData.pronunciation}\nIPA: ${letterData.ipa}`);
+                    }
+                    
+                    // Remove playing class after a delay
+                    if (button) {
+                        button.classList.add('playing');
+                        setTimeout(() => {
+                            button.classList.remove('playing');
+                        }, 1000);
+                    }
+                }
+            }
+            
+            // Function to play all pronunciation in sequence
+            function playAllPronunciation() {
+                if (isPlayingAll) {
+                    stopAllPronunciation();
+                    return;
+                }
+                
+                const currentData = showingAll ? [...alphabetData, ...vowelsData] : 
+                                  (currentView === 'consonants' ? alphabetData : vowelsData);
+                
+                pronunciationQueue = [...currentData];
+                isPlayingAll = true;
+                playAllPronunciationBtn.innerHTML = '<i class="fas fa-stop"></i> Stop Pronunciation';
+                playAllPronunciationBtn.classList.add('playing');
+                
+                playNextInQueue();
+            }
+            
+            function playNextInQueue() {
+                if (pronunciationQueue.length === 0) {
+                    // Finished playing all
+                    isPlayingAll = false;
+                    playAllPronunciationBtn.innerHTML = '<i class="fas fa-volume-up"></i> Play All Pronunciation';
+                    playAllPronunciationBtn.classList.remove('playing');
+                    return;
+                }
+                
+                const nextLetter = pronunciationQueue.shift();
+                const button = document.querySelector(`.pronounce-btn[data-letter="${nextLetter.letter}"]`);
+                
+                // Highlight the current letter card
+                const card = document.querySelector(`.letter-card[data-letter="${nextLetter.letter}"]`);
+                if (card) {
+                    card.style.boxShadow = '0 0 0 3px var(--accent-color)';
+                    card.style.transition = 'box-shadow 0.3s';
+                }
+                
+                playLetterPronunciation(nextLetter.letter, button);
+                
+                // Wait for speech to finish before playing next
+                if ('speechSynthesis' in window) {
+                    // We can't easily detect when speech finishes, so use a timeout
+                    setTimeout(() => {
+                        // Remove highlight
+                        if (card) {
+                            card.style.boxShadow = '';
+                        }
+                        
+                        // Play next with a delay
+                        setTimeout(playNextInQueue, 500);
+                    }, 1500);
+                } else {
+                    // For fallback, use shorter delay
+                    setTimeout(() => {
+                        // Remove highlight
+                        if (card) {
+                            card.style.boxShadow = '';
+                        }
+                        
+                        playNextInQueue();
+                    }, 1000);
+                }
+            }
+            
+            function stopAllPronunciation() {
+                if ('speechSynthesis' in window) {
+                    speechSynthesis.cancel();
+                }
+                
+                pronunciationQueue = [];
+                isPlayingAll = false;
+                playAllPronunciationBtn.innerHTML = '<i class="fas fa-volume-up"></i> Play All Pronunciation';
+                playAllPronunciationBtn.classList.remove('playing');
+                
+                // Remove highlights from all cards
+                document.querySelectorAll('.letter-card').forEach(card => {
+                    card.style.boxShadow = '';
+                });
+                
+                // Remove playing class from all buttons
+                document.querySelectorAll('.pronounce-btn').forEach(btn => {
+                    btn.classList.remove('playing');
+                });
+            }
+            
+            // Initial render - show consonants first
+            renderAlphabet(alphabetData);
+            
+            // Show all letters button functionality
+            showAllBtn.addEventListener('click', function() {
+                if (!showingAll) {
+                    // Show all letters (consonants + vowels)
+                    const allLetters = [...alphabetData, ...vowelsData];
+                    renderAlphabet(allLetters);
+                    showAllBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Show Consonants Only';
+                    showAllBtn.classList.remove('primary-btn');
+                    showAllBtn.classList.add('secondary-btn');
+                } else {
+                    // Show only consonants
+                    renderAlphabet(alphabetData);
+                    showAllBtn.innerHTML = '<i class="fas fa-eye"></i> Show All Letters';
+                    showAllBtn.classList.remove('secondary-btn');
+                    showAllBtn.classList.add('primary-btn');
+                }
+                showingAll = !showingAll;
+                
+                // Stop any ongoing pronunciation
+                stopAllPronunciation();
+            });
+            
+            // Toggle view between consonants and vowels
+            toggleViewBtn.addEventListener('click', function() {
+                if (currentView === 'consonants') {
+                    renderAlphabet(vowelsData);
+                    toggleViewBtn.innerHTML = '<i class="fas fa-exchange-alt"></i> Show Consonants';
+                    currentView = 'vowels';
+                } else {
+                    renderAlphabet(alphabetData);
+                    toggleViewBtn.innerHTML = '<i class="fas fa-exchange-alt"></i> Show Vowels';
+                    currentView = 'consonants';
+                }
+                
+                // Reset show all button if it was active
+                if (showingAll) {
+                    showingAll = false;
+                    showAllBtn.innerHTML = '<i class="fas fa-eye"></i> Show All Letters';
+                    showAllBtn.classList.remove('secondary-btn');
+                    showAllBtn.classList.add('primary-btn');
+                }
+                
+                // Stop any ongoing pronunciation
+                stopAllPronunciation();
+            });
+            
+            // Play all pronunciation button functionality
+            playAllPronunciationBtn.addEventListener('click', function() {
+                playAllPronunciation();
+            });
+            
+            // Play alphabet audio button functionality
+            playAlphabetBtn.addEventListener('click', function() {
+                if (isAlphabetPlaying) {
+                    alphabetAudio.pause();
+                    playAlphabetBtn.innerHTML = '<i class="fas fa-play-circle"></i> Play Recitation';
+                    playAlphabetBtn.classList.remove('playing');
+                    isAlphabetPlaying = false;
+                } else {
+                    // Stop any pronunciation
+                    stopAllPronunciation();
+                    
+                    // Stop song if playing
+                    if (isSongPlaying) {
+                        songAudio.pause();
+                        playSongBtn.innerHTML = '<i class="fas fa-play-circle"></i> Play Song';
+                        playSongBtn.classList.remove('playing');
+                        isSongPlaying = false;
+                    }
+                    
+                    alphabetAudio.play();
+                    playAlphabetBtn.innerHTML = '<i class="fas fa-pause-circle"></i> Pause';
+                    playAlphabetBtn.classList.add('playing');
+                    isAlphabetPlaying = true;
+                }
+            });
+            
+            // Play song audio button functionality
+            playSongBtn.addEventListener('click', function() {
+                if (isSongPlaying) {
+                    songAudio.pause();
+                    playSongBtn.innerHTML = '<i class="fas fa-play-circle"></i> Play Song';
+                    playSongBtn.classList.remove('playing');
+                    isSongPlaying = false;
+                } else {
+                    // Stop any pronunciation
+                    stopAllPronunciation();
+                    
+                    // Stop alphabet if playing
+                    if (isAlphabetPlaying) {
+                        alphabetAudio.pause();
+                        playAlphabetBtn.innerHTML = '<i class="fas fa-play-circle"></i> Play Recitation';
+                        playAlphabetBtn.classList.remove('playing');
+                        isAlphabetPlaying = false;
+                    }
+                    
+                    songAudio.play();
+                    playSongBtn.innerHTML = '<i class="fas fa-pause-circle"></i> Pause';
+                    playSongBtn.classList.add('playing');
+                    isSongPlaying = true;
+                }
+            });
+            
+            // Handle audio ended events
+            alphabetAudio.addEventListener('ended', function() {
+                playAlphabetBtn.innerHTML = '<i class="fas fa-play-circle"></i> Play Recitation';
+                playAlphabetBtn.classList.remove('playing');
+                isAlphabetPlaying = false;
+            });
+            
+            songAudio.addEventListener('ended', function() {
+                playSongBtn.innerHTML = '<i class="fas fa-play-circle"></i> Play Song';
+                playSongBtn.classList.remove('playing');
+                isSongPlaying = false;
+            });
+            
+            // Add click effect to letter cards
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.letter-card') && !e.target.closest('.pronounce-btn')) {
+                    const card = e.target.closest('.letter-card');
+                    const letter = card.dataset.letter;
+                    const letterData = [...alphabetData, ...vowelsData].find(l => l.letter === letter);
+                    
+                    if (letterData) {
+                        // Create a modal or alert with letter info
+                        alert(`Hanifi Rohingya Letter: ${letter}\nName: ${letterData.name}\nTranscription: ${letterData.transcription}\nIPA: ${letterData.ipa}\nPronunciation: ${letterData.pronunciation}\nExample: ${letterData.example}\n\nClick the speaker icon to hear the pronunciation.`);
+                        
+                        // Add visual feedback
+                        card.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            card.style.transform = '';
+                        }, 300);
+                    }
+                }
+            });
+            
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // Space to play/pause pronunciation
+                if (e.code === 'Space' && !e.target.matches('button, input, textarea, audio')) {
+                    e.preventDefault();
+                    if (isPlayingAll) {
+                        stopAllPronunciation();
+                    } else {
+                        playAllPronunciation();
+                    }
+                }
+                
+                // Escape to stop all audio
+                if (e.code === 'Escape') {
+                    stopAllPronunciation();
+                    alphabetAudio.pause();
+                    songAudio.pause();
+                    isAlphabetPlaying = false;
+                    isSongPlaying = false;
+                    playAlphabetBtn.innerHTML = '<i class="fas fa-play-circle"></i> Play Recitation';
+                    playAlphabetBtn.classList.remove('playing');
+                    playSongBtn.innerHTML = '<i class="fas fa-play-circle"></i> Play Song';
+                    playSongBtn.classList.remove('playing');
+                }
+            });
+            
+            // Add a helper message for keyboard shortcuts
+            setTimeout(() => {
+                console.log("Keyboard shortcuts:\n- Space: Play/Pause all pronunciation\n- Escape: Stop all audio");
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

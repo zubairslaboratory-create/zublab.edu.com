@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZubLab - Fun Learning for Kids</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #ff6b9d;
+            --accent-color: #6ce5a9;
+            --light-color: #f9f7ff;
+            --dark-color: #333366;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background decorations */
+        .bg-decoration {
+            position: absolute;
+            z-index: -1;
+        }
+
+        .circle {
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            background-color: var(--primary-color);
+            top: -100px;
+            right: -100px;
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            background-color: var(--secondary-color);
+            bottom: 100px;
+            left: -50px;
+        }
+
+        .circle-3 {
+            width: 150px;
+            height: 150px;
+            background-color: var(--accent-color);
+            bottom: 200px;
+            right: 50px;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+        }
+
+        .logo-text {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+            background-color: rgba(74, 107, 255, 0.1);
+        }
+
+        .parent-link {
+            color: var(--secondary-color);
+            background-color: rgba(255, 107, 157, 0.1);
+            padding: 8px 15px;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 60px 5% 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: var(--dark-color);
+        }
+
+        .highlight {
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin-bottom: 40px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Start Button */
+        .start-btn-container {
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            font-size: 20px;
+            font-weight: 800;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(74, 107, 255, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(74, 107, 255, 0.6);
+        }
+
+        .start-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-sparkle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            animation: sparkle 1.5s infinite;
+        }
+
+        .btn-sparkle:nth-child(1) {
+            top: 15px;
+            left: 30px;
+            animation-delay: 0s;
+        }
+
+        .btn-sparkle:nth-child(2) {
+            top: 10px;
+            right: 40px;
+            animation-delay: 0.3s;
+        }
+
+        .btn-sparkle:nth-child(3) {
+            bottom: 15px;
+            left: 50px;
+            animation-delay: 0.6s;
+        }
+
+        .btn-sparkle:nth-child(4) {
+            bottom: 10px;
+            right: 60px;
+            animation-delay: 0.9s;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Features Section */
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 40px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-card.kids {
+            border-top: 8px solid var(--primary-color);
+        }
+
+        .feature-card.parents {
+            border-top: 8px solid var(--secondary-color);
+        }
+
+        .feature-card.educational {
+            border-top: 8px solid var(--accent-color);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .kids .feature-icon {
+            color: var(--primary-color);
+        }
+
+        .parents .feature-icon {
+            color: var(--secondary-color);
+        }
+
+        .educational .feature-icon {
+            color: var(--accent-color);
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Characters */
+        .characters {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 40px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .character {
+            text-align: center;
+        }
+
+        .character-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+        }
+
+        .zubby {
+            background-color: #ffde59;
+            color: #e6a500;
+        }
+
+        .labby {
+            background-color: #a6e5ff;
+            color: #4a6bff;
+        }
+
+        .prof {
+            background-color: #d0a5ff;
+            color: #8a2be2;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 5% 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: white;
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: translateY(50px);
+            transition: transform 0.5s;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .modal h2 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .modal p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-btn.kid {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .modal-btn.parent {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .modal-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .start-btn {
+                font-size: 1.8rem;
+                padding: 18px 40px;
+            }
+
+            .feature-card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration circle circle-1"></div>
+    <div class="bg-decoration circle circle-2"></div>
+    <div class="bg-decoration circle circle-3"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-text">ZubLab</div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="hero">
+            <h1>Welcome to <span class="highlight">ZubLab</span> - Where Learning is an Adventure!</h1>
+            <p>ZubLab is a language center for children, offering in-person classes in three languages: Arabic, English, and Rohingya. For a simple monthly fee of 1000 BDT, kids can learn and practice in a supportive, face-to-face environment!</p>
+            
+            <div class="start-btn-container">
+                <button class="start-btn" id="startButton">
+                START LEARNING
+                </button>
+            </div>
+            
+            <p>ZubLab invites you to join us and develop your child's language skills.</p>
+        </section>
+
+        <section class="features">
+            <div class="feature-card kids">
+                <div class="feature-icon">
+                    <i class="fas fa-child"></i>
+                </div>
+                <h3>For Kids</h3>
+                <p>Interactive lessons, educational games, and creative activities designed specifically for young learners ages 4-12. Learn while having fun!</p>
+            </div>
+            
+            <div class="feature-card parents">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>For Parents</h3>
+                <p>Track your child's progress, access learning resources, and get expert tips on supporting your child's educational journey.</p>
+            </div>
+            
+            <div class="feature-card educational">
+                <div class="feature-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Educational</h3>
+                <p>ZubLab aligns three key languages: Arabic, English, and Rohingya. Its focus on Arabic enables learners to read the Quran accurately through the foundational Qaida method, while English and Rohingya support broader communication and understanding. Developed by ZubLab's Committee.</p>
+            </div>
+        </section>
+
+        <section class="characters">
+            <div class="character">
+                <div class="character-img zubby">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>Zubby</h3>
+                <p>Your learning buddy</p>
+            </div>
+            
+            <div class="character">
+                <div class="character-img labby">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <h3>Labby</h3>
+                <p>Science explorer</p>
+            </div>
+            
+            <div class="character">
+                <div class="character-img prof">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>Professor Spark</h3>
+                <p>Knowledge guide</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="logo">
+                <i class="fas fa-atom logo-icon"></i>
+                <div class="logo-text">ZubLab</div>
+            </div>
+            <p>Making education fun, interactive, and accessible for kids and parents alike.</p>
+            <div class="copyright">
+                &copy; 2023 ZubLab Educational Platform. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="close-modal" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2>Welcome to ZubLab!</h2>
+            <p>Are you a kid ready for fun learning adventures, or a parent looking for educational resources?</p>
+            <div class="modal-buttons">
+                <a href="dashboard.html"><button class="modal-btn kid" id="kidButton">
+                    <i class="fas fa-child"></i> I'm a Kid!
+                </button></a>
+                <a href="dashboard.html"><button class="modal-btn parent" id="parentButton">
+                    <i class="fas fa-user"></i> I'm a Parent
+                </button></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const startButton = document.getElementById('startButton');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const closeModal = document.getElementById('closeModal');
+        const kidButton = document.getElementById('kidButton');
+        const parentButton = document.getElementById('parentButton');
+        
+        // Open modal when Start button is clicked
+        startButton.addEventListener('click', () => {
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        });
+        
+        // Close modal when X is clicked
+        closeModal.addEventListener('click', () => {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        });
+        
+        // Close modal when clicking outside
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Kid button click
+        kidButton.addEventListener('click', () => {
+            alert("Yay! Let's have fun learning! Taking you to the kids' zone...");
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            // In a real app, this would redirect to the kids' area
+        });
+        
+        // Parent button click
+        parentButton.addEventListener('click', () => {
+            alert("Welcome to the Parents' Area! Here you can track progress and access resources.");
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            // In a real app, this would redirect to the parents' area
+        });
+        
+        // Create floating background elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const bgContainer = document.querySelector('body');
+            
+            // Create additional floating shapes
+            for (let i = 0; i < 8; i++) {
+                const shape = document.createElement('div');
+                shape.classList.add('bg-decoration');
+                
+                // Random shape type
+                const shapeType = Math.random() > 0.5 ? 'circle' : 'triangle';
+                
+                if (shapeType === 'circle') {
+                    shape.classList.add('circle');
+                    shape.style.width = `${Math.random() * 60 + 20}px`;
+                    shape.style.height = shape.style.width;
+                    shape.style.backgroundColor = getRandomColor();
+                    shape.style.opacity = Math.random() * 0.1 + 0.05;
+                }
+                
+                // Random position
+                shape.style.position = 'absolute';
+                shape.style.top = `${Math.random() * 100}%`;
+                shape.style.left = `${Math.random() * 100}%`;
+                shape.style.zIndex = '-1';
+                
+                bgContainer.appendChild(shape);
+            }
+            
+            // Add animation to the start button sparkles
+            const sparkles = document.querySelectorAll('.btn-sparkle');
+            sparkles.forEach((sparkle, index) => {
+                sparkle.style.animationDelay = `${index * 0.3}s`;
+            });
+        });
+        
+        // Helper function to get random color from palette
+        function getRandomColor() {
+            const colors = ['#4a6bff', '#ff6b9d', '#6ce5a9', '#ffde59', '#a6e5ff'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+        
+        // Add hover effect to feature cards
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

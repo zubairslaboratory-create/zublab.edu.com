@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Instructor | Elena Rose</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #f8e1e7;
+            --secondary: #a56a7c;
+            --accent: #d4a5b5;
+            --dark: #3a2c32;
+            --light: #fff9fb;
+            --text: #333333;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background-color: var(--light);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .book-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .book-btn:hover {
+            background-color: var(--accent);
+        }
+
+        /* Main Content */
+        .instructor-section {
+            padding: 60px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+
+        .instructor-image {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-overlay h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+
+        .image-overlay p {
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .instructor-info {
+            flex: 1.5;
+            min-width: 300px;
+        }
+
+        .instructor-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .instructor-title {
+            font-size: 20px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .instructor-bio {
+            margin-bottom: 30px;
+            font-size: 16px;
+            color: var(--text);
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        /* Expertise Section */
+        .expertise-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .expertise-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .expertise-item {
+            background-color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--primary);
+            font-weight: 500;
+        }
+
+        /* Booking Section */
+        .booking-section {
+            background-color: var(--primary);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+
+        .booking-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+        }
+
+        .booking-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 17px 35px;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        .booking-btn:hover {
+            background-color: var(--accent);
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            margin-top: 80px;
+        }
+
+        .testimonials-container {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--primary);
+        }
+
+        .testimonial-card {
+            min-width: 300px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            color: var(--secondary);
+            font-size: 18px;
+        }
+
+        .author-info p {
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .copyright {
+            color: #aaa;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .instructor-name {
+                font-size: 32px;
+            }
+            
+            .booking-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">Zub<span>Lab</span></a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <section class="instructor-section">
+            <div class="instructor-image">
+                <img src="zublab.webp" alt="Mohammed Jubayer" class="main-image">
+                <div class="image-overlay">
+                    <h3>Mohammed Jubayer</h3>
+                    <p>English Instructor</p>
+                </div>
+            </div>
+
+            <div class="instructor-info">
+                <h1 class="instructor-name"></h1>
+                <p class="instructor-title">English Specialist</p>              
+                <p class="instructor-bio">
+                    With over 12 years of experience in the beauty industry, Elena specializes in creating personalized beauty routines that enhance natural features. Her approach combines modern techniques with holistic skincare principles. Elena has worked with top beauty brands and has been featured in several beauty publications for her innovative approaches to self-image enhancement.
+                </p>
+                </div>
+
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials-section">
+            <h2 class="section-title">All Teachers</h2>
+            <div class="testimonials-container">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Elena transformed my approach to skincare. I finally feel confident in my own skin after just a few sessions with her!"</p>
+                    <div class="testimonial-author">
+                        <img src="zublab.webp" alt="Mohammed Jubayer" class="author-avatar">
+                        <div class="author-info">
+                            <h4>Mohammed Jubayer</h4>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"The self-image coaching with Elena changed my life. I learned to appreciate my natural beauty and enhance it subtly."</p>
+                    <div class="testimonial-author">
+                        <img src="zublab.webp" alt="zub" class="author-avatar">
+                        <div class="author-info">
+                            <h4>Forid</h4>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Elena's makeup techniques are incredible. She taught me how to highlight my best features without hiding my natural self."</p>
+                    <div class="testimonial-author">
+                        <img src="zublab.webp" alt="Forid" class="author-avatar">
+                        <div class="author-info">
+                            <h4>Hossain Ahmed</h4>
+                            <p>Student for 8 months</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">ZubLab</div>
+                <p class="copyright">&copy; 2025 Online in person class. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set minimum date for booking to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('session-date').setAttribute('min', today);
+            
+            // Initialize counters for animation
+            animateCounter('years-exp', 12);
+            animateCounter('students-taught', 850);
+            animateCounter('sessions-done', 2400);
+            
+            // Handle form submission
+            const bookingForm = document.getElementById('bookingForm');
+            bookingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const sessionType = document.getElementById('session-type').value;
+                const sessionDate = document.getElementById('session-date').value;
+                const sessionTime = document.getElementById('session-time').value;
+                
+                if (!sessionType || !sessionDate || !sessionTime) {
+                    alert('Please fill in all fields to book your session.');
+                    return;
+                }
+                
+                // Format date for display
+                const dateObj = new Date(sessionDate);
+                const formattedDate = dateObj.toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+                
+                // Get time text
+                const timeText = document.querySelector(`#session-time option[value="${sessionTime}"]`).textContent;
+                
+                // Show success message
+                alert(`Your ${sessionType.replace('-', ' ')} session with Elena has been booked for ${formattedDate} at ${timeText}. You will receive a confirmation email shortly.`);
+                
+                // Reset form
+                bookingForm.reset();
+                document.getElementById('session-date').setAttribute('min', today);
+            });
+            
+            // Add hover effect to expertise items
+            const expertiseItems = document.querySelectorAll('.expertise-item');
+            expertiseItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = 'var(--secondary)';
+                    this.style.color = 'white';
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = 'white';
+                    this.style.color = '';
+                    this.style.transform = '';
+                });
+            });
+            
+            // Function to animate counters
+            function animateCounter(elementId, targetNumber) {
+                const element = document.getElementById(elementId);
+                let currentNumber = 0;
+                const increment = targetNumber / 100;
+                const interval = 20; // ms
+                
+                const timer = setInterval(() => {
+                    currentNumber += increment;
+                    if (currentNumber >= targetNumber) {
+                        currentNumber = targetNumber;
+                        clearInterval(timer);
+                    }
+                    
+                    if (elementId === 'students-taught') {
+                        element.textContent = Math.floor(currentNumber) + '+';
+                    } else if (elementId === 'sessions-done') {
+                        element.textContent = (currentNumber >= 1000) 
+                            ? (currentNumber/1000).toFixed(1) + 'k' 
+                            : Math.floor(currentNumber);
+                    } else {
+                        element.textContent = Math.floor(currentNumber);
+                    }
+                }, interval);
+            }
+        });
+    </script>
+</body>
+</html>

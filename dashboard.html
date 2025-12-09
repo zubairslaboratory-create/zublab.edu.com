@@ -1,0 +1,4780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZubLab</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #283593;
+            --accent-color: #4fc3f7;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #2e7d32;
+            --warning-color: #ef6c00;
+            --danger-color: #c62828;
+            --gray-color: #6c757d;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Eye Protection Mode Styles */
+        .eye-protection-mode {
+            --primary-color: #2e7d32;
+            --secondary-color: #1b5e20;
+            --accent-color: #4caf50;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%) !important;
+            color: #1b5e20 !important;
+        }
+
+        .eye-protection-mode .auth-container {
+            background: #f1f8e9 !important;
+        }
+
+        .eye-protection-mode .left-section {
+            background: linear-gradient(rgba(46, 125, 50, 0.85), rgba(27, 94, 32, 0.9)) !important;
+        }
+
+        .eye-protection-mode .dashboard-container {
+            background-color: #f1f8e9 !important;
+        }
+
+        .eye-protection-mode .card {
+            background-color: #f1f8e9 !important;
+            border: 1px solid #c8e6c9 !important;
+        }
+
+        .eye-protection-mode .settings-container,
+        .eye-protection-mode .table-container,
+        .eye-protection-mode .course-card {
+            background-color: #f1f8e9 !important;
+            border: 1px solid #c8e6c9 !important;
+        }
+
+        .eye-protection-mode .btn {
+            background: var(--primary-color) !important;
+        }
+
+        .eye-protection-mode .btn:hover:not(:disabled) {
+            background: var(--secondary-color) !important;
+        }
+
+        /* Font Size Classes */
+        .font-small {
+            font-size: 14px !important;
+        }
+        
+        .font-small .card-value,
+        .font-small .form-title,
+        .font-small h1,
+        .font-small h2,
+        .font-small h3,
+        .font-small .tagline {
+            font-size: calc(1em * 0.9) !important;
+        }
+        
+        .font-medium {
+            font-size: 16px !important;
+        }
+        
+        .font-large {
+            font-size: 18px !important;
+        }
+        
+        .font-large .card-value,
+        .font-large .form-title,
+        .font-large h1,
+        .font-large h2,
+        .font-large h3,
+        .font-large .tagline {
+            font-size: calc(1em * 1.1) !important;
+        }
+        
+        .font-xlarge {
+            font-size: 20px !important;
+        }
+        
+        .font-xlarge .card-value,
+        .font-xlarge .form-title,
+        .font-xlarge h1,
+        .font-xlarge h2,
+        .font-xlarge h3,
+        .font-xlarge .tagline {
+            font-size: calc(1em * 1.2) !important;
+        }
+
+        /* Search Highlight */
+        .search-highlight {
+            background-color: yellow !important;
+            color: black !important;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        /* RTL Support for Arabic and Urdu */
+        [dir="rtl"] {
+            text-align: right;
+        }
+
+        [dir="rtl"] .input-group i {
+            left: auto;
+            right: 15px;
+        }
+
+        [dir="rtl"] .input-group input,
+        [dir="rtl"] .input-group select {
+            padding: 16px 50px 16px 16px;
+        }
+
+        [dir="rtl"] .menu-item i {
+            margin-right: 0;
+            margin-left: 15px;
+        }
+
+        [dir="rtl"] .search-box i {
+            left: auto;
+            right: 15px;
+        }
+
+        [dir="rtl"] .search-box input {
+            padding: 12px 45px 12px 15px;
+        }
+
+        [dir="rtl"] .user-avatar {
+            margin-right: 0;
+            margin-left: 15px;
+        }
+
+        [dir="rtl"] .profile-avatar-large {
+            margin-right: 0;
+            margin-left: 25px;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: var(--transition);
+            font-size: 16px;
+        }
+        
+        /* Auth Page Styling */
+        .auth-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            min-height: 700px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .left-section {
+            flex: 1;
+            background: linear-gradient(rgba(26, 35, 126, 0.85), rgba(49, 27, 146, 0.9)), url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1352&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 50px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo-icon {
+            font-size: 36px;
+            margin-right: 15px;
+            color: #4fc3f7;
+        }
+        
+        .logo-text {
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
+        .tagline {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        .description {
+            font-size: 18px;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+        
+        .features {
+            list-style: none;
+        }
+        
+        .features li {
+            margin-bottom: 15px;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .features i {
+            margin-right: 12px;
+            color: #4fc3f7;
+        }
+        
+        .right-section {
+            flex: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        
+        /* Back Button Styles */
+        .back-button-container {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            z-index: 100;
+        }
+        
+        .back-button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(26, 35, 126, 0.3);
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+        
+        /* For RTL languages */
+        [dir="rtl"] .back-button-container {
+            right: auto;
+            left: 30px;
+        }
+        
+        [dir="rtl"] .back-button i {
+            transform: rotate(180deg);
+        }
+        
+        .form-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+        
+        .form-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .form-subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .tab {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #888;
+            transition: var(--transition);
+        }
+        
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            margin-bottom: -2px;
+        }
+        
+        .form {
+            display: none;
+        }
+        
+        .form.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 16px;
+            color: #777;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 16px 16px 16px 50px;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+            position: relative;
+        }
+        
+        .btn:hover:not(:disabled) {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 35, 126, 0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .btn-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .message.success {
+            background: #e8f5e9;
+            color: var(--success-color);
+            display: block;
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .message.error {
+            background: #ffebee;
+            color: var(--danger-color);
+            display: block;
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        .message.info {
+            background: #e3f2fd;
+            color: #1565c0;
+            display: block;
+            border-left: 4px solid #1565c0;
+        }
+        
+        .message.warning {
+            background: #fff3e0;
+            color: var(--warning-color);
+            display: block;
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .google-sheets-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-top: 30px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            border-left: 4px solid #0f9d58;
+        }
+        
+        .google-sheets-info i {
+            color: #0f9d58;
+            font-size: 24px;
+            margin-right: 15px;
+        }
+        
+        /* Dashboard Styling */
+        .dashboard-container {
+            display: none;
+            width: 100%;
+            max-width: 1400px;
+            min-height: 90vh;
+            background-color: #f5f7fb;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+        
+        .sidebar {
+            width: 280px;
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 30px 25px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .sidebar-header h2 {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sidebar-menu {
+            flex: 1;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+        
+        .menu-item {
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .menu-item:hover {
+            background-color: rgba(26, 35, 126, 0.05);
+            border-left-color: var(--primary-color);
+        }
+        
+        .menu-item.active {
+            background-color: rgba(26, 35, 126, 0.1);
+            border-left-color: var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .menu-item i {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .sidebar-footer {
+            padding: 25px;
+            border-top: 1px solid #eee;
+            background-color: #fafafa;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-right: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(26, 35, 126, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .user-avatar-text {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .user-details h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+        
+        .user-details p {
+            font-size: 0.85rem;
+            color: var(--gray-color);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .header h1 {
+            color: var(--dark-color);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            color: var(--gray-color);
+            font-size: 1rem;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            width: 280px;
+            font-size: 0.95rem;
+            background-color: white;
+            transition: var(--transition);
+        }
+        
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+            outline: none;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+            font-size: 1rem;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--border-radius);
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Dashboard Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            
+        }
+        
+        .card-title {
+            font-size: 1rem;
+            color: var(--gray-color);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #0f9d58;
+        }
+        
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-icon.courses {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-icon.students {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .card-icon.assignments {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .card-icon.grades {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .card-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .card-change {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        /* Page Content */
+        .page-content {
+            display: none;
+        }
+        
+        .page-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        /* Settings Page - Profile Section */
+        .settings-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .settings-header {
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        .settings-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .settings-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .settings-content {
+            padding: 30px;
+        }
+        
+        .settings-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .settings-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .settings-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .settings-section h3 i {
+            margin-right: 12px;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .settings-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            border: 1px solid #eee;
+            transition: var(--transition);
+        }
+        
+        .settings-option:hover {
+            background-color: #f0f2f5;
+            border-color: #ddd;
+        }
+        
+        .settings-option:last-child {
+            margin-bottom: 0;
+        }
+        
+        .option-info {
+            flex: 1;
+        }
+        
+        .option-info h4 {
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+        
+        .option-info p {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+            line-height: 1.5;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 54px;
+            height: 28px;
+            margin-left: 15px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: var(--transition);
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        input:checked + .toggle-slider {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* Profile Preview */
+        .profile-preview {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: var(--border-radius);
+            border: 1px solid #e0e0e0;
+            position: relative;
+        }
+        
+        .profile-avatar-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-right: 25px;
+            box-shadow: 0 6px 15px rgba(26, 35, 126, 0.3);
+            flex-shrink: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .profile-avatar-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-avatar-text {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-info h3 {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+            font-weight: 700;
+        }
+        
+        .profile-info p {
+            color: var(--gray-color);
+            margin-bottom: 8px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .profile-info p i {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        .profile-info .role-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: linear-gradient(135deg, rgba(26, 35, 126, 0.1), rgba(67, 97, 238, 0.1));
+            color: var(--primary-color);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 10px;
+            border: 1px solid rgba(26, 35, 126, 0.2);
+        }
+        
+        /* Profile Picture Upload */
+        .profile-picture-upload {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+        
+        .profile-picture-upload input[type="file"] {
+            display: none;
+        }
+        
+        .upload-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 8px rgba(26, 35, 126, 0.3);
+            transition: var(--transition);
+        }
+        
+        .upload-btn:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+        }
+        
+        /* Language Selector */
+        
+        
+        .language-flag {
+            width: 24px;
+            height: 16px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+        
+        /* Button styles for settings */
+        .settings-btn {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 8px rgba(26, 35, 126, 0.2);
+        }
+        
+        .settings-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(26, 35, 126, 0.3);
+        }
+        
+        .settings-btn.secondary {
+            background: linear-gradient(135deg, #6c757d, #495057);
+        }
+        
+        .settings-btn.danger {
+            background: linear-gradient(135deg, #c62828, #b71c1c);
+        }
+        
+        .settings-btn i {
+            font-size: 0.9rem;
+        }
+        
+        /* Courses Page */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        
+        .course-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .course-header {
+            padding: 25px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        .course-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .course-header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        .course-body {
+            padding: 25px;
+        }
+        
+        .course-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .course-info span {
+            color: var(--gray-color);
+        }
+        
+        .course-info strong {
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+        
+        .course-body p {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 5px;
+        }
+        
+        /* Table Styling */
+        .table-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            overflow-x: auto;
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background-color: #f8f9fa;
+        }
+        
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .status-badge.completed {
+            background-color: rgba(46, 125, 50, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(46, 125, 50, 0.2);
+        }
+        
+        .status-badge.in-progress {
+            background-color: rgba(26, 35, 126, 0.1);
+            color: var(--primary-color);
+            border: 1px solid rgba(26, 35, 126, 0.2);
+        }
+        
+        .status-badge.pending {
+            background-color: rgba(239, 108, 0, 0.1);
+            color: var(--warning-color);
+            border: 1px solid rgba(239, 108, 0, 0.2);
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            backdrop-filter: blur(3px);
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            padding: 25px 30px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        .modal-header h3 {
+            font-size: 1.4rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            line-height: 1;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            background-color: #fafafa;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 0.95rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: white;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+            outline: none;
+        }
+        
+        .form-control:disabled {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+            color: #666;
+        }
+        
+        /* NEW: Contact Us & View Instructor Styles */
+        .contact-container, .instructors-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+        }
+        
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .contact-card {
+            background: #f9f9f9;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-card p {
+            color: var(--gray-color);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .contact-card .contact-details {
+            margin-top: 15px;
+        }
+        
+        .contact-card .contact-details p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .contact-card .contact-details i {
+            color: var(--primary-color);
+            width: 20px;
+        }
+        
+        .contact-form {
+            margin-top: 30px;
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: var(--border-radius);
+        }
+        
+        .instructors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .instructor-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 1px solid #eee;
+        }
+        
+        .instructor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .instructor-header {
+            padding: 25px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .instructor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid white;
+            overflow: hidden;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .instructor-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .instructor-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .instructor-info p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        .instructor-body {
+            padding: 20px;
+        }
+        
+        .instructor-details {
+            margin-bottom: 15px;
+        }
+        
+        .instructor-details p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+            font-size: 0.95rem;
+        }
+        
+        .instructor-details i {
+            color: var(--primary-color);
+            width: 20px;
+        }
+        
+        .instructor-subjects {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .subject-tag {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(26, 35, 126, 0.1);
+            color: var(--primary-color);
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .auth-container {
+                max-width: 1000px;
+            }
+            .dashboard-container {
+                max-width: 95vw;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .auth-container {
+                flex-direction: column;
+                max-width: 600px;
+            }
+            
+            .left-section {
+                padding: 40px 30px;
+            }
+            
+            .right-section {
+                padding: 40px 30px;
+            }
+            
+            .tagline {
+                font-size: 36px;
+            }
+            
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                top: 0;
+                height: 100vh;
+                z-index: 1000;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .search-box input {
+                width: 200px;
+            }
+            
+            .profile-preview {
+                flex-direction: column;
+                text-align: center;
+                padding: 25px;
+            }
+            
+            .profile-avatar-large {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .profile-picture-upload {
+                position: static;
+                margin-top: 15px;
+            }
+            
+            .back-button-container {
+                top: 15px;
+                right: 20px;
+            }
+            
+            .back-button {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .contact-info-grid,
+            .instructors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-cards {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .search-box {
+                flex: 1;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .settings-content {
+                padding: 20px;
+            }
+            
+            .settings-section {
+                padding-bottom: 25px;
+                margin-bottom: 30px;
+            }
+            
+            .settings-option {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .toggle-switch {
+                margin-left: 0;
+                align-self: flex-end;
+            }
+            
+            .modal-footer {
+                flex-direction: column;
+            }
+            
+            .modal-footer .btn {
+                width: 100%;
+            }
+            
+            .instructor-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .instructor-avatar {
+                width: 100px;
+                height: 100px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .auth-container {
+                border-radius: 15px;
+                min-height: auto;
+            }
+            
+            .left-section, .right-section {
+                padding: 30px 20px;
+            }
+            
+            .tagline {
+                font-size: 28px;
+            }
+            
+            .form-title {
+                font-size: 28px;
+            }
+            
+            .tabs {
+                justify-content: center;
+            }
+            
+            .dashboard-container {
+                min-height: 95vh;
+                border-radius: 15px;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .table-container {
+                padding: 20px;
+            }
+            
+            th, td {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+            
+            .settings-header {
+                padding: 25px 20px;
+            }
+            
+            .settings-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .back-button-container {
+                top: 10px;
+                right: 15px;
+            }
+            
+            .back-button {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .contact-container,
+            .instructors-container {
+                padding: 20px;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        /* Logout Confirmation Modal Styles */
+        .logout-confirmation {
+            text-align: center;
+        }
+        
+        .logout-icon {
+            font-size: 4rem;
+            color: #f44336;
+            margin-bottom: 20px;
+            background: rgba(244, 67, 54, 0.1);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+        
+        .logout-message {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+        
+        .logout-details {
+            color: var(--gray-color);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        
+        .logout-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .logout-btn {
+            min-width: 120px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .logout-btn.confirm {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: white;
+        }
+        
+        .logout-btn.confirm:hover {
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+        }
+        
+        .logout-btn.cancel {
+            background: #f5f5f5;
+            color: var(--dark-color);
+            border: 1px solid #ddd;
+        }
+        
+        .logout-btn.cancel:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .live-chat{
+            padding: 10px;
+            color: #f1f6f4;
+            background-color: #0f9d58;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Auth Container (Login/Register) -->
+    <div class="auth-container" id="auth-container">
+        <!-- Left Section: Platform Information -->
+        <section class="left-section">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="logo-text">ZubLab</div>
+            </div>
+            
+            <h1 class="tagline" id="tagline-text">Unlock Your Purpose Through Learning</h1>
+            
+            <p class="description" id="description-text">
+                ZubLab is a purpose-driven learning platform that connects your educational journey with meaningful outcomes. Join our community of learners today.
+            </p>
+            
+            <ul class="features">
+                <li><i class="fas fa-check-circle"></i> <span id="feature1">Live Classes</span></li>
+                <li><i class="fas fa-check-circle"></i> <span id="feature2">Per Month 1000BDT</span></li>
+                <li><i class="fas fa-check-circle"></i> <span id="feature3">Expert-led Classes & Parents Meeting</span></li>
+                <li><i class="fas fa-check-circle"></i> <span id="feature4">Community collaboration</span></li>
+                <li><i class="fas fa-check-circle"></i> <span id="feature5">Purpose-driven projects</span></li>
+            </ul>
+        </section>
+        
+        <!-- Right Section: Login/Register Forms -->
+        <section class="right-section">
+            <!-- Back Button -->
+            <div class="back-button-container">
+                <a href="index.html"><button id="back-to-home" class="back-button">
+                    <i class="fas fa-arrow-left"></i> <span id="back-text">Back</span>
+                </button></a>
+            </div>
+            
+            <div class="form-container">
+                <h2 class="form-title" id="welcome-text">Welcome to ZubLab</h2>
+                <p class="form-subtitle" id="signin-text">Sign in to your account or create a new one to get started</p>
+                
+                <!-- Tabs -->
+                <div class="tabs">
+                    <div class="tab active" id="login-tab">Login</div>
+                    <div class="tab" id="register-tab">Register</div>
+                </div>
+                
+                <!-- Login Form -->
+                <form class="form active" id="login-form">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="login-email" placeholder="Email address" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="login-password" placeholder="Password" required>
+                    </div>
+                    
+                    <div class="checkbox">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me" id="remember-text">Remember me</label>
+                    </div>
+                    
+                    <button type="submit" class="btn" id="login-btn">
+                        <span class="btn-text">
+                            <span class="loading" id="login-loading" style="display: none;"></span>
+                            <span id="login-text">Login to ZubLab</span>
+                        </span>
+                    </button>
+                    
+                    <div class="message" id="login-message"></div>
+                </form>
+                
+                <!-- Register Form -->
+                <form class="form" id="register-form">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="register-name" placeholder="Full name" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="register-email" placeholder="Email address" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="register-password" placeholder="Create a password" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-graduation-cap"></i>
+                        <select id="register-purpose" required>
+                            <option value="" disabled selected id="purpose-default">Select your primary learning purpose</option>
+                            <option value="Career">Career Advancement</option>
+                            <option value="Skills">Skill Development</option>
+                            <option value="Personal">Personal Growth</option>
+                            <option value="Social">Social Impact</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="checkbox">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms" id="terms-text">I agree to the Terms of Service and Privacy Policy</label>
+                    </div>
+                    
+                    <button type="submit" class="btn" id="register-btn">
+                        <span class="btn-text">
+                            <span class="loading" id="register-loading" style="display: none;"></span>
+                            <span id="register-text">Create ZubLab Account</span>
+                        </span>
+                    </button>
+                    
+                    <div class="message" id="register-message"></div>
+                </form>
+                
+                <!-- Google Sheets Integration Info -->
+                <div class="google-sheets-info">
+                    <i class="fas fa-exclamation-triangle" style="color: #F4B400; font-size: 24px;"></i>
+                    <div>
+                        <strong id="unique-email-text">Unique Email Address</strong><br>
+                        <span id="duplicate-text">Each email address can only be used for one registration. Duplicate email registrations are not allowed.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container" id="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-graduation-cap logo-icon"></i> ZubLab</h2>
+            </div>
+
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active" data-page="dashboard">
+                    <i class="fas fa-tachometer-alt"></i> <span class="menu-text" data-key="dashboard">Home</span>
+                </a>
+                <a href="#" class="menu-item" data-page="courses">
+                    <i class="fas fa-book-open"></i> <span class="menu-text" data-key="courses">Courses</span>
+                </a>
+                <a href="#" class="menu-item" data-page="assignments">
+                    <i class="fas fa-tasks"></i> <span class="menu-text" data-key="assignments">Assignments</span>
+                </a>
+                <a href="#" class="menu-item" data-page="grades">
+                    <i class="fas fa-chart-line"></i> <span class="menu-text" data-key="grades">Grades</span>
+                </a>
+                <a href="#" class="menu-item" data-page="calendar">
+                    <i class="fas fa-calendar-alt"></i> <span class="menu-text" data-key="calendar">Calendar</span>
+                </a>
+                <!-- NEW: Contact Us Menu Item -->
+                <a href="#" class="menu-item" data-page="contact">
+                    <i class="fas fa-headset"></i> <span class="menu-text" data-key="contactUs">Contact Us</span>
+                </a>
+                <!-- NEW: View Instructor Menu Item -->
+                <a href="#" class="menu-item" data-page="instructors">
+                    <i class="fas fa-chalkboard-teacher"></i> <span class="menu-text" data-key="viewInstructor">View Instructor</span>
+                </a>
+                <a href="#" class="menu-item" data-page="settings">
+                    <i class="fas fa-cog"></i> <span class="menu-text" data-key="settings">Settings</span>
+                </a>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">
+                        <div class="user-avatar-text" id="user-avatar-text">JD</div>
+                    </div>
+                    <div class="user-details">
+                        <h4 id="user-name">zublab</h4>
+                        <p id="user-email">zublab@example.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div>
+                    <h1 id="page-title">Home</h1>
+                    <p id="page-subtitle">Welcome to ZubLab Educational Platform</p>
+                </div>
+                <div class="header-actions">
+                    
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Search courses, assignments...">
+                    </div>
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div id="dashboard-content" class="page-content active">
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title" data-key="enrolledCourses">Active Classes</h3>
+                            <div class="card-icon courses">
+                                <i class="fas fa-book"></i>
+                            </div>
+                        </div>
+                        <div class="card-value" id="courses-count">2</div>
+                        <div class="card-change" data-key="thisSemester">This semester</div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title" data-key="assignmentsDue">Assignments Due</h3>
+                            <div class="card-icon assignments">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                        </div>
+                        <div class="card-value" id="assignments-count">3</div>
+                        <div class="card-change" data-key="next7Days">Next 7 days</div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title" data-key="averageGrade">Average Grade</h3>
+                            <div class="card-icon grades">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                        <div class="card-value" id="average-grade">88.5%</div>
+                        <div class="card-change" data-key="currentSemester">Current semester</div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title" data-key="upcomingEvents">Upcoming Events</h3>
+                            <div class="card-icon students">
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                        </div>
+                        <div class="card-value" id="events-count">2</div>
+                        <div class="card-change" data-key="thisWeek">This week</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-content">
+                    <div class="table-container">
+                        <h3 class="section-title"><i class="fas fa-list"></i> <span data-key="recentAssignments">Recent Assignments</span></h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-key="course">Course</th>
+                                    <th data-key="assignment">Assignment</th>
+                                    <th data-key="dueDate">Due Date</th>
+                                    <th data-key="status">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="assignments-table">
+                                <tr>
+                                    <td>Arabic</td>
+                                    <td>Reading</td>
+                                    <td>June 15, 2025</td>
+                                    <td><span class="status-badge completed" data-key="submitted">Submitted</span></td>
+                                </tr>
+                                <tr>
+                                    <td>English</td>
+                                    <td>Writing and Reading</td>
+                                    <td>July 10, 2025</td>
+                                    <td><span class="status-badge in-progress" data-key="inProgress">In Progress</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Rohingya</td>
+                                    <td>Writing and Reading</td>
+                                    <td>July 5, 2025</td>
+                                    <td><span class="status-badge pending" data-key="pending">Pending</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Courses Content -->
+            <a href="studentid.html"><div id="courses-content" class="page-content">
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-header">
+                            <h3>Arabic</h3>
+                            <p>Forid</p>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-info">
+                                <span data-key="courseCode">Course Code:</span>
+                                <span data-key="credits">Credits: 3</span>
+                            </div>
+                            <p>Learn Arabic</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                            <div class="course-info">
+                                <span data-key="progress">Progress: 75%</span>
+                                <span data-key="grade">Grade: A-</span>
+                            </div>
+                        </div>
+                    </div></a>
+
+                    <a href="studentid.html"><div class="course-card">
+                        <div class="course-header">
+                            <h3>English</h3>
+                            <p>Mohammed Jubayer</p>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-info">
+                                <span data-key="courseCode">Course Code: <strong>CS201</strong></span>
+                                <span data-key="credits">Credits: 4</span>
+                            </div>
+                            <p>Learn English language</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                            </div>
+                            <div class="course-info">
+                                <span data-key="progress">Progress: 60%</span>
+                                <span data-key="grade">Grade: B+</span>
+                            </div>
+                        </div>
+                    </div></a>
+
+                   <a href="studentid.html"> <div class="course-card">
+                        <div class="course-header">
+                            <h3>Rohingya</h3>
+                            <p>Hoassain Ahmed</p>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-info">
+                                <span data-key="courseCode">Course Code: <strong>PHYS101</strong></span>
+                                <span data-key="credits">Credits: 4</span>
+                            </div>
+                            <p>Learn Rohingya language</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 40%"></div>
+                            </div>
+                            <div class="course-info">
+                                <span data-key="progress">Progress: 40%</span>
+                                <span data-key="grade">Grade: In Progress</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div></a>
+
+            <!-- NEW: Contact Us Content -->
+            <div id="contact-content" class="page-content">
+                <div class="contact-container">
+                    <h2 class="section-title"><i class="fas fa-headset"></i> <span data-key="contactUs">Contact Us</span></h2>
+                    <p data-key="contactDescription">Get in touch with our support team for any questions, issues, or feedback.</p>
+                    
+                    <div class="contact-info-grid">
+                        <div class="contact-card">
+                            <h4><i class="fas fa-envelope"></i> <span data-key="emailSupport">Email Support</span></h4>
+                            <p data-key="emailSupportDesc">Send us an email and we'll respond within 24 hours.</p>
+                            <div class="contact-details">
+                                <p><i class="fas fa-envelope"></i> roworldstudio@gmail.com</p>
+                                <p><i class="fas fa-clock"></i> <span data-key="responseTime">Response time: 24 hours</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <h4><i class="fas fa-phone"></i> <span data-key="phoneSupport">Phone Support</span></h4>
+                            <p data-key="phoneSupportDesc">Call us during business hours for immediate assistance.</p>
+                            <div class="contact-details">
+                                <p><i class="fas fa-phone"></i> +880 1812018842 (Whatsapp)</p>
+                                <p><i class="fas fa-clock"></i> <span data-key="businessHours">Mon-Fri: 9AM-5PM (GMT+6)</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <h4><i class="fas fa-comments"></i> <span data-key="liveChat">Live Chat</span></h4>
+                            <p data-key="liveChatDesc">Chat with our support team in real-time during business hours.</p>
+                            <div class="contact-details">
+                                <p><i class="fas fa-comment-dots"></i> <span data-key="available">Available: 9AM-5PM</span></p>
+                                <p><i class="fas fa-user-check"></i> <span data-key="averageWait">Average wait: 5 minutes</span></p>
+                            </div>
+                            <a href="assest.html"><button class="live-chat">Live Chatting</button></a>
+                            <a href="payment.html"><button class="live-chat">Contact for Payment</button></a>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <h4><i class="fas fa-map-marker-alt"></i> <span data-key="officeAddress">Office Address</span></h4>
+                            <p data-key="officeAddressDesc">Visit our office for in-person support and consultations.</p>
+                            <div class="contact-details">
+                                <p><i class="fas fa-map-pin"></i> <span data-key="addressLine1">123 Learning Street</span></p>
+                                <p><i class="fas fa-city"></i> <span data-key="addressLine2">Education City, BD 1200</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3 class="section-title"><i class="fas fa-paper-plane"></i> <span data-key="sendMessage">Send us a Message</span></h3>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="contact-name" data-key="fullName">Full Name</label>
+                                <input type="text" id="contact-name" class="form-control" placeholder="Enter your name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-email" data-key="emailAddress">Email Address</label>
+                                <input type="email" id="contact-email" class="form-control" placeholder="Enter your email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-phone" data-key="phone">Whatsapp Number</label>
+                                <input type="phone" id="contact-phone" class="form-control" placeholder="+880" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-subject" data-key="subject">Subject</label>
+                                <select id="contact-subject" class="form-control" required>
+                                    <option value="" disabled selected data-key="selectSubject">Select a subject</option>
+                                    <option value="technical" data-key="technicalIssue">Technical Issue</option>
+                                    <option value="account" data-key="accountHelp">Account Help</option>
+                                    <option value="billing" data-key="billingQuestion">Billing Question</option>
+                                    <option value="feedback" data-key="feedback">Feedback</option>
+                                    <option value="other" data-key="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-message" data-key="message">Message</label>
+                                <textarea id="contact-message" class="form-control" rows="5" placeholder="Type your message here..." required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn" id="send-message-btn">
+                                <span class="btn-text">
+                                    <i class="fas fa-paper-plane"></i> <span data-key="sendMessageBtn">Send Message</span>
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW: View Instructor Content -->
+            <div id="instructors-content" class="page-content">
+                <div class="instructors-container">
+                    <h2 class="section-title"><i class="fas fa-chalkboard-teacher"></i> <span data-key="ourInstructors">Our Instructors</span></h2>
+                    <p data-key="instructorsDescription">Meet our team of expert instructors dedicated to your learning success.</p>
+                    
+                    <div class="instructors-grid">
+                        <div class="instructor-card">
+                            <div class="instructor-header">
+                                <div class="instructor-avatar">
+                                    <div>F</div>
+                                </div>
+                                <div class="instructor-info">
+                                    <h3>Forid</h3>
+                                    <p data-key="arabicInstructor">Arabic Language Instructor</p>
+                                </div>
+                            </div>
+                            <div class="instructor-body">
+                                <div class="instructor-details">
+                                    <p><i class="fas fa-graduation-cap"></i> <span data-key="qualification">MA in Arabic Literature</span></p>
+                                    <p><i class="fas fa-award"></i> <span data-key="experience">10+ years teaching experience</span></p>
+                                    <p><i class="fas fa-star"></i> <span data-key="rating">4.9/5 Student Rating</span></p>
+                                </div>
+                                <p data-key="foridBio">Specialized in Modern Standard Arabic and Quranic studies with a focus on practical communication skills.</p>
+                                <div class="instructor-subjects">
+                                    <strong data-key="subjects">Subjects:</strong><br>
+                                    <span class="subject-tag">Modern Arabic</span>
+                                    <span class="subject-tag">Quranic Studies</span>
+                                    <span class="subject-tag">Grammar</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="instructor-card">
+                            <div class="instructor-header">
+                                <div class="instructor-avatar">
+                                    <div>MJ</div>
+                                </div>
+                                <div class="instructor-info">
+                                    <h3>Mohammed Jubayer</h3>
+                                    <p data-key="englishInstructor">English Language Instructor</p>
+                                </div>
+                            </div>
+                            <div class="instructor-body">
+                                <div class="instructor-details">
+                                    <p><i class="fas fa-graduation-cap"></i> <span data-key="qualification">MA in English Literature</span></p>
+                                    <p><i class="fas fa-award"></i> <span data-key="experience">8+ years teaching experience</span></p>
+                                    <p><i class="fas fa-star"></i> <span data-key="rating">4.8/5 Student Rating</span></p>
+                                </div>
+                                <p data-key="jubayerBio">Expert in IELTS preparation and business English with a communicative teaching approach.</p>
+                                <div class="instructor-subjects">
+                                    <strong data-key="subjects">Subjects:</strong><br>
+                                    <span class="subject-tag">IELTS Prep</span>
+                                    <span class="subject-tag">Business English</span>
+                                    <span class="subject-tag">Conversation</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="instructor-card">
+                            <div class="instructor-header">
+                                <div class="instructor-avatar">
+                                    <div>HA</div>
+                                </div>
+                                <div class="instructor-info">
+                                    <h3>Hoassain Ahmed</h3>
+                                    <p data-key="rohingyaInstructor">Rohingya Language Instructor</p>
+                                </div>
+                            </div>
+                            <div class="instructor-body">
+                                <div class="instructor-details">
+                                    <p><i class="fas fa-graduation-cap"></i> <span data-key="qualification">PhD in Linguistics</span></p>
+                                    <p><i class="fas fa-award"></i> <span data-key="experience">15+ years teaching experience</span></p>
+                                    <p><i class="fas fa-star"></i> <span data-key="rating">5.0/5 Student Rating</span></p>
+                                </div>
+                                <p data-key="ahmedBio">Native Rohingya speaker and linguist specializing in language preservation and cultural education.</p>
+                                <div class="instructor-subjects">
+                                    <strong data-key="subjects">Subjects:</strong><br>
+                                    <span class="subject-tag">Rohingya Script</span>
+                                    <span class="subject-tag">Cultural Studies</span>
+                                    <span class="subject-tag">Translation</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="instructor-card">
+                            <div class="instructor-header">
+                                <div class="instructor-avatar">
+                                    <div>M</div>
+                                </div>
+                                <div class="instructor-info">
+                                    <h3>Upcoming</h3>
+                                    <p data-key="mathInstructor">Mathematics Instructor</p>
+                                </div>
+                            </div>
+                            <div class="instructor-body">
+                                <div class="instructor-details">
+                                    <p><i class="fas fa-graduation-cap"></i> <span data-key="qualification">MSc in Mathematics</span></p>
+                                    <p><i class="fas fa-award"></i> <span data-key="experience">7+ years teaching experience</span></p>
+                                    <p><i class="fas fa-star"></i> <span data-key="rating">4.7/5 Student Rating</span></p>
+                                </div>
+                                <p data-key="sarahBio">Specializes in making complex mathematical concepts accessible and engaging for all learning levels.</p>
+                                <div class="instructor-subjects">
+                                    <strong data-key="subjects">Subjects:</strong><br>
+                                    <span class="subject-tag">Algebra</span>
+                                    <span class="subject-tag">Calculus</span>
+                                    <span class="subject-tag">Statistics</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Content -->
+            <div id="settings-content" class="page-content">
+                <div class="settings-container">
+                    <div class="settings-header">
+                        <h2><i class="fas fa-cog"></i> <span data-key="accountSettings">Account Settings</span></h2>
+                        <p data-key="manageProfile">Manage your profile, preferences, and security settings</p>
+                    </div>
+                    
+                    <div class="settings-content">
+                        <!-- Profile Preview -->
+                        <div class="profile-preview">
+                            <div class="profile-avatar-large" id="profile-avatar-large">
+                                <div class="profile-avatar-text" id="profile-avatar-text">ZB</div>
+                            </div>
+                            <div class="profile-info">
+                                <h3 id="profile-name">ZubLab</h3>
+                                <p><i class="fas fa-envelope"></i> <span id="profile-email">zublab@example.com</span></p>
+                                <p><i class="fas fa-user-tag"></i> <span id="profile-role-display" data-key="student">Student</span></p>
+                                <span class="role-badge" id="profile-role-badge" data-key="studentAccount">Student Account</span>
+                            </div>
+                            <div class="profile-picture-upload">
+                                <input type="file" id="profile-picture-input" accept="image/*">
+                                <label for="profile-picture-input" class="upload-btn" title="Change profile picture">
+                                    <i class="fas fa-camera"></i>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Accessibility Settings Section -->
+                        <div class="settings-section">
+                            <h3><i class="fas fa-eye"></i> <span data-key="accessibility">Accessibility</span></h3>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <h4 data-key="eyeProtection">Eye Protection Mode</h4>
+                                    <p data-key="eyeProtectionDesc">Reduce eye strain with green-tinted theme and reduced brightness</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="eye-protection-mode">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <h4 data-key="fontSize">Font Size</h4>
+                                    <p data-key="fontSizeDesc">Adjust the text size for better readability</p>
+                                </div>
+                                <select id="font-size-select" class="form-control" style="width: 120px; margin-left: 15px;">
+                                    <option value="small" data-key="small">Small</option>
+                                    <option value="medium" selected data-key="medium">Medium</option>
+                                    <option value="large" data-key="large">Large</option>
+                                    <option value="xlarge" data-key="xlarge">Extra Large</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Language Settings Section -->
+                        <div class="settings-section">
+                            <h3><i class="fas fa-language"></i> <span data-key="language">Language</span></h3>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <h4 data-key="interfaceLanguage">Interface Language</h4>
+                                    <p data-key="languageDesc">Choose your preferred language for the interface</p>
+                                </div>
+                                <div class="language-selector">
+                                    <select id="settings-language-select" class="form-control">
+                                        <option value="en">English</option>
+                                        <option value="ar">Arabic</option>
+                                        <option value="ur">Urdu</option>
+                                        <option value="rhg">Rohingya</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Settings Section -->
+                        <div class="settings-section">
+                            <h3><i class="fas fa-user-cog"></i> <span data-key="accountSettings">Account Settings</span></h3>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <h4 data-key="profileInfo">Profile Information</h4>
+                                    <p data-key="profileInfoDesc">Update your personal details and profile picture</p>
+                                </div>
+                                <button class="settings-btn" id="edit-profile-btn">
+                                    <i class="fas fa-edit"></i> <span data-key="edit">Edit</span>
+                                </button>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <h4 data-key="changePassword">Change Password</h4>
+                                    <p data-key="changePasswordDesc">Update your login password for security</p>
+                                </div>
+                                <button class="settings-btn" id="change-password-btn">
+                                    <i class="fas fa-key"></i> <span data-key="change">Change</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Notifications Section -->
+                        <div class="settings-section">
+                            <h3><i class="fas fa-bell"></i> <span data-key="notifications">Notifications</span></h3>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <h4 data-key="emailNotifications">Email Notifications</h4>
+                                    <p data-key="emailNotificationsDesc">Receive email alerts for assignments and grades</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="email-notifications" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <h4 data-key="pushNotifications">Push Notifications</h4>
+                                    <p data-key="pushNotificationsDesc">Get push notifications on your device</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="push-notifications" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Privacy & Security Section -->
+                        <div class="settings-section">
+                            <h3><i class="fas fa-shield-alt"></i> <span data-key="privacySecurity">Privacy & Security</span></h3>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <h4 data-key="twoFactor">Two-Factor Authentication</h4>
+                                    <p data-key="twoFactorDesc">Add an extra layer of security to your account</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="two-factor-auth">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <h4 data-key="dataPrivacy">Data Privacy</h4>
+                                    <p data-key="dataPrivacyDesc">Manage how your data is collected and used</p>
+                                </div>
+                                <a href="data.html"><button class="settings-btn">
+                                    <i class="fas fa-database"></i> <span data-key="manage">Manage</span>
+                                </button></a>
+                            </div>
+                        </div>
+
+                        <!-- Session Section -->
+                        <div class="settings-section">
+                            <h3><i class="fas fa-sign-out-alt"></i> <span data-key="session">Session</span></h3>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <h4 data-key="logout">Logout</h4>
+                                    <p data-key="logoutDesc">Sign out from your ZubLab account on all devices</p>
+                                </div>
+                                <button id="logout-btn" class="settings-btn danger">
+                                    <i class="fas fa-sign-out-alt"></i> <span data-key="logout">Logout</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other pages -->
+            <div id="assignments-content" class="page-content">
+                <div class="table-container">
+                    <h3 class="section-title"><i class="fas fa-tasks"></i> <span data-key="assignments">Assignments</span></h3>
+                    <p data-key="viewAssignments">View and manage all your assignments here.</p>
+                </div>
+            </div>
+
+            <div id="grades-content" class="page-content">
+                <div class="table-container">
+                    <h3 class="section-title"><i class="fas fa-chart-line"></i> <span data-key="grades">Grades</span></h3>
+                    <p data-key="trackGrades">Track your academic performance and grades.</p>
+                </div>
+            </div>
+
+            <a href="schdule.html"><div id="calendar-content" class="page-content">
+                <div class="table-container">
+                    <h3 class="section-title"><i class="fas fa-calendar-alt"></i> <span data-key="calendar">Calendar</span></h3>
+                    <p data-key="viewSchedule">View your academic schedule and important dates.</p>
+                </div>
+            </div></a>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay" id="edit-profile-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-edit"></i> <span data-key="editProfile">Edit Profile Information</span></h3>
+                <button class="modal-close" id="close-edit-profile-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-profile-form">
+                    <div class="form-group">
+                        <label for="edit-name" data-key="fullName">Full Name</label>
+                        <input type="text" id="edit-name" class="form-control" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-email" data-key="emailAddress">Email Address</label>
+                        <input type="email" id="edit-email" class="form-control" placeholder="Enter your email" required disabled>
+                        <small style="color: var(--gray-color); margin-top: 5px; display: block;">
+                            <i class="fas fa-info-circle"></i> <span data-key="emailCannotChange">Email address cannot be changed for security reasons.</span>
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-role" data-key="accountType">Account Type</label>
+                        <select id="edit-role" class="form-control" required>
+                            <option value="student" data-key="student">Student</option>
+                            <option value="instructor" data-key="instructor">Instructor</option>
+                            <option value="admin" data-key="administrator">Administrator</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-bio" data-key="bioOptional">Bio (Optional)</label>
+                        <textarea id="edit-bio" class="form-control" placeholder="Tell us about yourself" rows="3"></textarea>
+                    </div>
+
+                    <div class="loading" id="edit-profile-spinner" style="display: none; margin: 20px auto;"></div>
+                    <div class="message" id="edit-profile-success"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="settings-btn secondary" id="cancel-edit-profile" data-key="cancel">Cancel</button>
+                <button class="settings-btn" id="save-profile-btn" data-key="saveChanges">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div class="modal-overlay" id="change-password-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-key"></i> <span data-key="changePassword">Change Password</span></h3>
+                <button class="modal-close" id="close-change-password-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="change-password-form">
+                    <div class="form-group">
+                        <label for="current-password" data-key="currentPassword">Current Password</label>
+                        <input type="password" id="current-password" class="form-control" placeholder="Enter your current password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="new-password" data-key="newPassword">New Password</label>
+                        <input type="password" id="new-password" class="form-control" placeholder="Enter new password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-new-password" data-key="confirmNewPassword">Confirm New Password</label>
+                        <input type="password" id="confirm-new-password" class="form-control" placeholder="Confirm new password" required>
+                    </div>
+
+                    <div class="loading" id="change-password-spinner" style="display: none; margin: 20px auto;"></div>
+                    <div class="message" id="change-password-success"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="settings-btn secondary" id="cancel-change-password" data-key="cancel">Cancel</button>
+                                <button class="settings-btn" id="save-password-btn" data-key="changePassword">Change Password</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal-overlay" id="logout-confirmation-modal">
+        <div class="modal">
+            <div class="modal-body">
+                <div class="logout-confirmation">
+                    <div class="logout-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <h3 class="logout-message" data-key="logoutConfirm">Are you sure you want to logout?</h3>
+                    <p class="logout-details" data-key="logoutConfirmDesc">You will be redirected to the login page and will need to sign in again to access your account.</p>
+                    
+                    <div class="logout-buttons">
+                        <button class="logout-btn cancel" id="cancel-logout-btn">
+                            <i class="fas fa-times"></i> <span data-key="cancel">Cancel</span>
+                        </button>
+                        <button class="logout-btn confirm" id="confirm-logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> <span data-key="logout">Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =============================================
+        // GOOGLE SHEETS CONFIGURATION
+        // =============================================
+        
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwtrXJvBNboOrsd7U7SV6wmfQwcuZMqHzLvoBoNhQbjuco5dGGMsmutrTWv9OJdvvMK/exec';
+        
+        // =============================================
+        // Translation Data
+        // =============================================
+        const translations = {
+            en: {
+                // Auth Page
+                tagline: "Unlock Your Purpose Through Learning",
+                description: "ZubLab is a purpose-driven learning platform that connects your educational journey with meaningful outcomes. Join our community of learners today.",
+                feature1: "Google Sheets Integration",
+                feature2: "Real-time Data Storage",
+                feature3: "Expert-led courses & workshops",
+                feature4: "Community collaboration",
+                feature5: "Purpose-driven projects",
+                welcome: "Welcome to ZubLab",
+                signin: "Sign in to your account or create a new one to get started",
+                login: "Login",
+                register: "Register",
+                remember: "Remember me",
+                loginText: "Login to ZubLab",
+                createAccount: "Create ZubLab Account",
+                purposeDefault: "Select your primary learning purpose",
+                terms: "I agree to the Terms of Service and Privacy Policy",
+                uniqueEmail: "Unique Email Address",
+                duplicate: "Each email address can only be used for one registration. Duplicate email registrations are not allowed.",
+                back: "Back",
+                
+                // Dashboard
+                dashboard: "Dashboard",
+                courses: "Courses",
+                assignments: "Assignments",
+                grades: "Grades",
+                calendar: "Calendar",
+                contactUs: "Contact Us",
+                viewInstructor: "View Instructor",
+                settings: "Settings",
+                welcomeSubtitle: "Welcome to ZubLab Educational Platform",
+                enrolledCourses: "Active Classes",
+                assignmentsDue: "Assignments Due",
+                averageGrade: "Average Grade",
+                upcomingEvents: "Upcoming Events",
+                thisSemester: "This semester",
+                next7Days: "Next 7 days",
+                currentSemester: "Current semester",
+                thisWeek: "This week",
+                recentAssignments: "Recent Assignments",
+                course: "Course",
+                assignment: "Assignment",
+                dueDate: "Due Date",
+                status: "Status",
+                submitted: "Submitted",
+                inProgress: "In Progress",
+                pending: "Pending",
+                courseCode: "Course Code",
+                credits: "Credits",
+                progress: "Progress",
+                grade: "Grade",
+                
+                // Contact Us Page
+                contactDescription: "Get in touch with our support team for any questions, issues, or feedback.",
+                emailSupport: "Email Support",
+                emailSupportDesc: "Send us an email and we'll respond within 24 hours.",
+                responseTime: "Response time: 24 hours",
+                phoneSupport: "Phone Support",
+                phoneSupportDesc: "Call us during business hours for immediate assistance.",
+                businessHours: "Mon-Fri: 9AM-5PM (GMT+6)",
+                liveChat: "Live Chat",
+                liveChatDesc: "Chat with our support team in real-time during business hours.",
+                available: "Available: 9AM-5PM",
+                averageWait: "Average wait: 5 minutes",
+                officeAddress: "Office Address",
+                officeAddressDesc: "Visit our office for in-person support and consultations.",
+                addressLine1: "123 Learning Street",
+                addressLine2: "Education City, BD 1200",
+                sendMessage: "Send us a Message",
+                fullName: "Full Name",
+                emailAddress: "Email Address",
+                subject: "Subject",
+                selectSubject: "Select a subject",
+                technicalIssue: "Technical Issue",
+                accountHelp: "Account Help",
+                billingQuestion: "Billing Question",
+                feedback: "Feedback",
+                other: "Other",
+                message: "Message",
+                sendMessageBtn: "Send Message",
+                
+                // View Instructor Page
+                ourInstructors: "Our Instructors",
+                instructorsDescription: "Meet our team of expert instructors dedicated to your learning success.",
+                arabicInstructor: "Arabic Language Instructor",
+                englishInstructor: "English Language Instructor",
+                rohingyaInstructor: "Rohingya Language Instructor",
+                mathInstructor: "Mathematics Instructor",
+                qualification: "",
+                experience: "10+ years teaching experience",
+                rating: "4.9/5 Student Rating",
+                foridBio: "Specialized in Modern Standard Arabic and Quranic studies with a focus on practical communication skills.",
+                jubayerBio: "Expert in IELTS preparation and business English with a communicative teaching approach.",
+                ahmedBio: "Native Rohingya speaker and linguist specializing in language preservation and cultural education.",
+                sarahBio: "Specializes in making complex mathematical concepts accessible and engaging for all learning levels.",
+                subjects: "Subjects",
+                
+                // Settings
+                accountSettings: "Account Settings",
+                manageProfile: "Manage your profile, preferences, and security settings",
+                student: "Student",
+                studentAccount: "Student Account",
+                accessibility: "Accessibility",
+                eyeProtection: "Eye Protection Mode",
+                eyeProtectionDesc: "Reduce eye strain with green-tinted theme and reduced brightness",
+                fontSize: "Font Size",
+                fontSizeDesc: "Adjust the text size for better readability",
+                small: "Small",
+                medium: "Medium",
+                large: "Large",
+                xlarge: "Extra Large",
+                language: "Language",
+                interfaceLanguage: "Interface Language",
+                languageDesc: "Choose your preferred language for the interface",
+                profileInfo: "Profile Information",
+                profileInfoDesc: "Update your personal details and profile picture",
+                edit: "Edit",
+                changePassword: "Change Password",
+                changePasswordDesc: "Update your login password for security",
+                change: "Change",
+                notifications: "Notifications",
+                emailNotifications: "Email Notifications",
+                emailNotificationsDesc: "Receive email alerts for assignments and grades",
+                pushNotifications: "Push Notifications",
+                pushNotificationsDesc: "Get push notifications on your device",
+                privacySecurity: "Privacy & Security",
+                twoFactor: "Two-Factor Authentication",
+                twoFactorDesc: "Add an extra layer of security to your account",
+                dataPrivacy: "Data Privacy",
+                dataPrivacyDesc: "Manage how your data is collected and used",
+                manage: "Manage",
+                session: "Session",
+                logout: "Logout",
+                logoutDesc: "Sign out from your ZubLab account on all devices",
+                logoutConfirm: "Are you sure you want to logout?",
+                logoutConfirmDesc: "You will be redirected to the login page and will need to sign in again to access your account.",
+                
+                // Modals
+                editProfile: "Edit Profile Information",
+                fullName: "Full Name",
+                emailAddress: "Email Address",
+                emailCannotChange: "Email address cannot be changed for security reasons.",
+                accountType: "Account Type",
+                instructor: "Instructor",
+                administrator: "Administrator",
+                bioOptional: "Bio (Optional)",
+                cancel: "Cancel",
+                saveChanges: "Save Changes",
+                currentPassword: "Current Password",
+                newPassword: "New Password",
+                confirmNewPassword: "Confirm New Password",
+                
+                // Page content
+                viewAssignments: "View and manage all your assignments here.",
+                trackGrades: "Track your academic performance and grades.",
+                viewSchedule: "View your academic schedule and important dates."
+            },
+            ar: {
+                // Auth Page
+                tagline: "افتح هدفك من خلال التعلم",
+                description: "ZubLab هو منصة تعليمية مدفوعة بالهدف تربط رحلتك التعليمية بنتائج ذات معنى. انضم إلى مجتمعنا من المتعلمين اليوم.",
+                feature1: "تكامل جداول Google",
+                feature2: "تخزين البيانات في الوقت الفعلي",
+                feature3: "دورات وورش عمل بقيادة الخبراء",
+                feature4: "التعاون المجتمعي",
+                feature5: "مشاريع مدفوعة بالهدف",
+                welcome: "مرحبًا بك في ZubLab",
+                signin: "سجل الدخول إلى حسابك أو أنشئ حسابًا جديدًا للبدء",
+                login: "تسجيل الدخول",
+                register: "التسجيل",
+                remember: "تذكرني",
+                loginText: "تسجيل الدخول إلى ZubLab",
+                createAccount: "إنشاء حساب ZubLab",
+                purposeDefault: "اختر هدف التعلم الأساسي الخاص بك",
+                terms: "أوافق على شروط الخدمة وسياسة الخصوصية",
+                uniqueEmail: "عنوان بريد إلكتروني فريد",
+                duplicate: "يمكن استخدام كل عنوان بريد إلكتروني لتسجيل واحد فقط. لا يُسمح بالتسجيلات المكررة للبريد الإلكتروني.",
+                back: "رجوع",
+                
+                // Dashboard
+                dashboard: "لوحة التحكم",
+                courses: "الدورات",
+                assignments: "المهام",
+                grades: "الدرجات",
+                calendar: "التقويم",
+                contactUs: "اتصل بنا",
+                viewInstructor: "عرض المعلمين",
+                settings: "الإعدادات",
+                welcomeSubtitle: "مرحبًا بك في منصة ZubLab التعليمية",
+                enrolledCourses: "الدورات المسجلة",
+                assignmentsDue: "المهام المستحقة",
+                averageGrade: "متوسط الدرجات",
+                upcomingEvents: "الأحداث القادمة",
+                thisSemester: "هذا الفصل الدراسي",
+                next7Days: "الـ 7 أيام القادمة",
+                currentSemester: "الفصل الدراسي الحالي",
+                thisWeek: "هذا الأسبوع",
+                recentAssignments: "المهام الأخيرة",
+                course: "الدورة",
+                assignment: "المهمة",
+                dueDate: "تاريخ الاستحقاق",
+                status: "الحالة",
+                submitted: "تم التقديم",
+                inProgress: "قيد التنفيذ",
+                pending: "معلق",
+                courseCode: "رمز الدورة",
+                credits: "الساعات المعتمدة",
+                progress: "التقدم",
+                grade: "الدرجة",
+                
+                // Contact Us Page
+                contactDescription: "تواصل مع فريق الدعم الخاص بنا لأي أسئلة أو مشاكل أو ملاحظات.",
+                emailSupport: "الدعم عبر البريد الإلكتروني",
+                emailSupportDesc: "أرسل لنا بريدًا إلكترونيًا وسنرد خلال 24 ساعة.",
+                responseTime: "وقت الاستجابة: 24 ساعة",
+                phoneSupport: "الدعم الهاتفي",
+                phoneSupportDesc: "اتصل بنا خلال ساعات العمل للحصول على مساعدة فورية.",
+                businessHours: "الإثنين-الجمعة: 9 صباحًا-5 مساءً (ت ع م+6)",
+                liveChat: "الدردشة المباشرة",
+                liveChatDesc: "دردش مع فريق الدعم الخاص بنا في الوقت الفعلي خلال ساعات العمل.",
+                available: "متاح: 9 صباحًا-5 مساءً",
+                averageWait: "متوسط الانتظار: 5 دقائق",
+                officeAddress: "عنوان المكتب",
+                officeAddressDesc: "قم بزيارة مكتبنا للحصول على الدعم الشخصي والاستشارات.",
+                addressLine1: "شارع التعلم 123",
+                addressLine2: "مدينة التعليم، BD 1200",
+                sendMessage: "أرسل لنا رسالة",
+                fullName: "الاسم الكامل",
+                emailAddress: "عنوان البريد الإلكتروني",
+                subject: "الموضوع",
+                selectSubject: "اختر موضوعًا",
+                technicalIssue: "مشكلة فنية",
+                accountHelp: "مساعدة الحساب",
+                billingQuestion: "سؤال حول الفواتير",
+                feedback: "ملاحظات",
+                other: "أخرى",
+                message: "الرسالة",
+                sendMessageBtn: "إرسال الرسالة",
+                
+                // View Instructor Page
+                ourInstructors: "معلمونا",
+                instructorsDescription: "تعرف على فريق معلمينا الخبراء المكرسين لنجاحك التعليمي.",
+                arabicInstructor: "معلم اللغة العربية",
+                englishInstructor: "معلم اللغة الإنجليزية",
+                rohingyaInstructor: "معلم اللغة الروهنجية",
+                mathInstructor: "معلم الرياضيات",
+                qualification: "ماجستير في الأدب العربي",
+                experience: "10+ سنوات خبرة في التدريس",
+                rating: "4.9/5 تقييم الطلاب",
+                foridBio: "متخصص في اللغة العربية الفصحى الحديثة وعلوم القرآن مع التركيز على مهارات الاتصال العملية.",
+                jubayerBio: "خبير في تحضير اختبار الآيلتس والإنجليزية للأعمال مع نهج تدريس تواصلي.",
+                ahmedBio: "متحدث أصلي للغة الروهنجية ولغوي متخصص في الحفاظ على اللغة والتعليم الثقافي.",
+                sarahBio: "تتخصص في جعل المفاهيم الرياضية المعقدة في متناول جميع مستويات التعليم وجذابة.",
+                subjects: "المواد الدراسية",
+                
+                // Settings
+                accountSettings: "إعدادات الحساب",
+                manageProfile: "إدارة ملفك الشخصي، وتفضيلاتك، وإعدادات الأمان",
+                student: "طالب",
+                studentAccount: "حساب طالب",
+                accessibility: "إمكانية الوصول",
+                eyeProtection: "وضع حماية العين",
+                eyeProtectionDesc: "قلل إجهاد العين باستخدام سمة خضراء اللون وخفت السطوع",
+                fontSize: "حجم الخط",
+                fontSizeDesc: "اضبط حجم النص لتحسين قابلية القراءة",
+                small: "صغير",
+                medium: "متوسط",
+                large: "كبير",
+                xlarge: "كبير جدًا",
+                language: "اللغة",
+                interfaceLanguage: "لغة الواجهة",
+                languageDesc: "اختر لغتك المفضلة للواجهة",
+                profileInfo: "معلومات الملف الشخصي",
+                profileInfoDesc: "تحديث بياناتك الشخصية وصورة ملفك الشخصي",
+                edit: "تعديل",
+                changePassword: "تغيير كلمة المرور",
+                changePasswordDesc: "تحديث كلمة مرور تسجيل الدخول للأمان",
+                change: "تغيير",
+                notifications: "الإشعارات",
+                emailNotifications: "إشعارات البريد الإلكتروني",
+                emailNotificationsDesc: "تلقي تنبيهات بالبريد الإلكتروني للمهام والدرجات",
+                pushNotifications: "الإشعارات الفورية",
+                pushNotificationsDesc: "الحصول على إشعارات فورية على جهازك",
+                privacySecurity: "الخصوصية والأمان",
+                twoFactor: "المصادقة الثنائية",
+                twoFactorDesc: "أضف طبقة إضافية من الأمان لحسابك",
+                dataPrivacy: "خصوصية البيانات",
+                dataPrivacyDesc: "إدارة كيفية جمع بياناتك واستخدامها",
+                manage: "إدارة",
+                session: "الجلسة",
+                logout: "تسجيل الخروج",
+                logoutDesc: "تسجيل الخروج من حساب ZubLab الخاص بك على جميع الأجهزة",
+                logoutConfirm: "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+                logoutConfirmDesc: "سيتم إعادة توجيهك إلى صفحة تسجيل الدخول وسوف تحتاج إلى تسجيل الدخول مرة أخرى للوصول إلى حسابك.",
+                
+                // Modals
+                editProfile: "تعديل معلومات الملف الشخصي",
+                fullName: "الاسم الكامل",
+                emailAddress: "عنوان البريد الإلكتروني",
+                emailCannotChange: "لا يمكن تغيير عنوان البريد الإلكتروني لأسباب أمنية.",
+                accountType: "نوع الحساب",
+                instructor: "مدرس",
+                administrator: "مدير",
+                bioOptional: "السيرة الذاتية (اختياري)",
+                cancel: "إلغاء",
+                saveChanges: "حفظ التغييرات",
+                currentPassword: "كلمة المرور الحالية",
+                newPassword: "كلمة المرور الجديدة",
+                confirmNewPassword: "تأكيد كلمة المرور الجديدة",
+                
+                // Page content
+                viewAssignments: "عرض وإدارة جميع مهامك هنا.",
+                trackGrades: "تتبع أدائك الأكاديمي ودرجاتك.",
+                viewSchedule: "عرض جدولك الأكاديمي والتواريخ المهمة."
+            },
+            ur: {
+                // Auth Page
+                tagline: "سیکھنے کے ذریعے اپنے مقصد کو کھولیں",
+                description: "ZubLab ایک مقصد پر مبنی لرننگ پلیٹ فارم ہے جو آپ کے تعلیمی سفر کو معنی خیز نتائج سے جوڑتا ہے۔ آج ہی ہمارے سیکھنے والوں کے کمیونٹی میں شامل ہوں۔",
+                feature1: "Google شیٹس انٹیگریشن",
+                feature2: "ریل ٹائم ڈیٹا اسٹوریج",
+                feature3: "ماہرین کی قیادت میں کورسز اور ورکشاپس",
+                feature4: "کمیونٹی تعاون",
+                feature5: "مقصد پر مبنی پروجیکٹس",
+                welcome: "ZubLab میں خوش آمدید",
+                signin: "شروع کرنے کے لیے اپنے اکاؤنٹ میں سائن ان کریں یا نیا اکاؤنٹ بنائیں",
+                login: "لاگ ان",
+                register: "رجسٹر",
+                remember: "مجھے یاد رکھیں",
+                loginText: "ZubLab میں لاگ ان کریں",
+                createAccount: "ZubLab اکاؤنٹ بنائیں",
+                purposeDefault: "اپنا بنیادی سیکھنے کا مقصد منتخب کریں",
+                terms: "میں سروس کی شرائط اور پرائیویسی پالیسی سے اتفاق کرتا ہوں",
+                uniqueEmail: "منفرد ای میل ایڈریس",
+                duplicate: "ہر ای میل ایڈریس صرف ایک رجسٹریشن کے لیے استعمال کیا جا سکتا ہے۔ ڈپلیکیٹ ای میل رجسٹریشنز کی اجازت نہیں ہے۔",
+                back: "واپس",
+                
+                // Dashboard
+                dashboard: "ڈیش بورڈ",
+                courses: "کورسز",
+                assignments: "اسائنمنٹس",
+                grades: "گریڈز",
+                calendar: "کیلنڈر",
+                contactUs: "ہم سے رابطہ کریں",
+                viewInstructor: "انسٹرکٹر دیکھیں",
+                settings: "ترتیبات",
+                welcomeSubtitle: "ZubLab تعلیمی پلیٹ فارم میں خوش آمدید",
+                enrolledCourses: "انرولڈ کورسز",
+                assignmentsDue: "واجب الادا اسائنمنٹس",
+                averageGrade: "اوسط گریڈ",
+                upcomingEvents: "آنے والے ایونٹس",
+                thisSemester: "اس سمسٹر",
+                next7Days: "اگلے 7 دن",
+                currentSemester: "موجودہ سمسٹر",
+                thisWeek: "اس ہفتے",
+                recentAssignments: "حالیہ اسائنمنٹس",
+                course: "کورس",
+                assignment: "اسائنمنٹ",
+                dueDate: "آخری تاریخ",
+                status: "حالت",
+                submitted: "جمع کرایا گیا",
+                inProgress: "جاری ہے",
+                pending: "زیر التوا",
+                courseCode: "کورس کوڈ",
+                credits: "کریڈٹس",
+                progress: "ترقی",
+                grade: "گریڈ",
+                
+                // Contact Us Page
+                contactDescription: "کسی بھی سوال، مسئلے یا فیڈ بیک کے لیے ہمارے سپورٹ ٹیم سے رابطہ کریں۔",
+                emailSupport: "ای میل سپورٹ",
+                emailSupportDesc: "ہمیں ای میل بھیجیں اور ہم 24 گھنٹے کے اندر جواب دیں گے۔",
+                responseTime: "جواب کا وقت: 24 گھنٹے",
+                phoneSupport: "فون سپورٹ",
+                phoneSupportDesc: "فوری مدد کے لیے کاروباری اوقات کے دوران ہم سے رابطہ کریں۔",
+                businessHours: "سوموار-جمعہ: صبح 9 بجے سے شام 5 بجے تک (GMT+6)",
+                liveChat: "لائیو چیٹ",
+                liveChatDesc: "کاروباری اوقات کے دوران ہمارے سپورٹ ٹیم کے ساتھ ریل ٹائم میں چیٹ کریں۔",
+                available: "دستیاب: صبح 9 بجے سے شام 5 بجے تک",
+                averageWait: "اوسط انتظار: 5 منٹ",
+                officeAddress: "دفتر کا پتہ",
+                officeAddressDesc: "ذاتی مدد اور مشاورت کے لیے ہمارے دفتر کا دورہ کریں۔",
+                addressLine1: "123 لرننگ سٹریٹ",
+                addressLine2: "ایجوکیشن سٹی، BD 1200",
+                sendMessage: "ہمیں پیغام بھیجیں",
+                fullName: "پورا نام",
+                emailAddress: "ای میل ایڈریس",
+                subject: "موضوع",
+                selectSubject: "ایک موضوع منتخب کریں",
+                technicalIssue: "تکنیکی مسئلہ",
+                accountHelp: "اکاؤنٹ کی مدد",
+                billingQuestion: "بلنگ کا سوال",
+                feedback: "فیڈ بیک",
+                other: "دیگر",
+                message: "پیغام",
+                sendMessageBtn: "پیغام بھیجیں",
+                
+                // View Instructor Page
+                ourInstructors: "ہمارے انسٹرکٹرز",
+                instructorsDescription: "آپ کی سیکھنے کی کامیابی کے لیے وقف ہمارے ماہر انسٹرکٹرز کی ٹیم سے ملاقات کریں۔",
+                arabicInstructor: "عربی زبان کے انسٹرکٹر",
+                englishInstructor: "انگریزی زبان کے انسٹرکٹر",
+                rohingyaInstructor: "روہنگیا زبان کے انسٹرکٹر",
+                mathInstructor: "ریاضی کے انسٹرکٹر",
+                qualification: "عربی ادب میں ایم اے",
+                experience: "10+ سالوں کی تدریسی تجربہ",
+                rating: "4.9/5 طلباء کی درجہ بندی",
+                foridBio: "جدید معیاری عربی اور قرآنی علوم میں مہارت رکھتے ہیں جس کا مرکز عملی مواصلاتی مہارتیں ہیں۔",
+                jubayerBio: "IELTS کی تیاری اور کاروباری انگریزی میں ماہر ہیں جن کا تدریسی طریقہ مواصلاتی ہے۔",
+                ahmedBio: "روہنگیا زبان کے مقامی بولنے والے اور زبان کے تحفظ اور ثقافتی تعلیم میں ماہر لسانیات۔",
+                sarahBio: "تمام سیکھنے کی سطحوں کے لیے پیچیدہ ریاضیاتی تصورات کو قابل رسائی اور پرکشش بنانے میں مہارت رکھتی ہیں۔",
+                subjects: "مضامین",
+                
+                // Settings
+                accountSettings: "اکاؤنٹ کی ترتیبات",
+                manageProfile: "اپنا پروفائل، ترجیحات اور سیکیورٹی کی ترتیبات منظم کریں",
+                student: "طالب علم",
+                studentAccount: "طالب علم اکاؤنٹ",
+                accessibility: "رسائی",
+                eyeProtection: "آنکھوں کے تحفظ کا موڈ",
+                eyeProtectionDesc: "ہری رنگ تھیم اور کم روشنی کے ساتھ آنکھوں کے دباؤ کو کم کریں",
+                fontSize: "فونٹ سائز",
+                fontSizeDesc: "بہتر پڑھنے کے لیے متن کا سائز ایڈجسٹ کریں",
+                small: "چھوٹا",
+                medium: "درمیانہ",
+                large: "بڑا",
+                xlarge: "بہت بڑا",
+                language: "زبان",
+                interfaceLanguage: "انٹرفیس زبان",
+                languageDesc: "انٹرفیس کے لیے اپنی پسندیدہ زبان منتخب کریں",
+                profileInfo: "پروفائل کی معلومات",
+                profileInfoDesc: "اپنی ذاتی تفصیلات اور پروفائل پکچر اپ ڈیٹ کریں",
+                edit: "ترمیم",
+                changePassword: "پاس ورڈ تبدیل کریں",
+                changePasswordDesc: "سیکورٹی کے لیے اپنا لاگ ان پاس ورڈ اپ ڈیٹ کریں",
+                change: "تبدیلی",
+                notifications: "اطلاعات",
+                emailNotifications: "ای میل اطلاعات",
+                emailNotificationsDesc: "اسائنمنٹس اور گریڈز کے لیے ای میل الرٹس وصول کریں",
+                pushNotifications: "پش اطلاعات",
+                pushNotificationsDesc: "اپنے ڈیوائس پر پش اطلاعات حاصل کریں",
+                privacySecurity: "رازداری اور سیکیورٹی",
+                twoFactor: "دو فیکٹر تصدیق",
+                twoFactorDesc: "اپنے اکاؤنٹ میں سیکیورٹی کی اضافی پرت شامل کریں",
+                dataPrivacy: "ڈیٹا رازداری",
+                dataPrivacyDesc: "منظم کریں کہ آپ کا ڈیٹا کیسے جمع کیا جاتا ہے اور استعمال ہوتا ہے",
+                manage: "منظم کریں",
+                session: "سیشن",
+                logout: "لاگ آؤٹ",
+                logoutDesc: "اپنے ZubLab اکاؤنٹ سے تمام آلات پر سائن آؤٹ کریں",
+                logoutConfirm: "کیا آپ واقعی لاگ آؤٹ کرنا چاہتے ہیں؟",
+                logoutConfirmDesc: "آپ کو لاگ ان صفحہ پر ری ڈائریکٹ کیا جائے گا اور اپنے اکاؤنٹ تک رسائی کے لیے دوبارہ سائن ان کرنے کی ضرورت ہوگی۔",
+                
+                // Modals
+                editProfile: "پروفائل کی معلومات میں ترمیم کریں",
+                fullName: "پورا نام",
+                emailAddress: "ای میل ایڈریس",
+                emailCannotChange: "سیکورٹی وجوہات کی بنا پر ای میل ایڈریس تبدیل نہیں کیا جا سکتا۔",
+                accountType: "اکاؤنٹ کی قسم",
+                instructor: "انسٹرکٹر",
+                administrator: "ایڈمنسٹریٹر",
+                bioOptional: "بائیو (اختیاری)",
+                cancel: "منسوخ کریں",
+                saveChanges: "تبدیلیاں محفوظ کریں",
+                currentPassword: "موجودہ پاس ورڈ",
+                newPassword: "نیا پاس ورڈ",
+                confirmNewPassword: "نیا پاس ورڈ کی تصدیق کریں",
+                
+                // Page content
+                viewAssignments: "اپنی تمام اسائنمنٹس یہاں دیکھیں اور منظم کریں۔",
+                trackGrades: "اپنی تعلیمی کارکردگی اور گریڈز کو ٹریک کریں۔",
+                viewSchedule: "اپنا تعلیمی شیڈول اور اہم تاریخوں کو دیکھیں۔"
+            },
+            rhg: {
+                // Auth Page - Rohingya Hanifi Script (approximate transliteration)
+                tagline: "𐴔𐴟𐴁𐴞𐴐𐴠𐴑 𐴆𐴞𐴊𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴆𐴞𐴌𐴞 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                description: "ZubLab 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                feature1: "Google 𐴆𐴡𐴤𐴞𐴤 𐴆𐴡𐴤𐴞𐴤",
+                feature2: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                feature3: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                feature4: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                feature5: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                welcome: "ZubLab 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                signin: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                login: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                register: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                remember: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                loginText: "ZubLab 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                createAccount: "ZubLab 𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤",
+                purposeDefault: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                terms: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                uniqueEmail: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                duplicate: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                back: "𐴔𐴟𐴁",
+                
+                // Dashboard - Using English placeholder for Rohingya
+                dashboard: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                courses: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                assignments: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                grades: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                calendar: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                contactUs: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                viewInstructor: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                settings: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                welcomeSubtitle: "ZubLab 𐴌𐴟𐴁𐴡𐴤𐴞𐴤 𐴆𐴡𐴤 𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                enrolledCourses: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                assignmentsDue: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                averageGrade: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                upcomingEvents: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                thisSemester: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                next7Days: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                currentSemester: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                thisWeek: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                recentAssignments: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                course: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                assignment: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                dueDate: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                status: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                submitted: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                inProgress: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                pending: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                courseCode: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                credits: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                progress: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                grade: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                
+                // Contact Us Page
+                contactDescription: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                emailSupport: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                emailSupportDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                responseTime: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                phoneSupport: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                phoneSupportDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                businessHours: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                liveChat: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                liveChatDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                available: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                averageWait: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                officeAddress: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                officeAddressDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                addressLine1: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                addressLine2: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                sendMessage: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                fullName: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                emailAddress: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                subject: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                selectSubject: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                technicalIssue: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                accountHelp: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                billingQuestion: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                feedback: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                other: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                message: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                sendMessageBtn: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                
+                // View Instructor Page
+                ourInstructors: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                instructorsDescription: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                arabicInstructor: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                englishInstructor: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                rohingyaInstructor: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                mathInstructor: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                qualification: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                experience: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                rating: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                foridBio: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                jubayerBio: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                ahmedBio: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                sarahBio: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                subjects: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                
+                // Settings
+                accountSettings: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                manageProfile: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                student: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                studentAccount: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                accessibility: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                eyeProtection: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                eyeProtectionDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                fontSize: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                fontSizeDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                small: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                medium: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                large: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                xlarge: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                language: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                interfaceLanguage: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                languageDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                profileInfo: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                profileInfoDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                edit: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                changePassword: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                changePasswordDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                change: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                notifications: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                emailNotifications: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                emailNotificationsDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                pushNotifications: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                pushNotificationsDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                privacySecurity: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                twoFactor: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                twoFactorDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                dataPrivacy: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                dataPrivacyDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                manage: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                session: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                logout: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                logoutDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                logoutConfirm: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                logoutConfirmDesc: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                
+                // Modals
+                editProfile: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                fullName: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                emailAddress: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                emailCannotChange: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                accountType: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                instructor: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                administrator: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                bioOptional: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                cancel: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                saveChanges: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                currentPassword: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                newPassword: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                confirmNewPassword: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                
+                // Page content
+                viewAssignments: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                trackGrades: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤",
+                viewSchedule: "𐴌𐴟𐴁𐴡𐴤𐴞𐴤"
+            }
+        };
+        
+        // =============================================
+        // DOM Elements - Auth
+        // =============================================
+        const authContainer = document.getElementById('auth-container');
+        const dashboardContainer = document.getElementById('dashboard-container');
+        
+        // Auth elements
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const loginMessage = document.getElementById('login-message');
+        const registerMessage = document.getElementById('register-message');
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const loginLoading = document.getElementById('login-loading');
+        const registerLoading = document.getElementById('register-loading');
+        const loginText = document.getElementById('login-text');
+        const registerText = document.getElementById('register-text');
+        const backButton = document.getElementById('back-to-home');
+        const backText = document.getElementById('back-text');
+        
+        // =============================================
+        // DOM Elements - Dashboard
+        // =============================================
+        const sidebar = document.getElementById('sidebar');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const menuItems = document.querySelectorAll('.menu-item');
+        const pageTitle = document.getElementById('page-title');
+        const pageSubtitle = document.getElementById('page-subtitle');
+        const userName = document.getElementById('user-name');
+        const userEmail = document.getElementById('user-email');
+        const userAvatar = document.getElementById('user-avatar');
+        const userAvatarText = document.getElementById('user-avatar-text');
+        const logoutBtn = document.getElementById('logout-btn');
+        const pageContents = document.querySelectorAll('.page-content');
+        
+        // Search elements
+        const searchInput = document.getElementById('search-input');
+        
+        // NEW: Contact Form Elements
+        const contactForm = document.getElementById('contact-form');
+        const sendMessageBtn = document.getElementById('send-message-btn');
+        
+        // Profile elements
+        const profileAvatarLarge = document.getElementById('profile-avatar-large');
+        const profileAvatarText = document.getElementById('profile-avatar-text');
+        const profileName = document.getElementById('profile-name');
+        const profileEmail = document.getElementById('profile-email');
+        const profileRoleDisplay = document.getElementById('profile-role-display');
+        const profileRoleBadge = document.getElementById('profile-role-badge');
+        const profilePictureInput = document.getElementById('profile-picture-input');
+        
+        // Modal elements
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const changePasswordBtn = document.getElementById('change-password-btn');
+        const editProfileModal = document.getElementById('edit-profile-modal');
+        const changePasswordModal = document.getElementById('change-password-modal');
+        const logoutConfirmationModal = document.getElementById('logout-confirmation-modal');
+        const closeEditProfileModal = document.getElementById('close-edit-profile-modal');
+        const closeChangePasswordModal = document.getElementById('close-change-password-modal');
+        const cancelEditProfile = document.getElementById('cancel-edit-profile');
+        const cancelChangePassword = document.getElementById('cancel-change-password');
+        const cancelLogoutBtn = document.getElementById('cancel-logout-btn');
+        const confirmLogoutBtn = document.getElementById('confirm-logout-btn');
+        const saveProfileBtn = document.getElementById('save-profile-btn');
+        const savePasswordBtn = document.getElementById('save-password-btn');
+        
+        // New feature elements
+        const eyeProtectionToggle = document.getElementById('eye-protection-mode');
+        const fontSizeSelect = document.getElementById('font-size-select');
+        const languageSelect = document.getElementById('language-select');
+        const settingsLanguageSelect = document.getElementById('settings-language-select');
+        
+        // =============================================
+        // State Management
+        // =============================================
+        let currentUser = null;
+        let currentLanguage = localStorage.getItem('zublab_language') || 'en';
+        let eyeProtectionMode = localStorage.getItem('zublab_eye_protection') === 'true';
+        let fontSize = localStorage.getItem('zublab_font_size') || 'medium';
+        let searchActive = false;
+        
+        // =============================================
+        // Helper Functions
+        // =============================================
+        
+        function clearMessages() {
+            loginMessage.className = 'message';
+            registerMessage.className = 'message';
+        }
+        
+        function showLoading(button, loadingEl, textEl) {
+            button.disabled = true;
+            loadingEl.style.display = 'inline-block';
+            textEl.textContent = button.id === 'login-btn' ? 'Logging in...' : 'Creating account...';
+        }
+        
+        function hideLoading(button, loadingEl, textEl, originalText) {
+            button.disabled = false;
+            loadingEl.style.display = 'none';
+            textEl.textContent = originalText;
+        }
+        
+        function showMessage(element, text, type) {
+            element.textContent = text;
+            element.className = `message ${type}`;
+            
+            setTimeout(() => {
+                if (element.textContent === text) {
+                    element.className = 'message';
+                }
+            }, 5000);
+        }
+        
+        function getInitials(name) {
+            if (!name) return 'US';
+            const nameParts = name.split(' ');
+            const initials = nameParts.map(part => part[0]).join('').toUpperCase();
+            return initials.substring(0, 2);
+        }
+        
+        // =============================================
+        // Back Button Functionality
+        // =============================================
+        
+        function goBackHome() {
+            // This can be customized based on your needs
+            // Option 1: Go to a specific homepage
+            // window.location.href = 'index.html';
+            
+            // Option 2: Go to previous page in history
+            // window.history.back();
+            
+            // Option 3: Show a message and stay on the page
+            showMessage(loginMessage, "Back button clicked - customize this function as needed", "info");
+            
+            // For demo purposes, let's just show an alert
+            alert("Back button clicked!\n\nThis would typically:\n1. Go back to the homepage\n2. Return to previous page\n3. Or navigate to a specific URL\n\nCustomize the 'goBackHome()' function in the JavaScript to implement your desired behavior.");
+        }
+        
+        function updateBackButtonText() {
+            const translation = translations[currentLanguage] || translations.en;
+            if (backText) {
+                backText.textContent = translation.back || 'Back';
+            }
+            
+            // Update RTL/LTR direction for arrow icon
+            if (currentLanguage === 'ar' || currentLanguage === 'ur') {
+                if (backButton) {
+                    backButton.innerHTML = `<span id="back-text">${translation.back || 'Back'}</span> <i class="fas fa-arrow-right"></i>`;
+                    backButton.style.flexDirection = 'row-reverse';
+                }
+            } else {
+                if (backButton) {
+                    backButton.innerHTML = `<i class="fas fa-arrow-left"></i> <span id="back-text">${translation.back || 'Back'}</span>`;
+                    backButton.style.flexDirection = 'row';
+                }
+            }
+        }
+        
+        // =============================================
+        // Font Size Functions - FIXED VERSION
+        // =============================================
+        
+        function changeFontSize(size) {
+            fontSize = size;
+            localStorage.setItem('zublab_font_size', size);
+            
+            // Remove existing font size classes
+            document.body.classList.remove('font-small', 'font-medium', 'font-large', 'font-xlarge');
+            
+            // Add new font size class
+            document.body.classList.add(`font-${size}`);
+            
+            // Update select value
+            if (fontSizeSelect) {
+                fontSizeSelect.value = size;
+            }
+            
+            // Show notification
+            const message = document.createElement('div');
+            message.className = 'message info';
+            message.textContent = `Font size changed to ${size}`;
+            message.style.position = 'fixed';
+            message.style.top = '20px';
+            message.style.right = '20px';
+            message.style.zIndex = '1000';
+            message.style.maxWidth = '300px';
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 3000);
+        }
+        
+        function applyFontSize() {
+            // Remove existing classes first
+            document.body.classList.remove('font-small', 'font-medium', 'font-large', 'font-xlarge');
+            
+            // Add the saved font size class
+            if (fontSize) {
+                document.body.classList.add(`font-${fontSize}`);
+            }
+            
+            // Update select value if exists
+            if (fontSizeSelect) {
+                fontSizeSelect.value = fontSize;
+            }
+        }
+        
+        // =============================================
+        // Search Functionality - FIXED VERSION
+        // =============================================
+        
+        function performSearch(query) {
+            if (!query.trim()) {
+                clearSearchHighlights();
+                searchActive = false;
+                return;
+            }
+            
+            searchActive = true;
+            const searchTerm = query.toLowerCase();
+            const activePage = document.querySelector('.page-content.active');
+            
+            if (!activePage) return;
+            
+            // Clear previous highlights
+            clearSearchHighlights();
+            
+            // Get all text nodes in the active page
+            const textNodes = getTextNodes(activePage);
+            let matchCount = 0;
+            
+            textNodes.forEach(node => {
+                const text = node.textContent;
+                const lowerText = text.toLowerCase();
+                
+                if (lowerText.includes(searchTerm)) {
+                    matchCount++;
+                    highlightTextNode(node, searchTerm);
+                }
+            });
+            
+            // Update search box placeholder to show results
+            if (searchInput) {
+                const originalPlaceholder = searchInput.getAttribute('data-original-placeholder') || 'Search courses, assignments...';
+                if (matchCount > 0) {
+                    searchInput.placeholder = `${matchCount} result${matchCount !== 1 ? 's' : ''} found`;
+                } else {
+                    searchInput.placeholder = 'No results found';
+                }
+                
+                // Store original placeholder if not already stored
+                if (!searchInput.getAttribute('data-original-placeholder')) {
+                    searchInput.setAttribute('data-original-placeholder', originalPlaceholder);
+                }
+            }
+        }
+        
+        function getTextNodes(element) {
+            const textNodes = [];
+            const walker = document.createTreeWalker(
+                element,
+                NodeFilter.SHOW_TEXT,
+                {
+                    acceptNode: function(node) {
+                        // Skip script and style elements
+                        if (node.parentNode.nodeName === 'SCRIPT' || 
+                            node.parentNode.nodeName === 'STYLE' ||
+                            node.parentNode.nodeName === 'NOSCRIPT') {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        
+                        // Skip empty text nodes
+                        if (!node.textContent.trim()) {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                }
+            );
+            
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+            
+            return textNodes;
+        }
+        
+        function highlightTextNode(textNode, searchTerm) {
+            const text = textNode.textContent;
+            const lowerText = text.toLowerCase();
+            const searchIndex = lowerText.indexOf(searchTerm);
+            
+            if (searchIndex === -1) return;
+            
+            const beforeText = text.substring(0, searchIndex);
+            const matchText = text.substring(searchIndex, searchIndex + searchTerm.length);
+            const afterText = text.substring(searchIndex + searchTerm.length);
+            
+            // Create span for highlighted text
+            const highlightSpan = document.createElement('span');
+            highlightSpan.className = 'search-highlight';
+            highlightSpan.textContent = matchText;
+            
+            // Replace the text node with highlighted version
+            const parent = textNode.parentNode;
+            const fragment = document.createDocumentFragment();
+            
+            if (beforeText) {
+                fragment.appendChild(document.createTextNode(beforeText));
+            }
+            
+            fragment.appendChild(highlightSpan);
+            
+            if (afterText) {
+                fragment.appendChild(document.createTextNode(afterText));
+            }
+            
+            parent.replaceChild(fragment, textNode);
+        }
+        
+        function clearSearchHighlights() {
+            const highlights = document.querySelectorAll('.search-highlight');
+            highlights.forEach(highlight => {
+                const parent = highlight.parentNode;
+                const text = highlight.textContent;
+                
+                // Replace highlight with text node
+                const textNode = document.createTextNode(text);
+                parent.replaceChild(textNode, highlight);
+                
+                // Normalize adjacent text nodes
+                parent.normalize();
+            });
+            
+            // Restore original placeholder if search is cleared
+            if (searchInput && searchInput.value.trim() === '') {
+                const originalPlaceholder = searchInput.getAttribute('data-original-placeholder');
+                if (originalPlaceholder) {
+                    searchInput.placeholder = originalPlaceholder;
+                }
+            }
+        }
+        
+        // =============================================
+        // Eye Protection Mode Functions
+        // =============================================
+        
+        function toggleEyeProtectionMode() {
+            eyeProtectionMode = !eyeProtectionMode;
+            localStorage.setItem('zublab_eye_protection', eyeProtectionMode);
+            
+            if (eyeProtectionMode) {
+                document.body.classList.add('eye-protection-mode');
+            } else {
+                document.body.classList.remove('eye-protection-mode');
+            }
+            
+            // Update toggle state
+            if (eyeProtectionToggle) {
+                eyeProtectionToggle.checked = eyeProtectionMode;
+            }
+            
+            // Show notification
+            const message = document.createElement('div');
+            message.className = 'message ' + (eyeProtectionMode ? 'success' : 'info');
+            message.textContent = eyeProtectionMode ? 
+                'Eye Protection Mode enabled' : 
+                'Eye Protection Mode disabled';
+            message.style.position = 'fixed';
+            message.style.top = '20px';
+            message.style.right = '20px';
+            message.style.zIndex = '1000';
+            message.style.maxWidth = '300px';
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 3000);
+        }
+        
+        function applyEyeProtectionMode() {
+            if (eyeProtectionMode) {
+                document.body.classList.add('eye-protection-mode');
+            }
+            if (eyeProtectionToggle) {
+                eyeProtectionToggle.checked = eyeProtectionMode;
+            }
+        }
+        
+        // =============================================
+        // Language Functions
+        // =============================================
+        
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('zublab_language', lang);
+            
+            // Update RTL/LTR direction
+            if (lang === 'ar' || lang === 'ur') {
+                document.body.setAttribute('dir', 'rtl');
+            } else {
+                document.body.setAttribute('dir', 'ltr');
+            }
+            
+            // Update select values
+            if (languageSelect) languageSelect.value = lang;
+            if (settingsLanguageSelect) settingsLanguageSelect.value = lang;
+            
+            // Apply translations
+            applyTranslations(lang);
+            
+            // Update back button text
+            updateBackButtonText();
+            
+            // Show notification
+            const message = document.createElement('div');
+            message.className = 'message success';
+            message.textContent = `Language changed to ${getLanguageName(lang)}`;
+            message.style.position = 'fixed';
+            message.style.top = '20px';
+            message.style.right = '20px';
+            message.style.zIndex = '1000';
+            message.style.maxWidth = '300px';
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 3000);
+        }
+        
+        function getLanguageName(code) {
+            const names = {
+                en: 'English',
+                ar: 'Arabic',
+                ur: 'Urdu',
+                rhg: 'Rohingya'
+            };
+            return names[code] || code;
+        }
+        
+        function applyTranslations(lang) {
+            const translation = translations[lang] || translations.en;
+            
+            // Update elements with data-key attribute
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translation[key]) {
+                    element.textContent = translation[key];
+                }
+            });
+            
+            // Update auth page elements
+            const taglineText = document.getElementById('tagline-text');
+            const descriptionText = document.getElementById('description-text');
+            const welcomeText = document.getElementById('welcome-text');
+            const signinText = document.getElementById('signin-text');
+            const rememberText = document.getElementById('remember-text');
+            const loginTabText = document.getElementById('login-tab');
+            const registerTabText = document.getElementById('register-tab');
+            const loginBtnText = document.getElementById('login-text');
+            const registerBtnText = document.getElementById('register-text');
+            const purposeDefault = document.getElementById('purpose-default');
+            const termsText = document.getElementById('terms-text');
+            const uniqueEmailText = document.getElementById('unique-email-text');
+            const duplicateText = document.getElementById('duplicate-text');
+            
+            if (taglineText && translation.tagline) taglineText.textContent = translation.tagline;
+            if (descriptionText && translation.description) descriptionText.textContent = translation.description;
+            if (welcomeText && translation.welcome) welcomeText.textContent = translation.welcome;
+            if (signinText && translation.signin) signinText.textContent = translation.signin;
+            if (rememberText && translation.remember) rememberText.textContent = translation.remember;
+            if (loginTabText && translation.login) loginTabText.textContent = translation.login;
+            if (registerTabText && translation.register) registerTabText.textContent = translation.register;
+            if (loginBtnText && translation.loginText) loginBtnText.textContent = translation.loginText;
+            if (registerBtnText && translation.createAccount) registerBtnText.textContent = translation.createAccount;
+            if (purposeDefault && translation.purposeDefault) purposeDefault.textContent = translation.purposeDefault;
+            if (termsText && translation.terms) termsText.textContent = translation.terms;
+            if (uniqueEmailText && translation.uniqueEmail) uniqueEmailText.textContent = translation.uniqueEmail;
+            if (duplicateText && translation.duplicate) duplicateText.textContent = translation.duplicate;
+            
+            // Update feature list
+            for (let i = 1; i <= 5; i++) {
+                const feature = document.getElementById(`feature${i}`);
+                if (feature && translation[`feature${i}`]) {
+                    feature.textContent = translation[`feature${i}`];
+                }
+            }
+            
+            // Update page title and subtitle based on active page
+            const activePage = document.querySelector('.page-content.active');
+            if (activePage) {
+                const pageId = activePage.id.replace('-content', '');
+                updatePageTitle(pageId);
+            }
+        }
+        
+        // =============================================
+        // Profile Picture Functions
+        // =============================================
+        
+        function updateProfilePicture(imageData) {
+            // Update sidebar avatar
+            if (imageData) {
+                userAvatar.innerHTML = `<img src="${imageData}" alt="Profile Picture">`;
+                userAvatarText.style.display = 'none';
+            } else {
+                userAvatar.innerHTML = '';
+                const initials = getInitials(currentUser?.name || 'User');
+                userAvatarText.textContent = initials;
+                userAvatarText.style.display = 'flex';
+            }
+            
+            // Update profile preview avatar
+            if (imageData) {
+                profileAvatarLarge.innerHTML = `<img src="${imageData}" alt="Profile Picture">`;
+                profileAvatarText.style.display = 'none';
+            } else {
+                profileAvatarLarge.innerHTML = '';
+                const initials = getInitials(currentUser?.name || 'User');
+                profileAvatarText.textContent = initials;
+                profileAvatarText.style.display = 'flex';
+            }
+            
+            // Save to local storage
+            if (currentUser) {
+                currentUser.profilePicture = imageData;
+                localStorage.setItem('zublab_current_user', JSON.stringify(currentUser));
+                
+                // Also update in users array if exists
+                const users = JSON.parse(localStorage.getItem('zublab_users') || '[]');
+                const userIndex = users.findIndex(u => u.email === currentUser.email);
+                if (userIndex !== -1) {
+                    users[userIndex].profilePicture = imageData;
+                    localStorage.setItem('zublab_users', JSON.stringify(users));
+                }
+            }
+        }
+        
+        function handleProfilePictureUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Check file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Profile picture must be less than 5MB');
+                return;
+            }
+            
+            // Check file type
+            if (!file.type.match('image.*')) {
+                alert('Please select an image file');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                updateProfilePicture(e.target.result);
+                
+                // Show success message
+                const message = document.createElement('div');
+                message.className = 'message success';
+                message.textContent = 'Profile picture updated successfully!';
+                message.style.position = 'fixed';
+                message.style.top = '20px';
+                message.style.right = '20px';
+                message.style.zIndex = '1000';
+                message.style.maxWidth = '300px';
+                document.body.appendChild(message);
+                
+                setTimeout(() => {
+                    message.remove();
+                }, 3000);
+            };
+            
+            reader.readAsDataURL(file);
+            
+            // Reset the file input
+            event.target.value = '';
+        }
+        
+        function removeProfilePicture() {
+            updateProfilePicture(null);
+            
+            // Show success message
+            const message = document.createElement('div');
+            message.className = 'message warning';
+            message.textContent = 'Profile picture removed';
+            message.style.position = 'fixed';
+            message.style.top = '20px';
+            message.style.right = '20px';
+            message.style.zIndex = '1000';
+            message.style.maxWidth = '300px';
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 3000);
+        }
+        
+        // =============================================
+        // Auth Tab switching functionality
+        // =============================================
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            loginForm.classList.add('active');
+            registerForm.classList.remove('active');
+            clearMessages();
+        });
+        
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            registerForm.classList.add('active');
+            loginForm.classList.remove('active');
+            clearMessages();
+        });
+        
+        // =============================================
+        // Google Sheets API Functions
+        // =============================================
+        
+        async function registerUserToGoogleSheets(userData) {
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        action: 'register',
+                        ...userData
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                return result;
+                
+            } catch (error) {
+                console.error('Google Sheets API Error:', error);
+                throw error;
+            }
+        }
+        
+        async function loginUserWithGoogleSheets(email, password) {
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        action: 'login',
+                        email: email,
+                        password: password
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                return result;
+                
+            } catch (error) {
+                console.error('Google Sheets API Error:', error);
+                throw error;
+            }
+        }
+        
+        // =============================================
+        // Dashboard Functions
+        // =============================================
+        
+        function showDashboardPage() {
+            authContainer.style.display = 'none';
+            dashboardContainer.style.display = 'flex';
+            updateDashboardUserInfo();
+            loadUserData();
+        }
+        
+        function showAuthPage() {
+            dashboardContainer.style.display = 'none';
+            authContainer.style.display = 'flex';
+            clearMessages();
+        }
+        
+        function updateDashboardUserInfo() {
+            if (currentUser) {
+                const name = currentUser.name || 'User';
+                const email = currentUser.email || 'user@example.com';
+                const role = currentUser.role || 'student';
+                const profilePicture = currentUser.profilePicture || null;
+                
+                userName.textContent = name;
+                userEmail.textContent = email;
+                
+                // Update avatars with profile picture or initials
+                if (profilePicture) {
+                    userAvatar.innerHTML = `<img src="${profilePicture}" alt="Profile Picture">`;
+                    userAvatarText.style.display = 'none';
+                    
+                    profileAvatarLarge.innerHTML = `<img src="${profilePicture}" alt="Profile Picture">`;
+                    profileAvatarText.style.display = 'none';
+                } else {
+                    const initials = getInitials(name);
+                    userAvatar.innerHTML = '';
+                    userAvatarText.textContent = initials;
+                    userAvatarText.style.display = 'flex';
+                    
+                    profileAvatarLarge.innerHTML = '';
+                    profileAvatarText.textContent = initials;
+                    profileAvatarText.style.display = 'flex';
+                }
+                
+                // Update profile preview
+                profileName.textContent = name;
+                profileEmail.textContent = email;
+                profileRoleDisplay.textContent = formatRole(role);
+                profileRoleBadge.textContent = formatRole(role) + ' Account';
+                
+                // Set modal values
+                if (document.getElementById('edit-name')) {
+                    document.getElementById('edit-name').value = name;
+                    document.getElementById('edit-email').value = email;
+                    document.getElementById('edit-role').value = role;
+                    document.getElementById('edit-bio').value = currentUser.bio || '';
+                }
+            }
+        }
+        
+        function formatRole(role) {
+            if (role === 'student') return 'Student';
+            if (role === 'instructor') return 'Instructor';
+            if (role === 'admin') return 'Administrator';
+            return role;
+        }
+        
+        function showPageContent(pageId) {
+            pageContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            const pageContent = document.getElementById(`${pageId}-content`);
+            if (pageContent) {
+                pageContent.classList.add('active');
+            }
+            
+            menuItems.forEach(item => {
+                if (item.getAttribute('data-page') === pageId) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            updatePageTitle(pageId);
+            
+            // Clear search when switching pages
+            if (searchActive && searchInput) {
+                searchInput.value = '';
+                clearSearchHighlights();
+                searchActive = false;
+            }
+        }
+        
+        function updatePageTitle(page) {
+            const titles = {
+                'dashboard': { title: 'Dashboard', subtitle: 'Welcome to ZubLab Educational Platform' },
+                'courses': { title: 'Courses', subtitle: 'Manage and view your courses' },
+                'assignments': { title: 'Assignments', subtitle: 'View and submit your assignments' },
+                'grades': { title: 'Grades', subtitle: 'Track your academic performance' },
+                'calendar': { title: 'Calendar', subtitle: 'View your academic schedule' },
+                'contact': { title: 'Contact Us', subtitle: 'Get in touch with our support team' },
+                'instructors': { title: 'Our Instructors', subtitle: 'Meet our expert teaching team' },
+                'settings': { title: 'Settings', subtitle: 'Manage your account settings' }
+            };
+            
+            // Get translation for current language
+            const translation = translations[currentLanguage] || translations.en;
+            
+            if (titles[page]) {
+                let titleKey, subtitleKey;
+                
+                switch(page) {
+                    case 'dashboard':
+                        titleKey = 'dashboard';
+                        subtitleKey = 'welcomeSubtitle';
+                        break;
+                    case 'courses':
+                        titleKey = 'courses';
+                        subtitleKey = 'manageCourses';
+                        break;
+                    case 'assignments':
+                        titleKey = 'assignments';
+                        subtitleKey = 'viewAssignments';
+                        break;
+                    case 'grades':
+                        titleKey = 'grades';
+                        subtitleKey = 'trackGrades';
+                        break;
+                    case 'calendar':
+                        titleKey = 'calendar';
+                        subtitleKey = 'viewSchedule';
+                        break;
+                    case 'contact':
+                        titleKey = 'contactUs';
+                        subtitleKey = 'contactDescription';
+                        break;
+                    case 'instructors':
+                        titleKey = 'ourInstructors';
+                        subtitleKey = 'instructorsDescription';
+                        break;
+                    case 'settings':
+                        titleKey = 'settings';
+                        subtitleKey = 'manageProfile';
+                        break;
+                    default:
+                        titleKey = page;
+                        subtitleKey = '';
+                }
+                
+                pageTitle.textContent = translation[titleKey] || titles[page].title;
+                pageSubtitle.textContent = translation[subtitleKey] || titles[page].subtitle;
+            }
+        }
+        
+        function loadUserData() {
+            if (currentUser) {
+                const role = currentUser.role || 'student';
+                if (role === 'student') {
+                    document.getElementById('courses-count').textContent = '3';
+                    document.getElementById('assignments-count').textContent = '1';
+                    document.getElementById('average-grade').textContent = '88.5%';
+                    document.getElementById('events-count').textContent = '0';
+                } else if (role === 'instructor') {
+                    document.getElementById('courses-count').textContent = '3';
+                    document.getElementById('assignments-count').textContent = '12';
+                    document.getElementById('average-grade').textContent = 'Grades';
+                    document.getElementById('events-count').textContent = '4';
+                } else if (role === 'admin') {
+                    document.getElementById('courses-count').textContent = 'All';
+                    document.getElementById('assignments-count').textContent = 'Monitor';
+                    document.getElementById('average-grade').textContent = 'Admin';
+                    document.getElementById('events-count').textContent = 'All';
+                }
+                
+                if (currentUser.emailNotifications !== undefined && document.getElementById('email-notifications')) {
+                    document.getElementById('email-notifications').checked = currentUser.emailNotifications;
+                }
+                if (currentUser.pushNotifications !== undefined && document.getElementById('push-notifications')) {
+                    document.getElementById('push-notifications').checked = currentUser.pushNotifications;
+                }
+                if (currentUser.twoFactorAuth !== undefined && document.getElementById('two-factor-auth')) {
+                    document.getElementById('two-factor-auth').checked = currentUser.twoFactorAuth;
+                }
+            }
+        }
+        
+        // =============================================
+        // Event Listeners
+        // =============================================
+        
+        // Back button event listener
+        if (backButton) {
+            backButton.addEventListener('click', goBackHome);
+        }
+        
+        // Search input event listener
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                performSearch(this.value);
+            });
+            
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    this.value = '';
+                    clearSearchHighlights();
+                    searchActive = false;
+                }
+            });
+            
+            // Clear search when clicking the search icon
+            const searchIcon = document.querySelector('.search-box i');
+            if (searchIcon) {
+                searchIcon.addEventListener('click', function() {
+                    if (searchInput.value.trim()) {
+                        searchInput.value = '';
+                        clearSearchHighlights();
+                        searchActive = false;
+                    }
+                });
+            }
+        }
+        
+        // Handle registration form submission
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('register-name').value.trim();
+            const email = document.getElementById('register-email').value.trim().toLowerCase();
+            const password = document.getElementById('register-password').value;
+            const purpose = document.getElementById('register-purpose').value;
+            
+            if (password.length < 6) {
+                showMessage(registerMessage, "Password must be at least 6 characters", "error");
+                return;
+            }
+            
+            const originalText = registerText.textContent;
+            showLoading(registerBtn, registerLoading, registerText);
+            
+            const userData = {
+                name: name,
+                email: email,
+                password: password,
+                purpose: purpose,
+                timestamp: new Date().toISOString(),
+                status: 'active'
+            };
+            
+            try {
+                showMessage(registerMessage, "Connecting to ZubLab's DB...", "info");
+                
+                const result = await registerUserToGoogleSheets(userData);
+                
+                if (result.success) {
+                    showMessage(registerMessage, "Account created successfully! Data saved to Google Sheets.", "success");
+                    
+                    currentUser = {
+                        ...userData,
+                        id: result.userId || Date.now().toString(),
+                        googleSheetsId: result.userId,
+                        role: 'student',
+                        emailNotifications: true,
+                        pushNotifications: true,
+                        twoFactorAuth: false,
+                        profilePicture: null
+                    };
+                    
+                    localStorage.setItem('zublab_current_user', JSON.stringify(currentUser));
+                    localStorage.setItem('zublab_users', JSON.stringify([currentUser]));
+                    
+                    registerForm.reset();
+                    
+                    setTimeout(() => {
+                        loginTab.click();
+                        document.getElementById('login-email').value = email;
+                        document.getElementById('login-password').value = password;
+                        showMessage(loginMessage, "Your credentials have been auto-filled. Click login to continue.", "info");
+                    }, 2000);
+                    
+                } else {
+                    showMessage(registerMessage, result.message || "Registration failed. Please try again.", "error");
+                }
+                
+            } catch (error) {
+                console.error('Registration error:', error);
+                
+                showMessage(registerMessage, "ZubLab account connection failed. Using ZubLab storage as backup...", "warning");
+                
+                const users = JSON.parse(localStorage.getItem('zublab_users') || '[]');
+                const userExists = users.some(user => user.email === email);
+                
+                if (userExists) {
+                    showMessage(registerMessage, "Email already registered locally. Please use a different email.", "error");
+                } else {
+                    currentUser = {
+                        ...userData,
+                        id: Date.now().toString(),
+                        localBackup: true,
+                        role: 'student',
+                        emailNotifications: true,
+                        pushNotifications: true,
+                        twoFactorAuth: false,
+                        profilePicture: null
+                    };
+                    
+                    users.push(currentUser);
+                    localStorage.setItem('zublab_users', JSON.stringify(users));
+                    localStorage.setItem('zublab_current_user', JSON.stringify(currentUser));
+                    
+                    showMessage(registerMessage, "Account created using ZubLab storage backup.", "warning");
+                    
+                    registerForm.reset();
+                    setTimeout(() => {
+                        loginTab.click();
+                        document.getElementById('login-email').value = email;
+                        document.getElementById('login-password').value = password;
+                        showMessage(loginMessage, "Account created with local storage backup.", "warning");
+                    }, 2000);
+                }
+            } finally {
+                hideLoading(registerBtn, registerLoading, registerText, originalText);
+            }
+        });
+        
+        // Handle login form submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
+            const password = document.getElementById('login-password').value;
+            
+            const originalText = loginText.textContent;
+            showLoading(loginBtn, loginLoading, loginText);
+            
+            try {
+                showMessage(loginMessage, "Authenticating with Google...", "info");
+                
+                const result = await loginUserWithGoogleSheets(email, password);
+                
+                if (result.success) {
+                    currentUser = {
+                        id: result.user.id,
+                        name: result.user.name,
+                        email: result.user.email,
+                        purpose: result.user.purpose,
+                        googleSheetsId: result.user.id,
+                        role: 'student',
+                        emailNotifications: true,
+                        pushNotifications: true,
+                        twoFactorAuth: false,
+                        source: 'google_sheets',
+                        profilePicture: null
+                    };
+                    
+                    localStorage.setItem('zublab_current_user', JSON.stringify(currentUser));
+                    
+                    const rememberMe = document.getElementById('remember-me').checked;
+                    if (rememberMe) {
+                        localStorage.setItem('zublab_remembered_email', email);
+                    } else {
+                        localStorage.removeItem('zublab_remembered_email');
+                    }
+                    
+                    showMessage(loginMessage, "Login successful! Redirecting to dashboard...", "success");
+                    
+                    setTimeout(() => {
+                        showDashboardPage();
+                    }, 1500);
+                    
+                } else {
+                    const users = JSON.parse(localStorage.getItem('zublab_users') || '[]');
+                    const user = users.find(u => u.email === email && u.password === password);
+                    
+                    if (user) {
+                        currentUser = {
+                            id: user.id,
+                            name: user.name,
+                            email: user.email,
+                            purpose: user.purpose,
+                            role: user.role || 'student',
+                            emailNotifications: user.emailNotifications !== undefined ? user.emailNotifications : true,
+                            pushNotifications: user.pushNotifications !== undefined ? user.pushNotifications : true,
+                            twoFactorAuth: user.twoFactorAuth !== undefined ? user.twoFactorAuth : false,
+                            source: 'local_storage',
+                            profilePicture: user.profilePicture || null,
+                            bio: user.bio || ''
+                        };
+                        
+                        localStorage.setItem('zublab_current_user', JSON.stringify(currentUser));
+                        
+                        showMessage(loginMessage, "Login successful!", "warning");
+                        
+                        setTimeout(() => {
+                            showDashboardPage();
+                        }, 1500);
+                    } else {
+                        if (email === '' && password === '') {
+                            currentUser = {
+                                id: 'demo_123',
+                                name: 'Demo User',
+                                email: '',
+                                purpose: 'exploration',
+                                role: 'student',
+                                emailNotifications: true,
+                                pushNotifications: true,
+                                twoFactorAuth: false,
+                                isDemo: true,
+                                source: 'demo',
+                                profilePicture: null,
+                                bio: 'This is a demo user account for testing purposes.'
+                            };
+                            
+                            localStorage.setItem('zublab_current_user', JSON.stringify(currentUser));
+                            
+                            showMessage(loginMessage, "Demo login successful!", "success");
+                            
+                            setTimeout(() => {
+                                showDashboardPage();
+                            }, 1500);
+                        } else {
+                            showMessage(loginMessage, "Invalid email or password. Please try again", "error");
+                        }
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                showMessage(loginMessage, "ZubLab account connection failed. Trying local storage...", "warning");
+                
+                const users = JSON.parse(localStorage.getItem('zublab_users') || '[]');
+                const user = users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    currentUser = {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        purpose: user.purpose,
+                        role: user.role || 'student',
+                        emailNotifications: user.emailNotifications !== undefined ? user.emailNotifications : true,
+                        pushNotifications: user.pushNotifications !== undefined ? user.pushNotifications : true,
+                        twoFactorAuth: user.twoFactorAuth !== undefined ? user.twoFactorAuth : false,
+                        source: 'local_fallback',
+                        profilePicture: user.profilePicture || null,
+                        bio: user.bio || ''
+                    };
+                    
+                    localStorage.setItem('zublab_current_user', JSON.stringify(currentUser));
+                    
+                    showMessage(loginMessage, "Login successful!", "warning");
+                    
+                    setTimeout(() => {
+                        showDashboardPage();
+                    }, 1500);
+                } else {
+                    showMessage(loginMessage, "Invalid credentials or connection error.", "error");
+                }
+            } finally {
+                hideLoading(loginBtn, loginLoading, loginText, originalText);
+            }
+        });
+        
+        // =============================================
+        // Dashboard Event Listeners
+        // =============================================
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+        });
+        
+        menuItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const page = this.getAttribute('data-page');
+                showPageContent(page);
+                
+                if (window.innerWidth <= 992) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        });
+        
+        // NEW: Contact Form Submission
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('contact-name').value.trim();
+                const email = document.getElementById('contact-email').value.trim();
+                const phone = document.getElementById('contact-phone').value.trim();
+                const subject = document.getElementById('contact-subject').value;
+                const message = document.getElementById('contact-message').value.trim();
+                
+                if (!name || !email || !subject || !message) {
+                    alert('Please fill all fields');
+                    return;
+                }
+                
+                // Show loading state
+                const originalText = sendMessageBtn.innerHTML;
+                sendMessageBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                sendMessageBtn.disabled = true;
+                
+                // Simulate sending message
+                setTimeout(() => {
+                    // Show success message
+                    const successDiv = document.createElement('div');
+                    successDiv.className = 'message success';
+                    successDiv.textContent = 'Your message has been sent successfully! We will respond within 24 hours.';
+                    contactForm.parentNode.insertBefore(successDiv, contactForm);
+                    
+                    // Reset form
+                    contactForm.reset();
+                    
+                    // Reset button
+                    sendMessageBtn.innerHTML = originalText;
+                    sendMessageBtn.disabled = false;
+                    
+                    // Remove success message after 5 seconds
+                    setTimeout(() => {
+                        successDiv.remove();
+                    }, 5000);
+                }, 1500);
+            });
+        }
+        
+        // Logout functionality with confirmation dialog
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            logoutConfirmationModal.classList.add('active');
+        });
+        
+        cancelLogoutBtn.addEventListener('click', function() {
+            logoutConfirmationModal.classList.remove('active');
+        });
+        
+        confirmLogoutBtn.addEventListener('click', function() {
+            localStorage.removeItem('zublab_current_user');
+            currentUser = null;
+            logoutConfirmationModal.classList.remove('active');
+            showAuthPage();
+            document.getElementById('login-email').value = '';
+            document.getElementById('login-password').value = '';
+            showMessage(loginMessage, "You have been logged out successfully.", "info");
+        });
+        
+        // Profile picture upload
+        profilePictureInput.addEventListener('change', handleProfilePictureUpload);
+        
+        // Add right-click context menu to remove profile picture
+        profileAvatarLarge.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            if (currentUser && currentUser.profilePicture) {
+                if (confirm('Remove profile picture?')) {
+                    removeProfilePicture();
+                }
+            }
+        });
+        
+        // Modal handling
+        editProfileBtn.addEventListener('click', function() {
+            editProfileModal.classList.add('active');
+        });
+        
+        closeEditProfileModal.addEventListener('click', function() {
+            editProfileModal.classList.remove('active');
+        });
+        
+        cancelEditProfile.addEventListener('click', function() {
+            editProfileModal.classList.remove('active');
+        });
+        
+        changePasswordBtn.addEventListener('click', function() {
+            changePasswordModal.classList.add('active');
+        });
+        
+        closeChangePasswordModal.addEventListener('click', function() {
+            changePasswordModal.classList.remove('active');
+        });
+        
+        cancelChangePassword.addEventListener('click', function() {
+            changePasswordModal.classList.remove('active');
+        });
+        
+        // Save profile changes
+        saveProfileBtn.addEventListener('click', function() {
+            const name = document.getElementById('edit-name').value.trim();
+            const email = document.getElementById('edit-email').value.trim();
+            const role = document.getElementById('edit-role').value;
+            const bio = document.getElementById('edit-bio').value.trim();
+            
+            if (currentUser) {
+                currentUser.name = name;
+                currentUser.role = role;
+                currentUser.bio = bio;
+                
+                localStorage.setItem('zublab_current_user', JSON.stringify(currentUser));
+                
+                updateDashboardUserInfo();
+                
+                const successEl = document.getElementById('edit-profile-success');
+                successEl.textContent = 'Profile updated successfully!';
+                successEl.className = 'message success';
+                
+                setTimeout(() => {
+                    editProfileModal.classList.remove('active');
+                    successEl.className = 'message';
+                }, 2000);
+            }
+        });
+        
+        // Save password changes
+        savePasswordBtn.addEventListener('click', function() {
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmNewPassword = document.getElementById('confirm-new-password').value;
+            
+            if (newPassword !== confirmNewPassword) {
+                const errorEl = document.getElementById('change-password-success');
+                errorEl.textContent = 'Passwords do not match!';
+                errorEl.className = 'message error';
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                const errorEl = document.getElementById('change-password-success');
+                errorEl.textContent = 'Password must be at least 6 characters!';
+                errorEl.className = 'message error';
+                return;
+            }
+            
+            const successEl = document.getElementById('change-password-success');
+            successEl.textContent = 'Password changed successfully!';
+            successEl.className = 'message success';
+            
+            setTimeout(() => {
+                changePasswordModal.classList.remove('active');
+                document.getElementById('change-password-form').reset();
+                successEl.className = 'message';
+            }, 2000);
+        });
+        
+        // New feature event listeners
+        if (eyeProtectionToggle) {
+            eyeProtectionToggle.addEventListener('change', toggleEyeProtectionMode);
+        }
+        
+        if (fontSizeSelect) {
+            fontSizeSelect.addEventListener('change', function() {
+                changeFontSize(this.value);
+            });
+        }
+        
+        if (languageSelect) {
+            languageSelect.addEventListener('change', function() {
+                changeLanguage(this.value);
+            });
+        }
+        
+        if (settingsLanguageSelect) {
+            settingsLanguageSelect.addEventListener('change', function() {
+                changeLanguage(this.value);
+            });
+        }
+        
+        // Notification preference changes
+        document.addEventListener('change', function(e) {
+            if (e.target.id === 'email-notifications' && currentUser) {
+                currentUser.emailNotifications = e.target.checked;
+                localStorage.setItem('zublab_current_user', JSON.stringify(currentUser));
+            }
+            if (e.target.id === 'push-notifications' && currentUser) {
+                currentUser.pushNotifications = e.target.checked;
+                localStorage.setItem('zublab_current_user', JSON.stringify(currentUser));
+            }
+            if (e.target.id === 'two-factor-auth' && currentUser) {
+                currentUser.twoFactorAuth = e.target.checked;
+                localStorage.setItem('zublab_current_user', JSON.stringify(currentUser));
+            }
+        });
+        
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 992 && 
+                !sidebar.contains(e.target) && 
+                e.target !== mobileMenuBtn && 
+                !mobileMenuBtn.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+        
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.classList.remove('active');
+            }
+        });
+        
+        // =============================================
+        // Initialize application
+        // =============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedUser = JSON.parse(localStorage.getItem('zublab_current_user'));
+            if (savedUser && savedUser.email) {
+                currentUser = savedUser;
+                showDashboardPage();
+            } else {
+                showAuthPage();
+            }
+            
+            // Apply saved settings
+            applyEyeProtectionMode();
+            applyFontSize();
+            changeLanguage(currentLanguage);
+            
+            // Update back button text
+            updateBackButtonText();
+            
+            const rememberedEmail = localStorage.getItem('zublab_remembered_email');
+            if (rememberedEmail) {
+                document.getElementById('login-email').value = rememberedEmail;
+                document.getElementById('remember-me').checked = true;
+            } else {
+                document.getElementById('login-email').value = "";
+                document.getElementById('login-password').value = "";
+                
+                setTimeout(() => {
+                    showMessage(loginMessage, "Demo credentials loaded. Click 'Login to ZubLab' to try.", "info");
+                }, 500);
+            }
+            
+            async function testConnection() {
+                try {
+                    const response = await fetch(GOOGLE_SCRIPT_URL + '?action=test');
+                    const data = await response.json();
+                    if (data.status === 'connected') {
+                        console.log('Google Sheets connection: ✅ Active');
+                    }
+                } catch (error) {
+                    console.warn('Google Sheets connection: ⚠️ Using fallback mode');
+                }
+            }
+            
+            testConnection();
+        });
+    </script>
+</body>
+</html>

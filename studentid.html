@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - Login & Zoom Classes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            min-height: 700px;
+            position: relative;
+        }
+
+        /* Back to Dashboard Button */
+        .back-to-dashboard {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(52, 152, 219, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .back-btn i {
+            font-size: 1rem;
+        }
+
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(145deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-panel {
+            flex: 1.2;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo i {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            color: #3498db;
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .features {
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-item i {
+            font-size: 1.8rem;
+            margin-right: 15px;
+            color: #3498db;
+        }
+
+        .feature-text h3 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .feature-text p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .login-form {
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-title i {
+            color: #3498db;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+            font-size: 1rem;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 15px 15px 50px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-control:focus {
+            border-color: #3498db;
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .btn {
+            padding: 16px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-secondary {
+            background: #ecf0f1;
+            color: #2c3e50;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .btn-secondary:hover {
+            background: #d5dbdb;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .message.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            display: block;
+        }
+
+        .zoom-section {
+            display: none;
+            margin-top: 30px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .zoom-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .zoom-header h2 {
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .zoom-header h2 i {
+            color: #2d8cff;
+        }
+
+        .current-time {
+            background: #34495e;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-align: center;
+            min-width: 220px;
+        }
+
+        .current-time #liveTime {
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .zoom-classes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .zoom-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #3498db;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .zoom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .zoom-card.live {
+            border-left: 5px solid #e74c3c;
+            background: #fff5f5;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 5px 20px rgba(229, 57, 53, 0.2); }
+            50% { box-shadow: 0 5px 30px rgba(229, 57, 53, 0.4); }
+            100% { box-shadow: 0 5px 20px rgba(229, 57, 53, 0.2); }
+        }
+
+        .zoom-card.upcoming {
+            border-left: 5px solid #2ecc71;
+        }
+
+        .zoom-card.completed {
+            border-left: 5px solid #95a5a6;
+            opacity: 0.8;
+        }
+
+        .class-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .class-title h3 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 1.3rem;
+        }
+
+        .class-title p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .class-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-live {
+            background: #ffebee;
+            color: #e74c3c;
+        }
+
+        .status-upcoming {
+            background: #e8f5e9;
+            color: #27ae60;
+        }
+
+        .status-completed {
+            background: #f5f5f5;
+            color: #7f8c8d;
+        }
+
+        .class-details {
+            margin: 20px 0;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #34495e;
+        }
+
+        .detail-item i {
+            margin-right: 10px;
+            width: 20px;
+            color: #3498db;
+        }
+
+        .join-btn {
+            background: #2d8cff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .join-btn:hover {
+            background: #1a75ff;
+            transform: translateY(-2px);
+        }
+
+        .join-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .student-info {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .student-details h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .student-details p {
+            opacity: 0.9;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            color: #3498db;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .demo-notice {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #ffeaa7;
+        }
+
+        .demo-credentials {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 2px dashed #3498db;
+        }
+
+        .demo-credentials h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .demo-credentials p {
+            margin-bottom: 5px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .week-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .day-btn {
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #34495e;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .day-btn:hover {
+            background: #e9ecef;
+        }
+
+        .day-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .day-btn.today {
+            border-color: #2ecc71;
+        }
+
+        .schedule-title {
+            color: #2c3e50;
+            margin: 20px 0;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .no-classes {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+            grid-column: 1 / -1;
+        }
+
+        .no-classes i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #bdc3c7;
+        }
+
+        .no-classes h3 {
+            margin-bottom: 10px;
+            color: #546e7a;
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+                max-width: 100%;
+            }
+            
+            .left-panel, .right-panel {
+                padding: 30px 20px;
+            }
+            
+            .back-to-dashboard {
+                top: 15px;
+                left: 15px;
+            }
+            
+            .zoom-classes {
+                grid-template-columns: 1fr;
+            }
+            
+            .week-navigation {
+                gap: 5px;
+            }
+            
+            .day-btn {
+                min-width: 70px;
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .zoom-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .student-info {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .current-time {
+                min-width: 100%;
+                margin-top: 10px;
+            }
+            
+            .back-btn {
+                padding: 8px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .back-btn i {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back to Dashboard Button -->
+        <div class="back-to-dashboard">
+            <a href="dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        
+        <!-- Left Panel: Welcome and Features -->
+        <div class="left-panel">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>Student Learning Portal</h1>
+                <p>Login to access your classes and join Zoom sessions</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature-item">
+                    <i class="fas fa-video"></i>
+                    <div class="feature-text">
+                        <h3>Live Zoom Classes</h3>
+                        <p>Join scheduled Zoom meetings with one click</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-calendar-check"></i>
+                    <div class="feature-text">
+                        <h3>Class Schedule</h3>
+                        <p>View your upcoming classes and meeting times</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <div class="feature-text">
+                        <h3>Expert Instructors</h3>
+                        <p>Learn from qualified teachers and professors</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-lock"></i>
+                    <div class="feature-text">
+                        <h3>Secure Access</h3>
+                        <p>Your credentials are securely managed by admin</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-notice">
+                <p><i class="fas fa-info-circle"></i> Admin manages all student credentials via ZubLab Admin. Contact your admin if you need login credentials.</p>
+            </div>
+        </div>
+        
+        <!-- Right Panel: Login and Zoom Classes -->
+        <div class="right-panel">
+            <!-- Student Info (Shows after login) -->
+            <div class="student-info" id="studentInfo">
+                <div class="student-details">
+                    <h3 id="studentName">Welcome, Student</h3>
+                    <p id="studentClass">Class: Not Assigned</p>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="loginSection">
+                <div class="form-title">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <h4>Student Login</h4>
+                </div>
+                
+                <div class="message" id="loginMessage"></div>
+                
+                <div class="login-form">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginUsername"><i class="fas fa-user"></i> Username</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user-circle"></i>
+                                <input type="text" id="loginUsername" class="form-control" placeholder="Enter username provided by admin" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword"><i class="fas fa-key"></i> Student ID</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-id-card"></i>
+                                <input type="password" id="loginPassword" class="form-control" placeholder="Enter student ID provided by admin" required>
+                            </div>
+                        </div>
+                        
+                        <div class="loading" id="loginLoading">
+                            <i class="fas fa-spinner"></i>
+                            <p>Verifying credentials...</p>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" id="loginButton">
+                            <i class="fas fa-sign-in-alt"></i> Login to Student Portal
+                        </button>
+                        
+                        <button type="button" class="btn btn-secondary" id="demoLoginBtn">
+                            <i class="fas fa-vial"></i> Try Demo Credentials
+                        </button>
+                    </form>
+                </div>
+                
+                
+                <div class="message info">
+                    <p><i class="fas fa-info-circle"></i> After login, you'll see your scheduled Zoom classes and can join them with one click.</p>
+                </div>
+            </div>
+            
+            <!-- Zoom Classes Section (Shows after login) -->
+            <div class="zoom-section" id="zoomSection">
+                <div class="zoom-header">
+                    <h2><i class="fas fa-video"></i> Your Weekly Class Schedule</h2>
+                    <div class="current-time">
+                        <div id="liveTime">Loading...</div>
+                    </div>
+                </div>
+                
+                <!-- Week Navigation -->
+                <div class="week-navigation" id="weekNavigation">
+                    <!-- Days will be added dynamically -->
+                </div>
+                
+                <div class="schedule-title" id="scheduleTitle">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Today's Classes</span>
+                </div>
+                
+                <div class="message info">
+                    <p><i class="fas fa-info-circle"></i> Click "Join Class" to open the Zoom meeting. Make sure Zoom is installed on your device.</p>
+                </div>
+                
+                <div class="loading" id="classesLoading">
+                    <i class="fas fa-spinner"></i>
+                    <p>Loading your classes...</p>
+                </div>
+                
+                <div class="zoom-classes" id="zoomClasses">
+                    <!-- Zoom classes will be loaded here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+        const USE_DEMO_MODE = true;
+        
+        // Day names
+        const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const DAYS_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        
+        // Demo student data
+        const demoStudents = [
+
+            { 
+                name: "Student", 
+                username: "ZUB_02025101", 
+                id: "Y1120101", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+             { 
+                name: "Student", 
+                username: "ZUB_02025102", 
+                id: "Y1110202", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+                        { 
+                name: "Student", 
+                username: "ZUB_02025103", 
+                id: "Y1131003", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+            { 
+                name: "Student", 
+                username: "ZUB_02025104", 
+                id: "Y1121304", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+            { 
+                name: "Student", 
+                username: "ZUB_02025104", 
+                id: "Y1121304", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+            { 
+                name: "Student", 
+                username: "ZUB_02025104", 
+                id: "Y1121304", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+            { 
+                name: "Student", 
+                username: "ZUB_02025104", 
+                id: "Y1121304", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+            { 
+                name: "Student", 
+                username: "ZUB_02025104", 
+                id: "Y1121304", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+            { 
+                name: "Student", 
+                username: "ZUB_02025105", 
+                id: "Y1131205", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+            { 
+                name: "Student", 
+                username: "ZUB_02025106", 
+                id: "Y1127406", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+            { 
+                name: "Student", 
+                username: "ZUB_02025107", 
+                id: "Y1163207", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+             
+            {   name: "Student", 
+                username: "ZUB_02025108", 
+                id: "Y1128308", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+             
+            {    name: "Student", 
+                username: "ZUB_02025109", 
+                id: "Y1171309", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+             
+             {   name: "Student", 
+                username: "ZUB_02025110", 
+                id: "Y1163410", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+             
+             {   name: "Student", 
+                username: "ZUB_02025111", 
+                id: "Y1189711", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+             
+             {   name: "Student", 
+                username: "ZUB_02025112", 
+                id: "Y1194512", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+             
+             {  name: "Student", 
+                username: "ZUB_02025113", 
+                id: "Y1132713", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+             
+             {  name: "Student", 
+                username: "ZUB_02025114", 
+                id: "Y1196514", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+             
+             {   name: "Student", 
+                username: "ZUB_02025115", 
+                id: "Y1154315", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+             
+             {    name: "Student", 
+                username: "ZUB_02025116", 
+                id: "Y1165316", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+             
+             {    name: "Student", 
+                username: "ZUB_02025117", 
+                id: "Y1176517", 
+                class: "Arabic,English and Rohingya",
+                email: "zublab@student.edu"
+            },
+        ];
+        
+        
+        // Class schedule based on requirements
+        const classSchedule = [
+            {
+                id: 1,
+                title: "Learn Quran reading ",
+                subject: "Arabic class",
+                teacher: "Forid",
+                days: [0, 1], // Sunday (0), Monday (1)
+                time: "15:40", // 3:40 PM in 24-hour format
+                duration: "1h 30m",
+                zoomLink: "https://us05web.zoom.us/j/6499684143?pwd=WWJylP164zuhtpzOnTHhgrU69NXWnj.1",
+                meetingId: "6499684143",
+                password: "ATWnt",
+                description: "Learn reading Quran and Qaida"
+            },
+            {
+                id: 2,
+                title: "Learn English Zero To Hero",
+                subject: "English",
+                teacher: "Mohammed Jubayer",
+                days: [2, 3], // Tuesday (2), Wednesday (3)
+                time: "15:40", // 3:40 PM
+                duration: "1h 30m",
+                zoomLink: "https://us05web.zoom.us/j/6499684143?pwd=WWJylP164zuhtpzOnTHhgrU69NXWnj.1",
+                meetingId: "6499684143",
+                password: "ATWnt",
+                description: "Learn English Zero To Hero"
+            },
+            {
+                id: 3,
+                title: "Learn Rohingya language",
+                subject: "Rohingya Language",
+                teacher: "Hamid Hossain",
+                days: [6], // Saturday (6)
+                time: "15:40", // 3:40 PM
+                duration: "1h 30m",
+                zoomLink: "https://us05web.zoom.us/j/6499684143?pwd=WWJylP164zuhtpzOnTHhgrU69NXWnj.1",
+                meetingId: "6499684143",
+                password: "ATWnt",
+                description: "Learn your mother tongue"
+            }
+        ];
+        
+        // DOM Elements
+        const loginSection = document.getElementById('loginSection');
+        const zoomSection = document.getElementById('zoomSection');
+        const studentInfo = document.getElementById('studentInfo');
+        const loginForm = document.getElementById('loginForm');
+        const loginMessage = document.getElementById('loginMessage');
+        const loginButton = document.getElementById('loginButton');
+        const loginLoading = document.getElementById('loginLoading');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const demoLoginBtn = document.getElementById('demoLoginBtn');
+        const zoomClassesContainer = document.getElementById('zoomClasses');
+        const classesLoading = document.getElementById('classesLoading');
+        const liveTimeElement = document.getElementById('liveTime');
+        const studentNameElement = document.getElementById('studentName');
+        const studentClassElement = document.getElementById('studentClass');
+        const weekNavigation = document.getElementById('weekNavigation');
+        const scheduleTitle = document.getElementById('scheduleTitle');
+        
+        // Current logged in student and selected day
+        let currentStudent = null;
+        let selectedDay = new Date().getDay(); // 0-6 (Sunday-Saturday)
+        
+        // Event Listeners
+        loginForm.addEventListener('submit', handleLogin);
+        logoutBtn.addEventListener('click', handleLogout);
+        demoLoginBtn.addEventListener('click', loadDemoCredentials);
+        
+        // Update live time
+        function updateLiveTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            });
+            const dateString = now.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            liveTimeElement.innerHTML = `${timeString}<br>${dateString}`;
+        }
+        
+        // Update time every second
+        setInterval(updateLiveTime, 1000);
+        updateLiveTime(); // Initial call
+        
+        // Initialize week navigation
+        function initWeekNavigation() {
+            weekNavigation.innerHTML = '';
+            const today = new Date().getDay();
+            
+            DAYS_SHORT.forEach((day, index) => {
+                const dayBtn = document.createElement('button');
+                dayBtn.className = `day-btn ${index === today ? 'today' : ''} ${index === selectedDay ? 'active' : ''}`;
+                dayBtn.textContent = day;
+                dayBtn.dataset.day = index;
+                
+                dayBtn.addEventListener('click', () => {
+                    selectedDay = parseInt(dayBtn.dataset.day);
+                    document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('active'));
+                    dayBtn.classList.add('active');
+                    loadDaySchedule(selectedDay);
+                });
+                
+                weekNavigation.appendChild(dayBtn);
+            });
+        }
+        
+        // Load schedule for a specific day
+        function loadDaySchedule(day) {
+            scheduleTitle.innerHTML = `<i class="fas fa-calendar-alt"></i><span>${DAYS[day]}'s Classes</span>`;
+            
+            // Filter classes for the selected day
+            const dayClasses = classSchedule.filter(cls => cls.days.includes(day));
+            
+            // Clear grid and show loading
+            zoomClassesContainer.innerHTML = '';
+            classesLoading.style.display = 'block';
+            
+            // Simulate loading delay
+            setTimeout(() => {
+                classesLoading.style.display = 'none';
+                
+                if (dayClasses.length === 0) {
+                    zoomClassesContainer.innerHTML = `
+                        <div class="no-classes">
+                            <i class="fas fa-calendar-times"></i>
+                            <h3>No Classes Scheduled</h3>
+                            <p>You have no classes scheduled for ${DAYS[day]}.</p>
+                            <p>Check other days or contact your teacher for schedule updates.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Create class cards
+                dayClasses.forEach(cls => {
+                    const zoomCard = createZoomCard(cls, day);
+                    zoomClassesContainer.appendChild(zoomCard);
+                });
+            }, 500);
+        }
+        
+        // Create zoom class card
+        function createZoomCard(cls, day) {
+            const card = document.createElement('div');
+            
+            // Determine class status
+            const now = new Date();
+            const classTime = new Date();
+            const [hours, minutes] = cls.time.split(':').map(Number);
+            
+            // Set class time for today
+            classTime.setHours(hours, minutes, 0, 0);
+            
+            // If it's not today, set for the next occurrence
+            if (now.getDay() !== day) {
+                const dayDifference = (day - now.getDay() + 7) % 7;
+                classTime.setDate(now.getDate() + dayDifference);
+            }
+            
+            // Calculate end time (1.5 hours later)
+            const endTime = new Date(classTime.getTime() + 60 * 60000);
+            
+            // Determine status
+            let status = 'upcoming';
+            let statusClass = 'upcoming';
+            let statusText = 'Upcoming';
+            
+            if (now >= classTime && now <= endTime) {
+                status = 'live';
+                statusClass = 'live';
+                statusText = 'Live Now';
+            } else if (now > endTime) {
+                status = 'completed';
+                statusClass = 'completed';
+                statusText = 'Completed';
+            }
+            
+            // Format time for display
+            const classTimeStr = classTime.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+            
+            const endTimeStr = endTime.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+            
+            card.className = `zoom-card ${statusClass}`;
+            card.innerHTML = `
+                <div class="class-header">
+                    <div class="class-title">
+                        <h3>${cls.title}</h3>
+                        <p>${cls.subject} • ${cls.teacher}</p>
+                    </div>
+                    <div class="class-status status-${statusClass}">${statusText}</div>
+                </div>
+                
+                <div class="class-details">
+                    <div class="detail-item">
+                        <i class="fas fa-clock"></i>
+                        <span><strong>Time:</strong> ${classTimeStr} - ${endTimeStr} (${cls.duration})</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-calendar"></i>
+                        <span><strong>Days:</strong> ${cls.days.map(d => DAYS_SHORT[d]).join(', ')}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-hashtag"></i>
+                        <span><strong>Meeting ID:</strong> ${cls.meetingId}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-key"></i>
+                        <span><strong>Password:</strong> ${cls.password}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-info-circle"></i>
+                        <span>${cls.description}</span>
+                    </div>
+                </div>
+                
+                <button class="join-btn" ${status !== 'live' ? 'disabled' : ''} 
+                    onclick="joinZoomClass('${cls.zoomLink}', '${cls.title}')">
+                    <i class="fas fa-video"></i> 
+                    ${status === 'live' ? 'Join Live Class' : 
+                      status === 'upcoming' ? 'Join When Live' : 'Class Ended'}
+                </button>
+            `;
+            
+            return card;
+        }
+        
+        // Join zoom class
+        function joinZoomClass(zoomLink, className) {
+            if (confirm(`You are about to join "${className}".\n\nThis will open Zoom in a new tab.\n\nClick OK to continue.`)) {
+                window.open(zoomLink, '_blank');
+                showMessage(`Opening "${className}" in Zoom...`, 'info');
+            }
+        }
+        
+        // Handle login
+        async function handleLogin(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            
+            // Validation
+            if (!username || !password) {
+                showMessage('Please enter both username and student ID', 'error');
+                return;
+            }
+            
+            // Show loading
+            loginButton.style.display = 'none';
+            loginLoading.style.display = 'block';
+            
+            // Authenticate
+            const authResult = await authenticateStudent(username, password);
+            
+            // Hide loading
+            loginLoading.style.display = 'none';
+            loginButton.style.display = 'flex';
+            
+            if (authResult.success) {
+                // Login successful
+                currentStudent = authResult.student;
+                showStudentDashboard();
+            } else {
+                // Login failed
+                showMessage(authResult.message || 'Invalid credentials. Please try again.', 'error');
+            }
+        }
+        
+        // Authenticate student
+        async function authenticateStudent(username, password) {
+            if (USE_DEMO_MODE) {
+                // Demo authentication
+                return authenticateWithDemoData(username, password);
+            } else {
+                // Google Sheets authentication
+                return await authenticateWithGoogleSheets(username, password);
+            }
+        }
+        
+        // Demo authentication
+        function authenticateWithDemoData(username, password) {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    const student = demoStudents.find(s => 
+                        s.username.toLowerCase() === username.toLowerCase() && 
+                        s.id === password
+                    );
+                    
+                    if (student) {
+                        resolve({
+                            success: true,
+                            student: student,
+                            message: `Welcome ${student.name}!`
+                        });
+                    } else {
+                        resolve({
+                            success: false,
+                            message: 'Invalid username or student ID'
+                        });
+                    }
+                }, 1000);
+            });
+        }
+        
+        // Google Sheets authentication
+        async function authenticateWithGoogleSheets(username, password) {
+            try {
+                const url = `${GOOGLE_SCRIPT_URL}?action=verify&username=${encodeURIComponent(username)}&id=${encodeURIComponent(password)}`;
+                const response = await fetch(url, { method: 'GET' });
+                
+                if (!response.ok) throw new Error('Network error');
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    return {
+                        success: true,
+                        student: {
+                            name: data.name || username,
+                            username: username,
+                            id: password,
+                            class: data.class || 'Not specified',
+                            email: data.email || ''
+                        }
+                    };
+                } else {
+                    return {
+                        success: false,
+                        message: data.message || 'Invalid credentials'
+                    };
+                }
+            } catch (error) {
+                console.error('Auth error:', error);
+                return {
+                    success: false,
+                    message: 'Unable to connect to authentication server'
+                };
+            }
+        }
+        
+        // Show student dashboard after login
+        function showStudentDashboard() {
+            // Update student info
+            studentNameElement.textContent = `Welcome, ${currentStudent.name}`;
+            studentClassElement.textContent = `Major: ${currentStudent.class}`;
+            
+            // Show student info and zoom section
+            studentInfo.style.display = 'flex';
+            loginSection.style.display = 'none';
+            zoomSection.style.display = 'block';
+            
+            // Initialize week navigation
+            initWeekNavigation();
+            
+            // Show loading for classes
+            classesLoading.style.display = 'block';
+            zoomClassesContainer.innerHTML = '';
+            
+            // Load today's classes
+            setTimeout(() => {
+                loadDaySchedule(selectedDay);
+                classesLoading.style.display = 'none';
+            }, 800);
+            
+            // Show success message
+            showMessage(`Welcome back, ${currentStudent.name}! You can now view and join your Zoom classes.`, 'success');
+        }
+        
+        // Handle logout
+        function handleLogout() {
+            // Reset form
+            loginForm.reset();
+            
+            // Hide student dashboard
+            studentInfo.style.display = 'none';
+            zoomSection.style.display = 'none';
+            
+            // Show login section
+            loginSection.style.display = 'block';
+            
+            // Clear current student
+            currentStudent = null;
+            
+            // Reset selected day to today
+            selectedDay = new Date().getDay();
+            
+            // Show message
+            showMessage('You have been logged out successfully.', 'info');
+        }
+        
+        // Load demo credentials
+        function loadDemoCredentials() {
+            document.getElementById('loginUsername').value = 'Jubayer';
+            document.getElementById('loginPassword').value = 'STU2025101';
+            showMessage('Demo credentials loaded. Click "Login to Student Portal" to continue.', 'info');
+        }
+        
+        // Show message
+        function showMessage(text, type) {
+            loginMessage.textContent = text;
+            loginMessage.className = `message ${type}`;
+            loginMessage.style.display = 'block';
+            
+            // Auto-hide after 5 seconds for success/info messages
+            if (type === 'success' || type === 'info') {
+                setTimeout(() => {
+                    loginMessage.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const autoLogin = urlParams.get('autologin');
+            
+            if (autoLogin === 'demo') {
+                loadDemoCredentials();
+            }
+            
+            // Check if already logged in (from localStorage)
+            const savedStudent = localStorage.getItem('currentStudent');
+            if (savedStudent) {
+                currentStudent = JSON.parse(savedStudent);
+                showStudentDashboard();
+            }
+            
+            // Show demo mode notice
+            if (USE_DEMO_MODE) {
+                console.log('Running in DEMO MODE. Set USE_DEMO_MODE to false and configure GOOGLE_SCRIPT_URL for Google Sheets integration.');
+            }
+        });
+    </script>
+</body>
+</html>
