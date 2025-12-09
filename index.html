@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZubLab.edu.com</title>
+    <title>ZubLab - Fun Learning for Kids</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -25,6 +25,8 @@
             color: var(--dark-color);
             overflow-x: hidden;
             position: relative;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
         }
 
         /* Background decorations */
@@ -65,11 +67,12 @@
         /* Header */
         header {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             padding: 20px 5%;
             background-color: white;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            flex-wrap: wrap;
         }
 
         .logo {
@@ -119,6 +122,15 @@
             padding: 8px 15px;
         }
 
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--dark-color);
+            cursor: pointer;
+        }
+
         /* Hero Section */
         .hero {
             display: flex;
@@ -159,7 +171,8 @@
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: white;
             border: none;
-            padding: 13px;
+            padding: 20px 50px;
+            font-size: 1.5rem;
             font-weight: 700;
             border-radius: 60px;
             cursor: pointer;
@@ -295,13 +308,16 @@
 
         .character {
             text-align: center;
+            flex: 1;
+            min-width: 200px;
+            max-width: 250px;
         }
 
         .character-img {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            margin-bottom: 15px;
+            margin: 0 auto 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -381,6 +397,7 @@
             position: relative;
             transform: translateY(50px);
             transition: transform 0.5s;
+            margin: 20px;
         }
 
         .modal-overlay.active .modal {
@@ -425,6 +442,8 @@
             border: none;
             cursor: pointer;
             transition: all 0.3s;
+            flex: 1;
+            min-width: 180px;
         }
 
         .modal-btn.kid {
@@ -442,32 +461,199 @@
         }
 
         /* Responsive Design */
+        
+        /* Tablet (768px and below) */
         @media (max-width: 768px) {
             header {
-                flex-direction: column;
-                gap: 20px;
+                padding: 15px 4%;
             }
-
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                width: 100%;
+                display: none;
+                margin-top: 15px;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
             nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
             }
-
+            
+            nav a {
+                display: block;
+                text-align: center;
+                padding: 12px;
+            }
+            
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.8rem;
             }
-
+            
             .hero p {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
-
+            
             .start-btn {
-                font-size: 1.8rem;
+                font-size: 1.3rem;
                 padding: 18px 40px;
             }
-
+            
             .feature-card {
                 min-width: 100%;
+                max-width: 100%;
+            }
+            
+            .character {
+                min-width: 150px;
+            }
+            
+            .modal h2 {
+                font-size: 2rem;
+            }
+            
+            .modal p {
+                font-size: 1.1rem;
+            }
+            
+            .modal-btn {
+                min-width: 150px;
+                font-size: 1.1rem;
+                padding: 12px 25px;
+            }
+            
+            .circle-1, .circle-2, .circle-3 {
+                display: none;
+            }
+        }
+        
+        /* Mobile (480px and below) */
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 1.8rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .start-btn {
+                font-size: 1.2rem;
+                padding: 15px 30px;
+            }
+            
+            .feature-card {
+                padding: 20px;
+            }
+            
+            .feature-icon {
+                font-size: 2.5rem;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.5rem;
+            }
+            
+            .character-img {
+                width: 100px;
+                height: 100px;
+                font-size: 2.8rem;
+            }
+            
+            .modal {
+                padding: 30px 20px;
+            }
+            
+            .modal h2 {
+                font-size: 1.8rem;
+            }
+            
+            .modal p {
+                font-size: 1rem;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .modal-btn {
+                width: 100%;
+            }
+        }
+        
+        /* Small Mobile (320px and below) */
+        @media (max-width: 320px) {
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .start-btn {
+                font-size: 1rem;
+                padding: 12px 25px;
+            }
+            
+            .character {
+                min-width: 100%;
+            }
+        }
+        
+        /* Large Desktop (1200px and above) */
+        @media (min-width: 1200px) {
+            .hero h1 {
+                font-size: 4rem;
+            }
+            
+            .features {
+                gap: 40px;
+            }
+            
+            .feature-card {
+                min-width: 300px;
+            }
+        }
+        
+        /* Landscape mode for mobile */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .hero {
+                padding: 30px 5% 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+            }
+            
+            .hero p {
+                margin-bottom: 25px;
+            }
+            
+            .start-btn-container {
+                margin: 20px 0;
+            }
+            
+            .features {
+                padding: 30px 5%;
             }
         }
     </style>
@@ -481,6 +667,7 @@
     <!-- Header -->
     <header>
         <div class="logo">
+            <i class="fas fa-school logo-icon"></i>
             <div class="logo-text">ZubLab</div>
         </div>
     </header>
@@ -493,7 +680,7 @@
             
             <div class="start-btn-container">
                 <button class="start-btn" id="startButton">
-                START LEARNING
+                    START LEARNING
                 </button>
             </div>
             
@@ -532,7 +719,7 @@
                     <i class="fas fa-book"></i>
                 </div>
                 <h3>Arabic</h3>
-            
+                <p>Learn Quranic Arabic with proper Tajweed</p>
             </div>
             
             <div class="character">
@@ -540,6 +727,7 @@
                     <i class="fas fa-book-open"></i>
                 </div>
                 <h3>English</h3>
+                <p>Modern English for communication & education</p>
             </div>
             
             <div class="character">
@@ -547,7 +735,7 @@
                     <i class="fas fa-lightbulb"></i>
                 </div>
                 <h3>Rohingya</h3>
-                
+                <p>Preserve cultural heritage and language</p>
             </div>
         </section>
     </main>
@@ -592,17 +780,19 @@
         const closeModal = document.getElementById('closeModal');
         const kidButton = document.getElementById('kidButton');
         const parentButton = document.getElementById('parentButton');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
         
         // Open modal when Start button is clicked
         startButton.addEventListener('click', () => {
             modalOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
+            document.body.style.overflow = 'hidden';
         });
         
         // Close modal when X is clicked
         closeModal.addEventListener('click', () => {
             modalOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto'; // Restore scrolling
+            document.body.style.overflow = 'auto';
         });
         
         // Close modal when clicking outside
@@ -611,6 +801,30 @@
                 modalOverlay.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
+        });
+        
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            // Change icon
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mainNav.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
         });
         
         // Kid button click
@@ -633,29 +847,31 @@
         document.addEventListener('DOMContentLoaded', () => {
             const bgContainer = document.querySelector('body');
             
-            // Create additional floating shapes
-            for (let i = 0; i < 8; i++) {
-                const shape = document.createElement('div');
-                shape.classList.add('bg-decoration');
-                
-                // Random shape type
-                const shapeType = Math.random() > 0.5 ? 'circle' : 'triangle';
-                
-                if (shapeType === 'circle') {
-                    shape.classList.add('circle');
-                    shape.style.width = `${Math.random() * 60 + 20}px`;
-                    shape.style.height = shape.style.width;
-                    shape.style.backgroundColor = getRandomColor();
-                    shape.style.opacity = Math.random() * 0.1 + 0.05;
+            // Only create floating elements on larger screens
+            if (window.innerWidth > 768) {
+                for (let i = 0; i < 8; i++) {
+                    const shape = document.createElement('div');
+                    shape.classList.add('bg-decoration');
+                    
+                    // Random shape type
+                    const shapeType = Math.random() > 0.5 ? 'circle' : 'triangle';
+                    
+                    if (shapeType === 'circle') {
+                        shape.classList.add('circle');
+                        shape.style.width = `${Math.random() * 60 + 20}px`;
+                        shape.style.height = shape.style.width;
+                        shape.style.backgroundColor = getRandomColor();
+                        shape.style.opacity = Math.random() * 0.1 + 0.05;
+                    }
+                    
+                    // Random position
+                    shape.style.position = 'absolute';
+                    shape.style.top = `${Math.random() * 100}%`;
+                    shape.style.left = `${Math.random() * 100}%`;
+                    shape.style.zIndex = '-1';
+                    
+                    bgContainer.appendChild(shape);
                 }
-                
-                // Random position
-                shape.style.position = 'absolute';
-                shape.style.top = `${Math.random() * 100}%`;
-                shape.style.left = `${Math.random() * 100}%`;
-                shape.style.zIndex = '-1';
-                
-                bgContainer.appendChild(shape);
             }
             
             // Add animation to the start button sparkles
@@ -675,14 +891,28 @@
         const featureCards = document.querySelectorAll('.feature-card');
         featureCards.forEach(card => {
             card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-10px)';
+                if (window.innerWidth > 768) {
+                    card.style.transform = 'translateY(-10px)';
+                }
             });
             
             card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
+                if (window.innerWidth > 768) {
+                    card.style.transform = 'translateY(0)';
+                }
             });
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            // Close mobile menu on resize to desktop
+            if (window.innerWidth > 768) {
+                mainNav.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
     </script>
 </body>
-
 </html>
