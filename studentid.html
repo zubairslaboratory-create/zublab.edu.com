@@ -1354,7 +1354,7 @@
                         <div class="class-details">
                             <div class="detail-item">
                                 <i class="fas fa-file-pdf"></i>
-                                <span><strong>Rohingya Script Guide</strong> <a href="https://ee.kobotoolbox.org/single/d1100d2ceed0ec89361d514c00f015f2"> Learn Hanifi script </a></span>
+                                <span><strong>Rohingya Script Guide</strong> - Learn Hanifi script</span>
                             </div>
                             <div class="detail-item">
                                 <i class="fas fa-book"></i>
@@ -1380,22 +1380,6 @@
         const DAYS_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         
         // Demo student data
-        const demoStudents = [
-            { 
-                name: "Student", 
-                username: "ZUB_02025101", 
-                id: "Y1120101", 
-                class: "Arabic,English and Rohingya",
-                email: "zublab@student.edu"
-            },
-            { 
-                name: "Student", 
-                username: "ZUB_02025102", 
-                id: "Y1110202", 
-                class: "Arabic,English and Rohingya",
-                email: "zublab@student.edu"
-            },
-            
         const demoStudents = [
             { 
                 name: "Student", 
@@ -1544,7 +1528,6 @@
                 class: "Arabic,English and Rohingya",
                 email: "zublab@student.edu"
             },
-        ];
         ];
         
         // Class schedule
@@ -1928,7 +1911,7 @@
         function loadDemoCredentials() {
             document.getElementById('loginUsername').value = 'ZUB_02025101';
             document.getElementById('loginPassword').value = 'Y1120101';
-            showMessage('Demo credentials loaded. Click "Login to ZUBLab Portal" to continue.', 'info');
+            showMessage('Demo credentials loaded. Click "Login to ZubLab Portal" to continue.', 'info');
         }
         
         // Assessment timer functions
@@ -2025,7 +2008,7 @@
         function enableAssessmentButtons() {
             // Arabic button
             const arabicBtn = document.getElementById("arabic-btn");
-            arabicBtn.className = "https://zubairslaboratory-create.github.io/zublab.edu.com/";
+            arabicBtn.className = "kobo-link";
             arabicBtn.innerHTML = '<i class="fas fa-external-link-alt"></i> Start Arabic Assessment on KoboCollect';
             arabicBtn.onclick = function() { 
                 window.open(koboLinks.arabic, '_blank'); 
@@ -2082,5 +2065,3 @@
     </script>
 </body>
 </html>
-
-
