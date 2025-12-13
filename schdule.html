@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZabLab.com</title>
+    <title>ZabLab'Schedule</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <style>
@@ -774,7 +774,7 @@
             <div class="header-info">
                 <div class="info-badge">
                     <i class="fas fa-clock"></i>
-                    <span>Daily: 3:40 PM - 4:40 PM</span>
+                    <span>Daily: 4:00 PM - 5:00 PM</span>
                 </div>
                 <div class="info-badge">
                     <i class="fas fa-globe-asia"></i>
@@ -794,25 +794,25 @@
                 <div class="day-card arabic">
                     <div class="day-name">Sunday</div>
                     <div class="day-subject arabic">Arabic</div>
-                    <div class="day-time">3:40 PM - 4:40 PM</div>
+                    <div class="day-time">4:00 PM - 5:00 PM</div>
                     <div class="day-instructor">Jubayer</div>
                 </div>
                 <div class="day-card arabic">
                     <div class="day-name">Monday</div>
                     <div class="day-subject arabic">Arabic</div>
-                    <div class="day-time">3:40 PM - 4:40 PM</div>
+                    <div class="day-time">4:00 PM - 5:00 PM</div>
                     <div class="day-instructor">Jubayer</div>
                 </div>
                 <div class="day-card english">
                     <div class="day-name">Tuesday</div>
                     <div class="day-subject english">English</div>
-                    <div class="day-time">3:40 PM - 4:40 PM</div>
-                    <div class="day-instructor">Jubayer</div>
+                    <div class="day-time">4:00 PM - 5:00 PM</div>
+                    <div class="day-instructor">jubayer</div>
                 </div>
                 <div class="day-card english">
                     <div class="day-name">Wednesday</div>
                     <div class="day-subject english">English</div>
-                    <div class="day-time">3:40 PM - 4:40 PM</div>
+                    <div class="day-time">4:00 PM - 5:00 PM</div>
                     <div class="day-instructor">Jubayer</div>
                 </div>
                 <div class="day-card weekend">
@@ -830,7 +830,7 @@
                 <div class="day-card rohingya">
                     <div class="day-name">Saturday</div>
                     <div class="day-subject rohingya">Rohingya</div>
-                    <div class="day-time">3:40 PM - 4:40 PM</div>
+                    <div class="day-time">4:00 PM - 5:00 PM</div>
                     <div class="day-instructor">Hossain Ahmmed</div>
                 </div>
             </div>
@@ -931,7 +931,7 @@
         <footer>
             <p><strong>Classes Schedule</strong> &copy; 2025</p>
             <p style="margin-top: 8px;">Schedule: Sunday & Monday (Arabic), Tuesday & Wednesday (English), Saturday (Rohingya)</p>
-            <p>Time: 3:40 PM - 4:40 PM Bangladesh Time | Weekends: Thursday & Friday</p>
+            <p>Time: 4:00 PM - 5:00 PM Bangladesh Time | Weekends: Thursday & Friday</p>
         </footer>
     </div>
 
@@ -1086,19 +1086,19 @@
         function getSubjectForDay(dayOfWeek) {
             switch(dayOfWeek) {
                 case 0: // Sunday
-                    return { name: 'Arabic', class: 'arabic', shortName: 'AR', instructor: 'Jubayer' };
+                    return { name: 'Arabic', class: 'arabic', shortName: 'AR', instructor: 'Mohammed Jubayer' };
                 case 1: // Monday
-                    return { name: 'Arabic', class: 'arabic', shortName: 'AR', instructor: 'Jubayer' };
+                    return { name: 'Arabic', class: 'arabic', shortName: 'AR', instructor: 'Mohammed Jubayer' };
                 case 2: // Tuesday
-                    return { name: 'English', class: 'english', shortName: 'EN', instructor: 'Jubayer' };
+                    return { name: 'English', class: 'english', shortName: 'EN', instructor:'Mohammed Jubayer' };
                 case 3: // Wednesday
-                    return { name: 'English', class: 'english', shortName: 'EN', instructor: 'Jubayer' };
+                    return { name: 'English', class: 'english', shortName: 'EN', instructor: 'Mohammed Jubayer' };
                 case 4: // Thursday
                     return { name: 'Weekend', class: 'weekend', shortName: 'OFF', instructor: '' };
                 case 5: // Friday
                     return { name: 'Weekend', class: 'weekend', shortName: 'OFF', instructor: '' };
                 case 6: // Saturday
-                    return { name: 'Rohingya', class: 'rohingya', shortName: 'RO', instructor: 'Hossain Ahmmed' };
+                    return { name: 'Rohingya', class: 'rohingya', shortName: 'RO', instructor: 'Mohammed Jubayer' };
                 default:
                     return { name: 'Weekend', class: 'weekend', shortName: 'OFF', instructor: '' };
             }
@@ -1161,9 +1161,9 @@
             
             scheduleListElement.innerHTML = '';
             
-            // Create class date with time (3:40 PM Bangladesh Time)
+            // Create class date with time (4:00 PM Bangladesh Time)
             const classDate = new Date(date);
-            classDate.setHours(15, 40, 0, 0); // 3:40 PM
+            classDate.setHours(15, 40, 0, 0); // 4:00 PM
             
             // Determine status
             const now = new Date();
@@ -1206,7 +1206,7 @@
                 <div class="class-details">
                     <div class="detail-row">
                         <i class="far fa-clock"></i>
-                        <span><strong>Time:</strong> 3:40 PM - 4:40 PM (1h 30m)</span>
+                        <span><strong>Time:</strong> 4:00 PM - 5:00 PM (60 minutes)</span>
                     </div>
                     <div class="detail-row">
                         <i class="fas fa-user-tie"></i>
@@ -1224,7 +1224,7 @@
                 
                 <div class="time-badge" style="margin-top: 15px;">
                     <i class="fas fa-bell"></i>
-                    <span>Class starts at 3:40 PM Bangladesh Time</span>
+                    <span>Class starts at 4:00 PM Bangladesh Time</span>
                 </div>
             `;
             
