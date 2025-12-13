@@ -1874,6 +1874,9 @@
             width: 100px;
             height: 100px;
         }
+        .table-container{
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
@@ -2019,7 +2022,7 @@
                     <i class="fas fa-book-open"></i> <span class="menu-text" data-key="courses">Courses</span>
                 </a>
                 <a href="#" class="menu-item" data-page="assignments">
-                    <i class="fas fa-tasks"></i> <span class="menu-text" data-key="assignments">Assignments</span>
+                    <i class="fas fa-language"></i> <span class="menu-text" data-key="assignments">Assignments</span>
                 </a>
                 <a href="#" class="menu-item" data-page="grades">
                     <i class="fas fa-chart-line"></i> <span class="menu-text" data-key="grades">Grades</span>
@@ -2064,7 +2067,7 @@
                     
                     <div class="search-box">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="search-input" placeholder="Search courses, assignments...">
+                        <input type="text" id="search-input" placeholder="Search classes, assignments...">
                     </div>
                     <button class="mobile-menu-btn" id="mobile-menu-btn">
                         <i class="fas fa-bars"></i>
@@ -2094,7 +2097,7 @@
                             </div>
                         </div>
                         <div class="card-value" id="assignments-count">3</div>
-                        <div class="card-change" data-key="next7Days">Next 7 days</div>
+                        <div class="card-change" data-key="next7Days">Next 1 month</div>
                     </div>
 
                     <div class="card">
@@ -2595,10 +2598,21 @@
 
             <!-- Other pages -->
             <div id="assignments-content" class="page-content">
-                <div class="table-container">
-                    <h3 class="section-title"><i class="fas fa-tasks"></i> <span data-key="assignments">Assignments</span></h3>
-                    <p data-key="viewAssignments">View and manage all your assignments here.</p>
-                </div>
+                <a href="quizA.html"><div class="table-container">
+                    <h3 class="section-title"><i class="fas fa-book-quran"></i> <span data-key="assignments">Arabic</span></h3>
+                    <h1>Arabic</h1>
+                    <p data-key="viewAssignments">View Arabic language here.</p>
+                </div></a>
+                <a href="quizE.html"><div class="table-container">
+                    <h3 class="section-title"><i class="fas fa-book"></i> <span data-key="assignments">English</span></h3>
+                    <h1>English</h1>
+                    <p data-key="viewAssignments">View English language here.</p>
+                </div></a>
+                <a href="rohingyaQ.html"><div class="table-container">
+                    <h3 class="section-title"><i class="fas fa-book-open"></i> <span data-key="assignments">Rohingya</span></h3>
+                    <h1>Rohingya</h1>
+                    <p data-key="viewAssignments">View Rohingya language here.</p>
+                </div></a>
             </div>
 
             <div id="grades-content" class="page-content">
@@ -2757,9 +2771,9 @@
                 back: "Back",
                 
                 // Dashboard
-                dashboard: "Dashboard",
-                courses: "Courses",
-                assignments: "Assignments",
+                dashboard: "Home",
+                courses: "Classes",
+                assignments: "Languages",
                 grades: "Grades",
                 calendar: "Calendar",
                 contactUs: "Contact Us",
@@ -2771,7 +2785,7 @@
                 averageGrade: "Average Grade",
                 upcomingEvents: "Upcoming Events",
                 thisSemester: "This semester",
-                next7Days: "Next 7 days",
+                next7Days: "Next 1 month",
                 currentSemester: "Current semester",
                 thisWeek: "This week",
                 recentAssignments: "Recent Assignments",
@@ -2888,7 +2902,7 @@
                 confirmNewPassword: "Confirm New Password",
                 
                 // Page content
-                viewAssignments: "View and manage all your assignments here.",
+                viewAssignments: "View languages here.",
                 trackGrades: "Track your academic performance and grades.",
                 viewSchedule: "View your academic schedule and important dates."
             },
@@ -4148,7 +4162,7 @@
         function updatePageTitle(page) {
             const titles = {
                 'dashboard': { title: 'Dashboard', subtitle: 'Welcome to ZubLab Educational Platform' },
-                'courses': { title: 'Courses', subtitle: 'Manage and view your courses' },
+                'courses': { title: 'Courses', subtitle: 'Manage and view your classes' },
                 'assignments': { title: 'Assignments', subtitle: 'View and submit your assignments' },
                 'grades': { title: 'Grades', subtitle: 'Track your academic performance' },
                 'calendar': { title: 'Calendar', subtitle: 'View your academic schedule' },
