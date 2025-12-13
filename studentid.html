@@ -1269,7 +1269,7 @@
                     <div class="instructions">
                         <h3><i class="fas fa-info-circle"></i> Assessment Instructions</h3>
                         <ul>
-                            <li>Assessments will begin 3 days after the current assessment period ends.</li>
+                            <li>Assessment is scheduled for <strong>December 13, 2025 from 2:10 PM to 3:10 PM</strong>.</li>
                             <li>All assessments are conducted via <strong>KoboCollect</strong> platform.</li>
                             <li>You will need a mobile device with KoboCollect app installed or a web browser.</li>
                             <li>The assessment supports three languages: Arabic, English, and Rohingya.</li>
@@ -1538,8 +1538,8 @@
                 subject: "Arabic class",
                 teacher: "Forid",
                 days: [0, 1],
-                time: "9:10",
-                duration: "15h 30m",
+                time: "15:40",
+                duration: "5h 30m",
                 zoomLink: "https://us05web.zoom.us/j/4868720477?pwd=XNvJy2vtTmxu0VccLBpy23eNlKU2HW.1.1",
                 meetingId: "6499684143",
                 password: "ATWnt",
@@ -1564,8 +1564,8 @@
                 subject: "Rohingya Language",
                 teacher: "Hamid Hossain",
                 days: [6],
-                time: "10:10",
-                duration: "11h 30m",
+                time: "15:40",
+                duration: "1h 30m",
                 zoomLink: "https://us05web.zoom.us/j/4868720477?pwd=XNvJy2vtTmxu0VccLBpy23eNlKU2HW.1",
                 meetingId: "6499684143",
                 password: "ATWnt",
@@ -1580,11 +1580,9 @@
             rohingya: "https://kc.kobotoolbox.org/YOUR_ROHINGYA_FORM_LINK"
         };
         
-        // Assessment dates
-        const assessmentEndDate = new Date();
-        assessmentEndDate.setDate(assessmentEndDate.getDate() + 3);
-        const assessmentStartDate = new Date(assessmentEndDate);
-        assessmentStartDate.setDate(assessmentStartDate.getDate() + 3);
+        // Assessment dates - Fixed to December 13, 2025
+        const assessmentStartDate = new Date('December 13, 2025 1:10:00'); // 2:10 PM
+        const assessmentEndDate = new Date('December 13, 2025 15:10:00');   // 3:10 PM
         
         // DOM Elements
         const loginContainer = document.getElementById('loginContainer');
@@ -1728,7 +1726,7 @@
             }
             
             // Calculate end time (1.5 hours later)
-            const endTime = new Date(classTime.getTime() + 90 * 60000);
+            const endTime = new Date(classTime.getTime() + 180 * 60000);
             
             // Determine status
             let status = 'upcoming';
@@ -1923,29 +1921,29 @@
         function updateAssessmentCountdown() {
             const now = new Date().getTime();
             
-            // Check if we're before the assessment end date
-            if (now < assessmentEndDate.getTime()) {
-                // Countdown to assessment end
-                const distance = assessmentEndDate.getTime() - now;
-                updateTimerDisplay(distance);
-                document.getElementById("assessment-status").innerHTML = "<span class='status-indicator status-active'></span> Current assessment period ends in:";
-                updateLanguageCards("active", assessmentEndDate);
-                
-            } else if (now < assessmentStartDate.getTime()) {
-                // Countdown to assessment start (3 days after end)
+            // Check if we're before the assessment start date
+            if (now < assessmentStartDate.getTime()) {
+                // Countdown to assessment start
                 const distance = assessmentStartDate.getTime() - now;
                 updateTimerDisplay(distance);
-                document.getElementById("assessment-status").innerHTML = "<span class='status-indicator status-upcoming'></span> Next assessment period starts in:";
+                document.getElementById("assessment-status").innerHTML = "<span class='status-indicator status-upcoming'></span> Assessment starts on Dec 13, 2025 at 2:10 PM in:";
                 updateLanguageCards("upcoming", assessmentStartDate);
                 
-            } else {
-                // Assessment has started
-                clearInterval(assessmentCountdown);
-                document.getElementById("assessment-status").innerHTML = "<span class='status-indicator status-active'></span> Assessment is now active!";
+            } else if (now < assessmentEndDate.getTime()) {
+                // Assessment is active (1 hour window)
+                const distance = assessmentEndDate.getTime() - now;
+                updateTimerDisplay(distance);
+                document.getElementById("assessment-status").innerHTML = "<span class='status-indicator status-active'></span> Assessment is active! Ends in:";
                 
                 // Enable assessment buttons
                 enableAssessmentButtons();
-                updateLanguageCards("started", null);
+                updateLanguageCards("active", assessmentEndDate);
+                
+            } else {
+                // Assessment has ended
+                clearInterval(assessmentCountdown);
+                document.getElementById("assessment-status").innerHTML = "<span class='status-indicator status-ended'></span> Assessment ended on Dec 13, 2025 at 3:10 PM";
+                updateLanguageCards("ended", null);
             }
         }
         
@@ -1979,28 +1977,36 @@
                     const distance = assessmentEndDate.getTime() - now;
                     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     
                     if (days > 0) {
-                        element.innerHTML = `${days} day${days !== 1 ? 's' : ''}`;
+                        element.innerHTML = `${days} day${days !== 1 ? 's' : ''} ${hours} hour${hours !== 1 ? 's' : ''}`;
                     } else if (hours > 0) {
-                        element.innerHTML = `${hours} hour${hours !== 1 ? 's' : ''}`;
+                        element.innerHTML = `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''}`;
+                    } else if (minutes > 0) {
+                        element.innerHTML = `${minutes} minute${minutes !== 1 ? 's' : ''}`;
                     } else {
-                        element.innerHTML = "less than an hour";
+                        element.innerHTML = "less than a minute";
                     }
                     
                 } else if (status === "upcoming") {
-                    // Assessment period ended, waiting for next one to start
+                    // Countdown to assessment start
                     const distance = assessmentStartDate.getTime() - now;
                     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     
                     if (days > 0) {
-                        element.innerHTML = `${days} day${days !== 1 ? 's' : ''}`;
+                        element.innerHTML = `${days} day${days !== 1 ? 's' : ''} ${hours} hour${hours !== 1 ? 's' : ''}`;
                     } else if (hours > 0) {
-                        element.innerHTML = `${hours} hour${hours !== 1 ? 's' : ''}`;
+                        element.innerHTML = `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''}`;
+                    } else if (minutes > 0) {
+                        element.innerHTML = `${minutes} minute${minutes !== 1 ? 's' : ''}`;
                     } else {
-                        element.innerHTML = "less than an hour";
+                        element.innerHTML = "less than a minute";
                     }
+                } else if (status === "ended") {
+                    element.innerHTML = "Assessment ended";
                 }
             });
         }
@@ -2065,4 +2071,3 @@
     </script>
 </body>
 </html>
-
