@@ -587,13 +587,13 @@
             <div class="intro-content">
                 <div class="intro-text">
                     <h2>About the Hanifi Rohingya Script</h2>
-                    <p>The Hanifi Rohingya script was developed in the 1980s by the Rohingya Language Committee under the guidance of Maulana Mohammed Hanif, giving the script its name "Hanifi" [citation:2]. This script was created to provide the Rohingya people with a unique writing system that reflects their own culture and history [citation:2].</p>
-                    <p>The script has an Arabic flavor, reflecting the Rohingya religion and history, as they trace their descent to Arab traders and other groups who have been in the region for generations [citation:2]. It is written right-to-left and is considered one of the most attractive invented scripts for a living language in recent times [citation:4].</p>
-                    <p>Today, the script is taught in Rohingya community schools in refugee camps, with an estimated 25,000 children learning it in Bangladesh alone [citation:2].</p>
+                    <p>The Hanifi Rohingya script was developed in the 1980s by the Rohingya Language Committee under the guidance of Maulana Mohammed Hanif, giving the script its name "Hanifi". This script was created to provide the Rohingya people with a unique writing system that reflects their own culture and history.</p>
+                    <p>The script has an Arabic flavor, reflecting the Rohingya religion and history, as they trace their descent to Arab traders and other groups who have been in the region for generations. It is written right-to-left and is considered one of the most attractive invented scripts for a living language in recent times.</p>
+                    <p>Today, the script is taught in Rohingya community schools in refugee camps, with an estimated 25,000 children learning it in Bangladesh alone.</p>
                 </div>
                 <div class="intro-image">
                     <div class="script-sample" dir="rtl">
-                     <h2 class="ro">الاركلان</h2>
+                     <h2 class="ro">𐴌𐴟𐴇𐴝𐴥𐴚𐴒𐴙𐴝</h2>
                     </div>
                     <p><em>Sample of Hanifi Rohingya script writing</em></p>
                 </div>
@@ -745,49 +745,49 @@
     <script>
         // Enhanced alphabet data with IPA pronunciation and example words
         const alphabetData = [
-            { letter: "𐴀", name: "Aa", transcription: "aa", ipa: "/a/", pronunciation: "a", example: "Initial vowel carrier", audioId: "audio-a" },
-            { letter: "𐴁", name: "Ba", transcription: "B", ipa: "/ba/", pronunciation: "b", example: "Like Arabic ب", audioId: "audio-b" },
-            { letter: "𐴂", name: "Pa", transcription: "P", ipa: "/p/", pronunciation: "p", example: "P sound", audioId: "audio-p" },
-            { letter: "𐴃", name: "Tha", transcription: "T", ipa: "/t̪/", pronunciation: "t (dental)", example: "Dental T", audioId: "audio-t" },
-            { letter: "𐴄", name: "Tta", transcription: "Ṭ", ipa: "/ʈ/", pronunciation: "ṭ (retroflex)", example: "Retroflex T", audioId: "audio-tt" },
-            { letter: "𐴅", name: "Ja", transcription: "J", ipa: "/ɟ/", pronunciation: "j", example: "J sound", audioId: "audio-j" },
-            { letter: "𐴆", name: "Cha", transcription: "C", ipa: "/c/", pronunciation: "ch", example: "Ch sound", audioId: "audio-ch" },
-            { letter: "𐴇", name: "Ha", transcription: "H", ipa: "/h/", pronunciation: "h", example: "Heavy H", audioId: "audio-h" },
-            { letter: "𐴈", name: "Kha", transcription: "Kh", ipa: "/x/", pronunciation: "kh", example: "Like Arabic خ", audioId: "audio-kh" },
-            { letter: "𐴉", name: "Fa", transcription: "F", ipa: "/f/", pronunciation: "f", example: "F sound", audioId: "audio-f" },
-            { letter: "𐴊", name: "Da", transcription: "D", ipa: "/d̪/", pronunciation: "d (dental)", example: "Dental D", audioId: "audio-d" },
-            { letter: "𐴋", name: "Dda", transcription: "Ḍ", ipa: "/ɖ/", pronunciation: "ḍ (retroflex)", example: "Retroflex D", audioId: "audio-dd" },
-            { letter: "𐴌", name: "Ra", transcription: "R", ipa: "/r/", pronunciation: "r", example: "R sound", audioId: "audio-r" },
-            { letter: "𐴍", name: "Rra", transcription: "Ṛ", ipa: "/ɽ/", pronunciation: "ṛ (retroflex)", example: "Retroflex R", audioId: "audio-rr" },
-            { letter: "𐴎", name: "Za", transcription: "Z", ipa: "/z/", pronunciation: "z", example: "Z sound", audioId: "audio-z" },
-            { letter: "𐴏", name: "Sa", transcription: "S", ipa: "/s/", pronunciation: "s", example: "S sound", audioId: "audio-s" },
-            { letter: "𐴐", name: "Sha", transcription: "Sh", ipa: "/ʃ/", pronunciation: "sh", example: "Sh sound", audioId: "audio-sh" },
-            { letter: "𐴑", name: "Ka", transcription: "K", ipa: "/k/", pronunciation: "k", example: "K sound", audioId: "audio-k" },
-            { letter: "𐴒", name: "Ga", transcription: "G", ipa: "/g/", pronunciation: "g", example: "G sound", audioId: "audio-g" },
-            { letter: "𐴓", name: "La", transcription: "L", ipa: "/l/", pronunciation: "l", example: "L sound", audioId: "audio-l" },
-            { letter: "𐴔", name: "Ma", transcription: "M", ipa: "/m/", pronunciation: "m", example: "M sound", audioId: "audio-m" },
-            { letter: "𐴕", name: "Na", transcription: "N", ipa: "/n/", pronunciation: "n", example: "N sound", audioId: "audio-n" },
-            { letter: "𐴖", name: "Wa", transcription: "W", ipa: "/w/", pronunciation: "w", example: "W sound", audioId: "audio-w" },
-            { letter: "𐴗", name: "Kinna Wa", transcription: "Ñ", ipa: "/ɲ/", pronunciation: "ñ (nasal)", example: "Nasal sound", audioId: "audio-ñ" },
-            { letter: "𐴘", name: "Ya", transcription: "Y", ipa: "/j/", pronunciation: "y", example: "Y sound", audioId: "audio-y" },
-            { letter: "𐴙", name: "Kinna Ya", transcription: "Ny", ipa: "/ɲ/", pronunciation: "ny", example: "Palatal nasal", audioId: "audio-ny" },
-            { letter: "𐴚", name: "Nga", transcription: "V", ipa: "/v/", pronunciation: "v", example: "V sound", audioId: "audio-v" },
-            { letter: "𐴛", name: "Naiya", transcription: "Ts", ipa: "/t͡s/", pronunciation: "ts", example: "Ts sound", audioId: "audio-ts" }
-        ];
+    { letter: "𐴀", name: "Aa", audioId: "alphabet.mp3" },
+    { letter: "𐴁", name: "Ba", audioId: "audio-b.mp3" },
+    { letter: "𐴂", name: "Pa", audioId: "audio-p.mp3" },
+    { letter: "𐴃", name: "Tha", audioId: "audio-t.mp3" },
+    { letter: "𐴄", name: "Tta", audioId: "audio-tt.mp3" },
+    { letter: "𐴅", name: "Ja", audioId: "audio-j.mp3" },
+    { letter: "𐴆", name: "Cha", audioId: "audio-ch.mp3" },
+    { letter: "𐴇", name: "Ha", audioId: "audio-h.mp3" },
+    { letter: "𐴈", name: "Kha", audioId: "audio-kh.mp3" },
+    { letter: "𐴉", name: "Fa", audioId: "audio-f.mp3" },
+    { letter: "𐴊", name: "Da", audioId: "audio-d.mp3" },
+    { letter: "𐴋", name: "Dda", audioId: "audio-dd.mp3" },
+    { letter: "𐴌", name: "Ra", audioId: "audio-r.mp3" },
+    { letter: "𐴍", name: "Rra", audioId: "audio-rr.mp3" },
+    { letter: "𐴎", name: "Za", audioId: "audio-z.mp3" },
+    { letter: "𐴏", name: "Sa", audioId: "audio-s.mp3" },
+    { letter: "𐴐", name: "Sha", audioId: "audio-sh.mp3" },
+    { letter: "𐴑", name: "Ka", audioId: "audio-k.mp3" },
+    { letter: "𐴒", name: "Ga", audioId: "audio-g.mp3" },
+    { letter: "𐴓", name: "La", audioId: "audio-l.mp3" },
+    { letter: "𐴔", name: "Ma", audioId: "audio-m.mp3" },
+    { letter: "𐴕", name: "Na", audioId: "audio-n.mp3" }, // Fixed typo: "udioId" → "audioId"
+    { letter: "𐴖", name: "Wa", audioId: "audio-w.mp3" },
+    { letter: "𐴗", name: "Kinna Wa", audioId: "audio-kinna-wa.mp3" },
+    { letter: "𐴘", name: "Ya", audioId: "audio-y.mp3" },
+    { letter: "𐴙", name: "Kinna Ya", audioId: "audio-kinna-ya.mp3" },
+    { letter: "𐴚", name: "Nga", audioId: "audio-nga.mp3" },
+    { letter: "𐴛", name: "Naiya", audioId: "audio-naiya.mp3" }
+];
 
         // Vowels and diacritics data with pronunciation
-        const vowelsData = [
-            { letter: "لا", name: "Aafor", transcription: "-", ipa: "-", pronunciation: "silent", example: "No vowel marker", audioId: "audio-sakin" },
-            { letter: "ؤ", name: "Efor", transcription: "◌ّ", ipa: "gemination", pronunciation: "doubled consonant", example: "Consonant doubler", audioId: "audio-shadda" },
-            { letter: "ئئ", name: "Ufor", transcription: "a", ipa: "/a/", pronunciation: "a (short)", example: "Short a", audioId: "audio-vowel-a" },
-            { letter: "ء", name: "Aefor", transcription: "i", ipa: "/i/", pronunciation: "i (short)", example: "Short i", audioId: "audio-vowel-i" },
-            { letter: "ذ", name: "Ofor", transcription: "i", ipa: "/i/", pronunciation: "i (short)", example: "Short i", audioId: "audio-vowel-i" },
-            { letter: "]", name: "Nahorna", transcription: "i", ipa: "/i/", pronunciation: "i (short)", example: "Short i", audioId: "audio-vowel-i" },
-            { letter: "𐴤", name: "Haarbai", transcription: "u", ipa: "/u/", pronunciation: "u (short)", example: "Short u", audioId: "audio-vowel-u" },
-            { letter: "𐴥", name: "Tela", transcription: "i", ipa: "/i/", pronunciation: "i (short)", example: "Short i", audioId: "audio-vowel-i" },
-            { letter: "𐴦", name: "Tana", transcription: "u", ipa: "/u/", pronunciation: "u (short)", example: "Short u", audioId: "audio-vowel-u" },
-            { letter: "𐴧", name: "Tossi", transcription: "e", ipa: "/e/", pronunciation: "e (short)", example: "Short e", audioId: "audio-vowel-e" },
-        ];
+       const vowelsData = [
+    { letter: "𐴝", name: "Aafor", audioId: "audio-aafor.mp3" },
+    { letter: "𐴞", name: "Efor", audioId: "audio-efor.mp3" },
+    { letter: "𐴟", name: "Ufor", audioId: "audio-ufor.mp3" },
+    { letter: "𐴠", name: "Aefor", audioId: "audio-aefor.mp3" },
+    { letter: "𐴡", name: "Ofor", audioId: "audio-ofor.mp3" },
+    { letter: "𐴣", name: "Nahorna", audioId: "audio-nahorna.mp3" },
+    { letter: "𐴤", name: "Haarbai", audioId: "audio-haarbai.mp3" },
+    { letter: "𐴥", name: "Tela", audioId: "audio-tela.mp3" },
+    { letter: "𐴦", name: "Tana", audioId: "audio-tana.mp3" },
+    { letter: "𐴧", name: "Tossi", audioId: "audio-tossi.mp3" },
+      ];
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
