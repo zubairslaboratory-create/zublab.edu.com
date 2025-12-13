@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZUBLab - Integrated Student Learning & Assessment Portal</title>
+    <title>ZubLab - Integrated Student Learning & Assessment Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Combined CSS for both portals */
@@ -1091,7 +1091,7 @@
             <div class="logo-container">
                 <i class="fas fa-graduation-cap"></i>
                 <div class="logo-text">
-                    <h1>ZUBLab Student Dashboard</h1>
+                    <h1>ZubLab Student Dashboard</h1>
                     <p>Arabic • English • Rohingya Language Learning</p>
                 </div>
             </div>
@@ -1161,24 +1161,10 @@
                     </div>
 
                     <div class="assessment-info">
-                        <h3>Assessment Starts In:</h3>
-                        <div class="timer-container">
-                            <div class="timer-box">
-                                <div class="timer-value" id="days">00</div>
-                                <div class="timer-label">Days</div>
-                            </div>
-                            <div class="timer-box">
-                                <div class="timer-value" id="hours">00</div>
-                                <div class="timer-label">Hours</div>
-                            </div>
-                            <div class="timer-box">
-                                <div class="timer-value" id="minutes">00</div>
-                                <div class="timer-label">Minutes</div>
-                            </div>
-                            <div class="timer-box">
-                                <div class="timer-value" id="seconds">00</div>
-                                <div class="timer-label">Seconds</div>
-                            </div>
+                        <h3>Next Assessment Schedule</h3>
+                        <p>Each language assessment is scheduled on a different day for 2 hours duration (4:00 PM - 6:00 PM)</p>
+                        <div class="timer-container" id="nextAssessmentTimer">
+                            <!-- Timer will be dynamically inserted here based on next assessment -->
                         </div>
                         <p id="assessment-status" style="margin-top: 20px; font-weight: 600; font-size: 1.2rem;"></p>
                     </div>
@@ -1190,23 +1176,31 @@
                                 <div class="language-icon"><i class="fas fa-book-quran"></i></div>
                                 <div>
                                     <h3 class="language-title">Arabic <span class="language-badge">العربية</span></h3>
-                                    <p><span class="status-indicator status-upcoming"></span> Assessment starts in <span id="arabic-time">3 days</span></p>
+                                    <p><span class="status-indicator" id="arabic-status-indicator"></span> <span id="arabic-status-text">Loading...</span></p>
                                 </div>
                             </div>
                             <p class="language-description">Test your Arabic language skills with assessments covering grammar and reading. Suitable for beginners to advanced learners.</p>
                             
                             <div class="assessment-details">
                                 <div class="detail-item">
+                                    <span class="detail-label">Assessment Date:</span>
+                                    <span class="detail-value">December 13, 2025</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Time:</span>
+                                    <span class="detail-value">4:00 PM - 6:00 PM (2 hours)</span>
+                                </div>
+                                <div class="detail-item">
                                     <span class="detail-label">Duration:</span>
-                                    <span class="detail-value">60 minutes</span>
+                                    <span class="detail-value">120 minutes</span>
                                 </div>
                                 <div class="detail-item">
                                     <span class="detail-label">Questions:</span>
                                     <span class="detail-value">20 (Multiple-choice & Writing)</span>
                                 </div>
                                 <div class="detail-item">
-                                    <span class="detail-label">Level:</span>
-                                    <span class="detail-value">Beginner to Advanced</span>
+                                    <span class="detail-label">Countdown:</span>
+                                    <span class="detail-value" id="arabic-countdown">--:--:--</span>
                                 </div>
                             </div>
                             
@@ -1221,23 +1215,31 @@
                                 <div class="language-icon"><i class="fas fa-language"></i></div>
                                 <div>
                                     <h3 class="language-title">English</h3>
-                                    <p><span class="status-indicator status-upcoming"></span> Assessment starts in <span id="english-time">3 days</span></p>
+                                    <p><span class="status-indicator" id="english-status-indicator"></span> <span id="english-status-text">Loading...</span></p>
                                 </div>
                             </div>
                             <p class="language-description">Test your English proficiency with assessments covering grammar, vocabulary, reading comprehension, and writing skills.</p>
                             
                             <div class="assessment-details">
                                 <div class="detail-item">
+                                    <span class="detail-label">Assessment Date:</span>
+                                    <span class="detail-value">December 14, 2025</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Time:</span>
+                                    <span class="detail-value">4:00 PM - 6:00 PM (2 hours)</span>
+                                </div>
+                                <div class="detail-item">
                                     <span class="detail-label">Duration:</span>
-                                    <span class="detail-value">60 minutes</span>
+                                    <span class="detail-value">120 minutes</span>
                                 </div>
                                 <div class="detail-item">
                                     <span class="detail-label">Questions:</span>
                                     <span class="detail-value">20 (Multiple-choice & Writing)</span>
                                 </div>
                                 <div class="detail-item">
-                                    <span class="detail-label">Level:</span>
-                                    <span class="detail-value">Beginner to Advanced</span>
+                                    <span class="detail-label">Countdown:</span>
+                                    <span class="detail-value" id="english-countdown">--:--:--</span>
                                 </div>
                             </div>
                             
@@ -1252,23 +1254,31 @@
                                 <div class="language-icon"><i class="fas fa-users"></i></div>
                                 <div>
                                     <h3 class="language-title">Rohingya <span class="language-badge">𐴌𐴟𐴇𐴝𐴥𐴚𐴒𐴙𐴝</span></h3>
-                                    <p><span class="status-indicator status-upcoming"></span> Assessment starts in <span id="rohingya-time">3 days</span></p>
+                                    <p><span class="status-indicator" id="rohingya-status-indicator"></span> <span id="rohingya-status-text">Loading...</span></p>
                                 </div>
                             </div>
                             <p class="language-description">Test your Rohingya language skills. This assessment covers basic vocabulary, common phrases, and comprehension skills.</p>
                             
                             <div class="assessment-details">
                                 <div class="detail-item">
+                                    <span class="detail-label">Assessment Date:</span>
+                                    <span class="detail-value">December 15, 2025</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Time:</span>
+                                    <span class="detail-value">4:00 PM - 6:00 PM (2 hours)</span>
+                                </div>
+                                <div class="detail-item">
                                     <span class="detail-label">Duration:</span>
-                                    <span class="detail-value">60 minutes</span>
+                                    <span class="detail-value">120 minutes</span>
                                 </div>
                                 <div class="detail-item">
                                     <span class="detail-label">Questions:</span>
                                     <span class="detail-value">20 (Multiple-choice & Writing)</span>
                                 </div>
                                 <div class="detail-item">
-                                    <span class="detail-label">Level:</span>
-                                    <span class="detail-value">Beginner to Intermediate</span>
+                                    <span class="detail-label">Countdown:</span>
+                                    <span class="detail-value" id="rohingya-countdown">--:--:--</span>
                                 </div>
                             </div>
                             
@@ -1281,7 +1291,9 @@
                     <div class="instructions">
                         <h3><i class="fas fa-info-circle"></i> Assessment Instructions</h3>
                         <ul>
-                            <li>Assessment is scheduled for <strong>December 13, 2025 from 2:10 PM to 3:10 PM</strong>.</li>
+                            <li><strong>Arabic Assessment:</strong> December 13, 2025 (4:00 PM - 6:00 PM)</li>
+                            <li><strong>English Assessment:</strong> December 14, 2025 (4:00 PM - 6:00 PM)</li>
+                            <li><strong>Rohingya Assessment:</strong> December 15, 2025 (4:00 PM - 6:00 PM)</li>
                             <li>All assessments are conducted via <strong>KoboCollect</strong> platform.</li>
                             <li>You will need a mobile device with KoboCollect app installed or a web browser.</li>
                             <li>The assessment supports three languages: Arabic, English, and Rohingya.</li>
@@ -1592,9 +1604,21 @@
             rohingya: "https://ee.kobotoolbox.org/single/c21dc67cf88b3ec4014877d682718a22"
         };
         
-        // Assessment dates - Fixed to December 13, 2025
-        const assessmentStartDate = new Date('December 13, 2025 18:00:00'); // 2:10 PM
-        const assessmentEndDate = new Date('December 13, 2025 20:00:00');   // 3:10 PM
+        // Assessment dates - UPDATED as per requirements
+        const assessmentSchedule = {
+            arabic: {
+                start: new Date('December 13, 2025 18:44:00'), // 4:00 PM
+                end: new Date('December 13, 2025 19:44:00')    // 6:00 PM
+            },
+            english: {
+                start: new Date('December 14, 2025 16:00:00'), // 4:00 PM
+                end: new Date('December 14, 2025 18:00:00')    // 6:00 PM
+            },
+            rohingya: {
+                start: new Date('December 15, 2025 16:00:00'), // 4:00 PM
+                end: new Date('December 15, 2025 18:00:00')    // 6:00 PM
+            }
+        };
         
         // DOM Elements
         const loginContainer = document.getElementById('loginContainer');
@@ -1613,6 +1637,8 @@
         const zoomClassesContainer = document.getElementById('zoomClasses');
         const liveTimeElement = document.getElementById('liveTime');
         const classesLoading = document.getElementById('classesLoading');
+        const nextAssessmentTimer = document.getElementById('nextAssessmentTimer');
+        const assessmentStatus = document.getElementById('assessment-status');
         
         // Global variables
         let currentStudent = null;
@@ -1888,7 +1914,7 @@
             // Initialize components
             initWeekNavigation();
             loadDaySchedule(selectedDay);
-            startAssessmentTimer();
+            startAssessmentTimers();
             
             // Update time
             setInterval(updateLiveTime, 1000);
@@ -1924,129 +1950,191 @@
             showMessage('Demo credentials loaded. Click "Login to ZubLab Portal" to continue.', 'info');
         }
         
-        // Assessment timer functions
-        function startAssessmentTimer() {
-            assessmentCountdown = setInterval(updateAssessmentCountdown, 1000);
-            updateAssessmentCountdown();
+        // Assessment timer functions - UPDATED for separate language schedules
+        function startAssessmentTimers() {
+            // Update all timers immediately
+            updateAllAssessmentTimers();
+            
+            // Then update every second
+            assessmentCountdown = setInterval(updateAllAssessmentTimers, 1000);
         }
         
-        function updateAssessmentCountdown() {
+        function updateAllAssessmentTimers() {
             const now = new Date().getTime();
+            let nextAssessment = null;
+            let nextAssessmentDistance = Infinity;
             
-            // Check if we're before the assessment start date
-            if (now < assessmentStartDate.getTime()) {
-                // Countdown to assessment start
-                const distance = assessmentStartDate.getTime() - now;
-                updateTimerDisplay(distance);
-                document.getElementById("assessment-status").innerHTML = "<span class='status-indicator status-upcoming'></span> Assessment starts on Dec 13, 2025 at 2:10 PM in:";
-                updateLanguageCards("upcoming", assessmentStartDate);
+            // Update each language's timer
+            for (const [language, schedule] of Object.entries(assessmentSchedule)) {
+                updateLanguageTimer(language, schedule.start, schedule.end);
                 
-            } else if (now < assessmentEndDate.getTime()) {
-                // Assessment is active (1 hour window)
-                const distance = assessmentEndDate.getTime() - now;
-                updateTimerDisplay(distance);
-                document.getElementById("assessment-status").innerHTML = "<span class='status-indicator status-active'></span> Assessment is active! Ends in:";
+                // Find the next upcoming assessment
+                const startTime = schedule.start.getTime();
+                const endTime = schedule.end.getTime();
                 
-                // Enable assessment buttons
-                enableAssessmentButtons();
-                updateLanguageCards("active", assessmentEndDate);
+                if (now < endTime) {
+                    const distance = (now < startTime) ? startTime - now : endTime - now;
+                    if (distance < nextAssessmentDistance) {
+                        nextAssessmentDistance = distance;
+                        nextAssessment = { language, schedule };
+                    }
+                }
+            }
+            
+            // Update the next assessment display
+            updateNextAssessmentDisplay(nextAssessment, nextAssessmentDistance);
+        }
+        
+        function updateLanguageTimer(language, start, end) {
+            const now = new Date().getTime();
+            const startTime = start.getTime();
+            const endTime = end.getTime();
+            
+            // Get elements for this language
+            const statusIndicator = document.getElementById(`${language}-status-indicator`);
+            const statusText = document.getElementById(`${language}-status-text`);
+            const countdownElement = document.getElementById(`${language}-countdown`);
+            const buttonElement = document.getElementById(`${language}-btn`);
+            
+            if (now < startTime) {
+                // Assessment hasn't started yet
+                const distance = startTime - now;
+                const timeLeft = formatTime(distance);
+                
+                statusIndicator.className = "status-indicator status-upcoming";
+                statusText.textContent = `Starts in ${timeLeft}`;
+                countdownElement.textContent = formatCountdown(distance);
+                buttonElement.className = "kobo-link disabled";
+                buttonElement.innerHTML = '<i class="fas fa-external-link-alt"></i> Assessment Not Available Yet';
+                buttonElement.onclick = null;
+                
+            } else if (now >= startTime && now <= endTime) {
+                // Assessment is active
+                const distance = endTime - now;
+                const timeLeft = formatTime(distance);
+                
+                statusIndicator.className = "status-indicator status-active";
+                statusText.textContent = `Active - Ends in ${timeLeft}`;
+                countdownElement.textContent = formatCountdown(distance);
+                
+                // Enable the assessment button
+                buttonElement.className = "kobo-link";
+                buttonElement.innerHTML = `<i class="fas fa-external-link-alt"></i> Start ${language.charAt(0).toUpperCase() + language.slice(1)} Assessment`;
+                buttonElement.onclick = function() { 
+                    window.open(koboLinks[language], '_blank'); 
+                };
                 
             } else {
                 // Assessment has ended
-                clearInterval(assessmentCountdown);
-                document.getElementById("assessment-status").innerHTML = "<span class='status-indicator status-ended'></span> Assessment ended on Dec 13, 2025 at 3:10 PM";
-                updateLanguageCards("ended", null);
+                statusIndicator.className = "status-indicator status-ended";
+                statusText.textContent = "Assessment Ended";
+                countdownElement.textContent = "00:00:00";
+                buttonElement.className = "kobo-link disabled";
+                buttonElement.innerHTML = '<i class="fas fa-external-link-alt"></i> Assessment Ended';
+                buttonElement.onclick = null;
             }
         }
         
-        function updateTimerDisplay(distance) {
-            // Calculate days, hours, minutes, seconds
+        function updateNextAssessmentDisplay(nextAssessment, distance) {
+            if (!nextAssessment) {
+                // All assessments have ended
+                assessmentStatus.innerHTML = "<span class='status-indicator status-ended'></span> All assessments have ended";
+                nextAssessmentTimer.innerHTML = `
+                    <div class="timer-box">
+                        <div class="timer-value">00</div>
+                        <div class="timer-label">Days</div>
+                    </div>
+                    <div class="timer-box">
+                        <div class="timer-value">00</div>
+                        <div class="timer-label">Hours</div>
+                    </div>
+                    <div class="timer-box">
+                        <div class="timer-value">00</div>
+                        <div class="timer-label">Minutes</div>
+                    </div>
+                    <div class="timer-box">
+                        <div class="timer-value">00</div>
+                        <div class="timer-label">Seconds</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            const { language, schedule } = nextAssessment;
+            const now = new Date().getTime();
+            const startTime = schedule.start.getTime();
+            const endTime = schedule.end.getTime();
+            
+            // Update status text
+            const languageName = language.charAt(0).toUpperCase() + language.slice(1);
+            const formattedDate = schedule.start.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            if (now < startTime) {
+                // Next assessment is upcoming
+                assessmentStatus.innerHTML = `<span class='status-indicator status-upcoming'></span> Next: ${languageName} Assessment on ${formattedDate} at 4:00 PM`;
+            } else if (now >= startTime && now <= endTime) {
+                // Assessment is currently active
+                assessmentStatus.innerHTML = `<span class='status-indicator status-active'></span> ${languageName} Assessment is Active! Ends at 6:00 PM`;
+            }
+            
+            // Update the timer display
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
             
-            // Update the timer display
-            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
-            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+            nextAssessmentTimer.innerHTML = `
+                <div class="timer-box">
+                    <div class="timer-value">${days.toString().padStart(2, '0')}</div>
+                    <div class="timer-label">Days</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-value">${hours.toString().padStart(2, '0')}</div>
+                    <div class="timer-label">Hours</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-value">${minutes.toString().padStart(2, '0')}</div>
+                    <div class="timer-label">Minutes</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-value">${seconds.toString().padStart(2, '0')}</div>
+                    <div class="timer-label">Seconds</div>
+                </div>
+            `;
         }
         
-        function updateLanguageCards(status, targetDate) {
-            const languageCards = [
-                { id: "arabic-time", name: "Arabic", button: "arabic-btn" },
-                { id: "english-time", name: "English", button: "english-btn" },
-                { id: "rohingya-time", name: "Rohingya", button: "rohingya-btn" }
-            ];
+        function formatTime(milliseconds) {
+            const days = Math.floor(milliseconds / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((milliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
             
-            languageCards.forEach(lang => {
-                const element = document.getElementById(lang.id);
-                const now = new Date().getTime();
-                
-                if (status === "active") {
-                    // Current assessment period is active
-                    const distance = assessmentEndDate.getTime() - now;
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    
-                    if (days > 0) {
-                        element.innerHTML = `${days} day${days !== 1 ? 's' : ''} ${hours} hour${hours !== 1 ? 's' : ''}`;
-                    } else if (hours > 0) {
-                        element.innerHTML = `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''}`;
-                    } else if (minutes > 0) {
-                        element.innerHTML = `${minutes} minute${minutes !== 1 ? 's' : ''}`;
-                    } else {
-                        element.innerHTML = "less than a minute";
-                    }
-                    
-                } else if (status === "upcoming") {
-                    // Countdown to assessment start
-                    const distance = assessmentStartDate.getTime() - now;
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    
-                    if (days > 0) {
-                        element.innerHTML = `${days} day${days !== 1 ? 's' : ''} ${hours} hour${hours !== 1 ? 's' : ''}`;
-                    } else if (hours > 0) {
-                        element.innerHTML = `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''}`;
-                    } else if (minutes > 0) {
-                        element.innerHTML = `${minutes} minute${minutes !== 1 ? 's' : ''}`;
-                    } else {
-                        element.innerHTML = "less than a minute";
-                    }
-                } else if (status === "ended") {
-                    element.innerHTML = "Assessment ended";
-                }
-            });
+            if (days > 0) {
+                return `${days} day${days !== 1 ? 's' : ''} ${hours} hour${hours !== 1 ? 's' : ''}`;
+            } else if (hours > 0) {
+                return `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''}`;
+            } else if (minutes > 0) {
+                return `${minutes} minute${minutes !== 1 ? 's' : ''}`;
+            } else {
+                return "less than a minute";
+            }
         }
         
-        function enableAssessmentButtons() {
-            // Arabic button
-            const arabicBtn = document.getElementById("arabic-btn");
-            arabicBtn.className = "kobo-link";
-            arabicBtn.innerHTML = '<i class="fas fa-external-link-alt"></i> Start Arabic Assessment on KoboCollect';
-            arabicBtn.onclick = function() { 
-                window.open(koboLinks.arabic, '_blank'); 
-            };
+        function formatCountdown(distance) {
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
             
-            // English button
-            const englishBtn = document.getElementById("english-btn");
-            englishBtn.className = "kobo-link";
-            englishBtn.innerHTML = '<i class="fas fa-external-link-alt"></i> Start English Assessment on KoboCollect';
-            englishBtn.onclick = function() { 
-                window.open(koboLinks.english, '_blank'); 
-            };
-            
-            // Rohingya button
-            const rohingyaBtn = document.getElementById("rohingya-btn");
-            rohingyaBtn.className = "kobo-link";
-            rohingyaBtn.innerHTML = '<i class="fas fa-external-link-alt"></i> Start Rohingya Assessment on KoboCollect';
-            rohingyaBtn.onclick = function() { 
-                window.open(koboLinks.rohingya, '_blank'); 
-            };
+            if (days > 0) {
+                return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            } else {
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
         }
         
         // Show message
@@ -2083,4 +2171,3 @@
     </script>
 </body>
 </html>
-
