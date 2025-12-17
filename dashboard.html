@@ -2312,39 +2312,6 @@
         .table-container{
             margin: 10px;
         }
-        .feed-view{
-            align-items: center;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            width: 100%;
-        }
-        .feed-btn{
-            background-color: #90b0b1;
-            padding: 10px;
-            border: none;
-            border-radius: 10px;
-            width: 150px;
-            color: rgb(210, 143, 20);
-             
-        }
-        .feed-btn {
-            padding: 15px;
-            border: 2px solid #e4e6eb;
-            border-radius: 8px;
-            background-color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 16px;
-            font-weight: 500;
-            width: 100%;
-            max-width: 300px;
-        }
-
-       .feed-btn:hover {
-            border-color: #1877f2;
-            background-color: #f7f9fc;
-        }
     </style>
 </head>
 <body>
@@ -2490,10 +2457,10 @@
                     <i class="fas fa-book-open"></i> <span class="menu-text" data-key="courses">Courses</span>
                 </a>
                 <a href="#" class="menu-item" data-page="assignments">
-                    <i class="fas fa-award"></i> <span class="menu-text" data-key="assignments">Languages</span>
+                    <i class="fas fa-award"></i> <span class="menu-text" data-key="assignments">Assignments</span>
                 </a>
                 <a href="#" class="menu-item" data-page="grades">
-                    <i class="fas fa-bullhorn"></i> <span class="menu-text" data-key="feed">Announcements</span>
+                    <i class="fas fa-newspaper"></i> <span class="menu-text" data-key="feed">Admin Feed</span>
                 </a>
                 <a href="#" class="menu-item" data-page="calendar">
                     <i class="fas fa-calendar-alt"></i> <span class="menu-text" data-key="calendar">Calendar</span>
@@ -3071,13 +3038,11 @@
                 <div class="feed-container">
                     <div class="feed-header">
                         <div class="feed-title">
-                            <i class="fas fa-bullhorn"></i>
-                            <h2>Announcements</h2>
+                            <i class="fas fa-newspaper"></i>
+                            <h2>Admin Feed & Announcements</h2>
                         </div>
                         <div class="feed-stats">
-                        </div>
-                        <div class="feed-view">
-                            <a href="feed.html"><button class="feed-btn">View</button></a>
+                            <span id="post-count">0 posts</span>
                         </div>
                     </div>
 
@@ -3088,7 +3053,7 @@
                                 <div id="post-user-avatar-text">A</div>
                             </div>
                             <div class="post-input">
-                                <textarea id="post-text" placeholder="What's on your mind? Share an announcement, update, or important information with the ZubLab community..."></textarea>
+                                <textarea id="post-text" placeholder="What's on your mind?"></textarea>
                             </div>
                         </div>
                         
@@ -3302,7 +3267,7 @@
                 dashboard: "Home",
                 courses: "Classes",
                 assignments: "Languages",
-                grades: "Announcements",
+                grades: "Admin Feed",
                 calendar: "Calendar",
                 contactUs: "Contact Us",
                 viewInstructor: "View Instructor",
@@ -3328,7 +3293,7 @@
                 credits: "Credits",
                 progress: "Progress",
                 grade: "Grade",
-                feed: "Announcement",
+                feed: "Admin Feed",
                 
                 // Contact Us Page
                 contactDescription: "Get in touch with our support team for any questions, issues, or feedback.",
