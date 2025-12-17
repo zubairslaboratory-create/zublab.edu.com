@@ -2312,6 +2312,39 @@
         .table-container{
             margin: 10px;
         }
+        .feed-view{
+            align-items: center;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+        .feed-btn{
+            background-color: #90b0b1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            width: 150px;
+            color: rgb(210, 143, 20);
+             
+        }
+        .feed-btn {
+            padding: 15px;
+            border: 2px solid #e4e6eb;
+            border-radius: 8px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            max-width: 300px;
+        }
+
+       .feed-btn:hover {
+            border-color: #1877f2;
+            background-color: #f7f9fc;
+        }
     </style>
 </head>
 <body>
@@ -2457,10 +2490,10 @@
                     <i class="fas fa-book-open"></i> <span class="menu-text" data-key="courses">Courses</span>
                 </a>
                 <a href="#" class="menu-item" data-page="assignments">
-                    <i class="fas fa-award"></i> <span class="menu-text" data-key="assignments">Assignments</span>
+                    <i class="fas fa-award"></i> <span class="menu-text" data-key="assignments">Languages</span>
                 </a>
                 <a href="#" class="menu-item" data-page="grades">
-                    <i class="fas fa-newspaper"></i> <span class="menu-text" data-key="feed">Admin Feed</span>
+                    <i class="fas fa-bullhorn"></i> <span class="menu-text" data-key="feed">Announcements</span>
                 </a>
                 <a href="#" class="menu-item" data-page="calendar">
                     <i class="fas fa-calendar-alt"></i> <span class="menu-text" data-key="calendar">Calendar</span>
@@ -3038,64 +3071,17 @@
                 <div class="feed-container">
                     <div class="feed-header">
                         <div class="feed-title">
-                            <i class="fas fa-newspaper"></i>
-                            <h2>Admin Feed & Announcements</h2>
+                            <i class="fas fa-bullhorn"></i>
+                            <h2>Announcements</h2>
                         </div>
                         <div class="feed-stats">
-                            <span id="post-count">0 posts</span>
+                        </div>
+                        <div class="feed-view">
+                            <a href="feed.html"><button class="feed-btn">View</button></a>
                         </div>
                     </div>
 
-                    <!-- Post Creation Form (Visible to Admin only) -->
-                    <div class="post-form-card" id="post-form-container">
-                        <div class="post-form-header">
-                            <div class="post-user-avatar" id="post-user-avatar">
-                                <div id="post-user-avatar-text">A</div>
-                            </div>
-                            <div class="post-input">
-                                <textarea id="post-text" placeholder="What's on your mind?"></textarea>
-                            </div>
-                        </div>
-                        
-                        <div class="image-preview" id="image-preview">
-                            <img id="preview-image" src="" alt="Preview">
-                            <button type="button" class="remove-image" id="remove-image">Remove Image</button>
-                        </div>
-                        
-                        <div class="post-actions">
-                            <div class="post-media-buttons">
-                                <label for="image-upload" class="media-btn photo-btn">
-                                    <i class="fas fa-image"></i>
-                                    <span>Photo</span>
-                                </label>
-                                <input type="file" id="image-upload" accept="image/*" style="display: none;">
-                                
-                                <button type="button" class="media-btn video-btn" id="add-video">
-                                    <i class="fas fa-video"></i>
-                                    <span>Video</span>
-                                </button>
-                                
-                                <button type="button" class="media-btn file-btn" id="add-file">
-                                    <i class="fas fa-file-alt"></i>
-                                    <span>File</span>
-                                </button>
-                            </div>
-                            <button type="button" class="post-submit-btn" id="submit-post" disabled>Post</button>
-                        </div>
-                    </div>
-
-                    <!-- Feed Posts -->
-                    <div class="feed-posts" id="feed-posts">
-                        <!-- Posts will be dynamically inserted here -->
-                        <div class="empty-feed" id="empty-feed">
-                            <i class="fas fa-newspaper"></i>
-                            <h3>No posts yet</h3>
-                            <p>Be the first to share something with the ZubLab community!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+                    
             <!-- Other pages -->
             <div id="assignments-content" class="page-content">
                 <a href="quizA.html"><div class="table-container">
@@ -3267,7 +3253,7 @@
                 dashboard: "Home",
                 courses: "Classes",
                 assignments: "Languages",
-                grades: "Admin Feed",
+                grades: "Announcements",
                 calendar: "Calendar",
                 contactUs: "Contact Us",
                 viewInstructor: "View Instructor",
@@ -3293,7 +3279,7 @@
                 credits: "Credits",
                 progress: "Progress",
                 grade: "Grade",
-                feed: "Admin Feed",
+                feed: "Announcement",
                 
                 // Contact Us Page
                 contactDescription: "Get in touch with our support team for any questions, issues, or feedback.",
@@ -3477,333 +3463,7 @@
         const languageSelect = document.getElementById('language-select');
         const settingsLanguageSelect = document.getElementById('settings-language-select');
         
-        // =============================================
-        // ADMIN FEED ELEMENTS
-        // =============================================
-        const postFormContainer = document.getElementById('post-form-container');
-        const postText = document.getElementById('post-text');
-        const imageUpload = document.getElementById('image-upload');
-        const imagePreview = document.getElementById('image-preview');
-        const previewImage = document.getElementById('preview-image');
-        const removeImageBtn = document.getElementById('remove-image');
-        const submitPostBtn = document.getElementById('submit-post');
-        const feedPosts = document.getElementById('feed-posts');
-        const emptyFeed = document.getElementById('empty-feed');
-        const postCount = document.getElementById('post-count');
-        const postUserAvatar = document.getElementById('post-user-avatar');
-        const postUserAvatarText = document.getElementById('post-user-avatar-text');
-        const addVideoBtn = document.getElementById('add-video');
-        const addFileBtn = document.getElementById('add-file');
-        
-        // =============================================
-        // State Management
-        // =============================================
-        let currentUser = null;
-        let currentLanguage = localStorage.getItem('zublab_language') || 'en';
-        let eyeProtectionMode = localStorage.getItem('zublab_eye_protection') === 'true';
-        let fontSize = localStorage.getItem('zublab_font_size') || 'medium';
-        let searchActive = false;
-        
-        // Admin Feed State
-        let posts = JSON.parse(localStorage.getItem('zublab_posts')) || [];
-        let selectedImage = null;
-        
-        // =============================================
-        // Helper Functions
-        // =============================================
-        
-        function clearMessages() {
-            loginMessage.className = 'message';
-            registerMessage.className = 'message';
-        }
-        
-        function showLoading(button, loadingEl, textEl) {
-            button.disabled = true;
-            loadingEl.style.display = 'inline-block';
-            textEl.textContent = button.id === 'login-btn' ? 'Logging in...' : 'Creating account...';
-        }
-        
-        function hideLoading(button, loadingEl, textEl, originalText) {
-            button.disabled = false;
-            loadingEl.style.display = 'none';
-            textEl.textContent = originalText;
-        }
-        
-        function showMessage(element, text, type) {
-            element.textContent = text;
-            element.className = `message ${type}`;
-            
-            setTimeout(() => {
-                if (element.textContent === text) {
-                    element.className = 'message';
-                }
-            }, 5000);
-        }
-        
-        function getInitials(name) {
-            if (!name) return 'US';
-            const nameParts = name.split(' ');
-            const initials = nameParts.map(part => part[0]).join('').toUpperCase();
-            return initials.substring(0, 2);
-        }
-        
-        function formatTimeAgo(timestamp) {
-            const now = new Date();
-            const postTime = new Date(timestamp);
-            const diffMs = now - postTime;
-            const diffSec = Math.floor(diffMs / 1000);
-            const diffMin = Math.floor(diffSec / 60);
-            const diffHour = Math.floor(diffMin / 60);
-            const diffDay = Math.floor(diffHour / 24);
-            
-            if (diffSec < 60) {
-                return 'Just now';
-            } else if (diffMin < 60) {
-                return `${diffMin} minute${diffMin !== 1 ? 's' : ''} ago`;
-            } else if (diffHour < 24) {
-                return `${diffHour} hour${diffHour !== 1 ? 's' : ''} ago`;
-            } else if (diffDay < 7) {
-                return `${diffDay} day${diffDay !== 1 ? 's' : ''} ago`;
-            } else {
-                return postTime.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            }
-        }
-        
-        // =============================================
-        // ADMIN FEED FUNCTIONS
-        // =============================================
-        
-        function initializeAdminFeed() {
-            // Update post form avatar
-            if (currentUser) {
-                const initials = getInitials(currentUser.name);
-                postUserAvatarText.textContent = initials;
-                
-                // Show/hide post form based on user role
-                const isAdmin = currentUser.role === 'admin' || currentUser.role === 'instructor';
-                postFormContainer.style.display = isAdmin ? 'block' : 'none';
-            }
-            
-            // Load posts
-            loadPosts();
-            
-            // Update post count
-            updatePostCount();
-        }
-        
-        function loadPosts() {
-            // Clear feed
-            feedPosts.innerHTML = '';
-            
-            if (posts.length === 0) {
-                emptyFeed.style.display = 'block';
-                return;
-            }
-            
-            emptyFeed.style.display = 'none';
-            
-            // Sort posts by timestamp (newest first)
-            const sortedPosts = [...posts].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            
-            // Create post cards
-            sortedPosts.forEach((post, index) => {
-                const postCard = createPostCard(post, index);
-                feedPosts.appendChild(postCard);
-            });
-        }
-        
-        function createPostCard(post, index) {
-            const postCard = document.createElement('div');
-            postCard.className = 'post-card';
-            postCard.dataset.index = index;
-            
-            const isAdmin = post.userRole === 'admin' || post.userRole === 'instructor';
-            const userInitials = getInitials(post.userName);
-            const timeAgo = formatTimeAgo(post.timestamp);
-            
-            postCard.innerHTML = `
-                <div class="post-header">
-                    <div class="post-user-info">
-                        <div class="post-user-avatar large">
-                            <div>${userInitials}</div>
-                        </div>
-                        <div class="post-user-details">
-                            <h4>${post.userName} ${isAdmin ? '<span class="admin-badge">ADMIN</span>' : ''}</h4>
-                            <p class="post-time"><i class="far fa-clock"></i> ${timeAgo}</p>
-                        </div>
-                    </div>
-                    ${currentUser && (currentUser.role === 'admin' || currentUser.email === post.userEmail) ? `
-                    <div class="post-menu">
-                        <button class="post-menu-btn">
-                            <i class="fas fa-ellipsis-h"></i>
-                        </button>
-                        <div class="post-menu-dropdown">
-                            <div class="post-menu-item delete" data-action="delete" data-index="${index}">
-                                <i class="fas fa-trash"></i> Delete Post
-                            </div>
-                        </div>
-                    </div>` : ''}
-                </div>
-                <div class="post-content">
-                    <div class="post-text">${post.text}</div>
-                    ${post.image ? `
-                    <div class="post-image">
-                        <img src="${post.image}" alt="Post image">
-                    </div>` : ''}
-                </div>
-                <div class="post-stats">
-                    <span class="likes-count">${post.likes || 0} likes</span>
-                    <span class="comments-count">${post.comments || 0} comments</span>
-                </div>
-                <div class="post-actions-bar">
-                    <button class="post-action-btn like-btn ${post.likedBy && post.likedBy.includes(currentUser?.email) ? 'active' : ''}" data-action="like" data-index="${index}">
-                        <i class="fas fa-thumbs-up"></i> Like
-                    </button>
-                    <button class="post-action-btn" data-action="comment" data-index="${index}">
-                        <i class="far fa-comment"></i> Comment
-                    </button>
-                    <button class="post-action-btn" data-action="share" data-index="${index}">
-                        <i class="fas fa-share"></i> Share
-                    </button>
-                </div>
-            `;
-            
-            return postCard;
-        }
-        
-        function addPost(text, image) {
-            const newPost = {
-                id: Date.now().toString(),
-                userName: currentUser.name,
-                userEmail: currentUser.email,
-                userRole: currentUser.role,
-                text: text,
-                image: image,
-                timestamp: new Date().toISOString(),
-                likes: 0,
-                likedBy: [],
-                comments: 0,
-                shares: 0
-            };
-            
-            posts.unshift(newPost);
-            savePosts();
-            loadPosts();
-            updatePostCount();
-            
-            // Show success message
-            showNotification('Post published successfully!', 'success');
-        }
-        
-        function deletePost(index) {
-            if (confirm('Are you sure you want to delete this post?')) {
-                posts.splice(index, 1);
-                savePosts();
-                loadPosts();
-                updatePostCount();
-                showNotification('Post deleted successfully!', 'success');
-            }
-        }
-        
-        function likePost(index) {
-            const post = posts[index];
-            const userEmail = currentUser.email;
-            
-            if (!post.likedBy) {
-                post.likedBy = [];
-            }
-            
-            const userIndex = post.likedBy.indexOf(userEmail);
-            
-            if (userIndex === -1) {
-                // Like the post
-                post.likedBy.push(userEmail);
-                post.likes = (post.likes || 0) + 1;
-                showNotification('Post liked!', 'info');
-            } else {
-                // Unlike the post
-                post.likedBy.splice(userIndex, 1);
-                post.likes = Math.max(0, (post.likes || 1) - 1);
-                showNotification('Post unliked!', 'info');
-            }
-            
-            savePosts();
-            loadPosts();
-        }
-        
-        function savePosts() {
-            localStorage.setItem('zublab_posts', JSON.stringify(posts));
-        }
-        
-        function updatePostCount() {
-            postCount.textContent = `${posts.length} post${posts.length !== 1 ? 's' : ''}`;
-            
-            // Update dashboard card if it exists
-            const averageGradeCard = document.querySelector('.dashboard-cards .card:nth-child(3) .card-value');
-            if (averageGradeCard && currentUser && (currentUser.role === 'admin' || currentUser.role === 'instructor')) {
-                averageGradeCard.textContent = `${posts.length}`;
-                const cardTitle = document.querySelector('.dashboard-cards .card:nth-child(3) .card-title');
-                if (cardTitle) cardTitle.textContent = 'Total Posts';
-            }
-        }
-        
-        function showNotification(message, type) {
-            const notification = document.createElement('div');
-            notification.className = `message ${type}`;
-            notification.textContent = message;
-            notification.style.position = 'fixed';
-            notification.style.top = '20px';
-            notification.style.right = '20px';
-            notification.style.zIndex = '10000';
-            notification.style.maxWidth = '300px';
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
-        }
-        
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            // Check file size (max 5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                alert('Image must be less than 5MB');
-                return;
-            }
-            
-            // Check file type
-            if (!file.type.match('image.*')) {
-                alert('Please select an image file');
-                return;
-            }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                selectedImage = e.target.result;
-                previewImage.src = selectedImage;
-                imagePreview.style.display = 'block';
-                
-                // Enable submit button if there's text
-                if (postText.value.trim()) {
-                    submitPostBtn.disabled = false;
-                }
-            };
-            
-            reader.readAsDataURL(file);
-        }
-        
-        function clearPostForm() {
-            postText.value = '';
-            selectedImage = null;
-            previewImage.src = '';
-            imagePreview.style.display = 'none';
-            submitPostBtn.disabled = true;
-            imageUpload.value = '';
-        }
-        
+       
         // =============================================
         // Back Button Functionality
         // =============================================
@@ -4318,156 +3978,6 @@
             backButton.addEventListener('click', goBackHome);
         }
         
-        // =============================================
-        // ADMIN FEED EVENT LISTENERS
-        // =============================================
-        
-        // Post text input
-        postText.addEventListener('input', function() {
-            submitPostBtn.disabled = !this.value.trim() && !selectedImage;
-        });
-        
-        // Image upload
-        imageUpload.addEventListener('change', handleImageUpload);
-        
-        // Remove image
-        removeImageBtn.addEventListener('click', function() {
-            selectedImage = null;
-            previewImage.src = '';
-            imagePreview.style.display = 'none';
-            imageUpload.value = '';
-            
-            // Disable submit button if no text
-            if (!postText.value.trim()) {
-                submitPostBtn.disabled = true;
-            }
-        });
-        
-        // Submit post
-        submitPostBtn.addEventListener('click', function() {
-            const text = postText.value.trim();
-            
-            if (!text && !selectedImage) {
-                showNotification('Please add text or an image to post', 'error');
-                return;
-            }
-            
-            addPost(text, selectedImage);
-            clearPostForm();
-        });
-        
-        // Add sample posts button (for demo)
-        addVideoBtn.addEventListener('click', function() {
-            if (posts.length === 0) {
-                // Add sample posts for demo
-                const samplePosts = [
-                    {
-                        id: '1',
-                        userName: 'ZubLab Admin',
-                        userEmail: 'admin@zublab.com',
-                        userRole: 'admin',
-                        text: 'Welcome to the new ZubLab Admin Feed! This is where we will share important announcements, updates, and educational resources with our community.',
-                        image: null,
-                        timestamp: new Date(Date.now() - 3600000).toISOString(),
-                        likes: 12,
-                        likedBy: [],
-                        comments: 3,
-                        shares: 1
-                    },
-                    {
-                        id: '2',
-                        userName: 'Forid',
-                        userEmail: 'forid@zublab.com',
-                        userRole: 'instructor',
-                        text: 'Arabic class will be held tomorrow at 10 AM instead of 9 AM. Please make sure to complete the reading assignment before class.',
-                        image: null,
-                        timestamp: new Date(Date.now() - 7200000).toISOString(),
-                        likes: 8,
-                        likedBy: [],
-                        comments: 2,
-                        shares: 0
-                    },
-                    {
-                        id: '3',
-                        userName: 'Mohammed Jubayer',
-                        userEmail: 'jubayer@zublab.com',
-                        userRole: 'instructor',
-                        text: 'Great work on the English assignments this week! I\'ve posted the grades in the system. Remember, practice makes perfect - keep reading and writing every day!',
-                        image: null,
-                        timestamp: new Date(Date.now() - 86400000).toISOString(),
-                        likes: 15,
-                        likedBy: [],
-                        comments: 5,
-                        shares: 2
-                    }
-                ];
-                
-                posts = samplePosts;
-                savePosts();
-                loadPosts();
-                updatePostCount();
-                showNotification('Sample posts added for demo!', 'success');
-            } else {
-                showNotification('Sample posts already exist!', 'info');
-            }
-        });
-        
-        // Add file button
-        addFileBtn.addEventListener('click', function() {
-            showNotification('File upload feature coming soon!', 'info');
-        });
-        
-        // Feed interactions (delegated events)
-        feedPosts.addEventListener('click', function(e) {
-            const postCard = e.target.closest('.post-card');
-            if (!postCard) return;
-            
-            const index = parseInt(postCard.dataset.index);
-            
-            // Like button
-            if (e.target.closest('[data-action="like"]')) {
-                if (!currentUser) {
-                    showNotification('Please login to like posts', 'error');
-                    return;
-                }
-                likePost(index);
-            }
-            
-            // Delete button
-            if (e.target.closest('[data-action="delete"]')) {
-                deletePost(index);
-            }
-            
-            // Comment button
-            if (e.target.closest('[data-action="comment"]')) {
-                showNotification('Comment feature coming soon!', 'info');
-            }
-            
-            // Share button
-            if (e.target.closest('[data-action="share"]')) {
-                showNotification('Share feature coming soon!', 'info');
-            }
-            
-            // Post menu
-            if (e.target.closest('.post-menu-btn')) {
-                const dropdown = postCard.querySelector('.post-menu-dropdown');
-                dropdown.classList.toggle('show');
-                
-                // Close other dropdowns
-                document.querySelectorAll('.post-menu-dropdown.show').forEach(d => {
-                    if (d !== dropdown) d.classList.remove('show');
-                });
-            }
-        });
-        
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.post-menu')) {
-                document.querySelectorAll('.post-menu-dropdown.show').forEach(dropdown => {
-                    dropdown.classList.remove('show');
-                });
-            }
-        });
         
         // =============================================
         // Handle registration form submission
