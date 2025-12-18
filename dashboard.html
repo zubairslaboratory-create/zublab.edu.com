@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZubLab.edu.com - Admin Feed</title>
+    <title>ZubLab.edu.com - Student Feed</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -1047,7 +1047,6 @@
         
         /* Language Selector */
         
-        
         .language-flag {
             width: 24px;
             height: 16px;
@@ -1536,7 +1535,7 @@
         }
         
         /* ============================================
-           ADMIN FEED STYLES (Facebook-like feed)
+           STUDENT FEED STYLES (Announcements Feed)
            ============================================ */
         
         .feed-container {
@@ -1574,12 +1573,14 @@
             margin: 0;
         }
         
+        /* Post form is hidden for students, but visible for instructors/admins */
         .post-form-card {
             background-color: var(--facebook-gray);
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 30px;
             border: 1px solid #dddfe2;
+            display: none; /* Hidden by default, shown for instructors/admins */
         }
         
         .post-form-header {
@@ -1896,13 +1897,25 @@
             color: var(--facebook-blue);
         }
         
+        .instructor-badge {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        
         .admin-badge {
             display: inline-block;
             background-color: var(--facebook-blue);
             color: white;
             font-size: 0.7rem;
             font-weight: 600;
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 10px;
             margin-left: 5px;
             vertical-align: middle;
@@ -1918,6 +1931,33 @@
             font-size: 3rem;
             margin-bottom: 15px;
             color: #bdc3c7;
+        }
+        
+        /* Announcement filter buttons */
+        .announcement-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            background-color: #f0f2f5;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .filter-btn:hover {
+            background-color: #e4e6eb;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
         }
         
         /* Responsive Design */
@@ -2312,39 +2352,6 @@
         .table-container{
             margin: 10px;
         }
-        .feed-view{
-            align-items: center;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            width: 100%;
-        }
-        .feed-btn{
-            background-color: #90b0b1;
-            padding: 10px;
-            border: none;
-            border-radius: 10px;
-            width: 150px;
-            color: rgb(210, 143, 20);
-             
-        }
-        .feed-btn {
-            padding: 15px;
-            border: 2px solid #e4e6eb;
-            border-radius: 8px;
-            background-color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 16px;
-            font-weight: 500;
-            width: 100%;
-            max-width: 300px;
-        }
-
-       .feed-btn:hover {
-            border-color: #1877f2;
-            background-color: #f7f9fc;
-        }
     </style>
 </head>
 <body>
@@ -2490,10 +2497,10 @@
                     <i class="fas fa-book-open"></i> <span class="menu-text" data-key="courses">Courses</span>
                 </a>
                 <a href="#" class="menu-item" data-page="assignments">
-                    <i class="fas fa-award"></i> <span class="menu-text" data-key="assignments">Languages</span>
+                    <i class="fas fa-award"></i> <span class="menu-text" data-key="assignments">Assignments</span>
                 </a>
                 <a href="#" class="menu-item" data-page="grades">
-                    <i class="fas fa-bullhorn"></i> <span class="menu-text" data-key="feed">Announcements</span>
+                    <i class="fas fa-newspaper"></i> <span class="menu-text" data-key="feed">Announcements</span>
                 </a>
                 <a href="#" class="menu-item" data-page="calendar">
                     <i class="fas fa-calendar-alt"></i> <span class="menu-text" data-key="calendar">Calendar</span>
@@ -2570,13 +2577,13 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title" data-key="averageGrade">Average Grade</h3>
+                            <h3 class="card-title" id="announcements-card-title" data-key="announcements">Announcements</h3>
                             <div class="card-icon grades">
-                                <i class="fas fa-chart-line"></i>
+                                <i class="fas fa-bullhorn"></i>
                             </div>
                         </div>
-                        <div class="card-value" id="average-grade">88.5%</div>
-                        <div class="card-change" data-key="currentSemester">Current semester</div>
+                        <div class="card-value" id="announcements-count">0</div>
+                        <div class="card-change" data-key="recent">Recent updates</div>
                     </div>
 
                     <div class="card">
@@ -3065,23 +3072,67 @@
             </div>
 
             <!-- ============================================
-                 ADMIN FEED CONTENT (Replaces Grades Page)
+                 STUDENT FEED CONTENT (Announcements for all)
                  ============================================ -->
             <div id="grades-content" class="page-content">
                 <div class="feed-container">
                     <div class="feed-header">
                         <div class="feed-title">
                             <i class="fas fa-bullhorn"></i>
-                            <h2>Announcements</h2>
+                            <h2>Announcements & Updates</h2>
                         </div>
                         <div class="feed-stats">
-                        </div>
-                        <div class="feed-view">
-                            <a href="feed.html"><button class="feed-btn">View</button></a>
+                            <span id="post-count">0 announcements</span>
                         </div>
                     </div>
 
-                    
+                    <!-- Announcement filter buttons -->
+                    <div class="announcement-filters">
+                        <button class="filter-btn active" data-filter="all">All Announcements</button>
+                        <button class="filter-btn" data-filter="instructor">From Instructors</button>
+                        <button class="filter-btn" data-filter="important">Important</button>
+                    </div>
+
+                    <!-- Post Creation Form (Visible to Admin/Instructor only) -->
+                    <div class="post-form-card" id="post-form-container">
+                        <div class="post-form-header">
+                            <div class="post-user-avatar" id="post-user-avatar">
+                                <div id="post-user-avatar-text">A</div>
+                            </div>
+                            <div class="post-input">
+                                <textarea id="post-text" placeholder="Create a new announcement for all students..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="image-preview" id="image-preview">
+                            <img id="preview-image" src="" alt="Preview">
+                            <button type="button" class="remove-image" id="remove-image">Remove Image</button>
+                        </div>
+                        
+                        <div class="post-actions">
+                            <div class="post-media-buttons">
+                                <label for="image-upload" class="media-btn photo-btn">
+                                    <i class="fas fa-image"></i>
+                                    <span>Add Image</span>
+                                </label>
+                                <input type="file" id="image-upload" accept="image/*" style="display: none;">
+                            </div>
+                            <button type="button" class="post-submit-btn" id="submit-post" disabled>Post Announcement</button>
+                        </div>
+                    </div>
+
+                    <!-- Feed Posts -->
+                    <div class="feed-posts" id="feed-posts">
+                        <!-- Posts will be dynamically inserted here -->
+                        <div class="empty-feed" id="empty-feed">
+                            <i class="fas fa-newspaper"></i>
+                            <h3>No announcements yet</h3>
+                            <p>Check back later for updates from your instructors!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Other pages -->
             <div id="assignments-content" class="page-content">
                 <a href="quizA.html"><div class="table-container">
@@ -3187,7 +3238,7 @@
             </div>
             <div class="modal-footer">
                 <button class="settings-btn secondary" id="cancel-change-password" data-key="cancel">Cancel</button>
-                <button class="settings-btn" id="save-password-btn" data-key="changePassword">Change Password</button>
+                                <button class="settings-btn" id="save-password-btn" data-key="changePassword">Change Password</button>
             </div>
         </div>
     </div>
@@ -3261,11 +3312,11 @@
                 welcomeSubtitle: "Welcome to ZubLab Educational Platform",
                 enrolledCourses: "Active Classes",
                 assignmentsDue: "Assignments Due",
-                averageGrade: "Average Grade",
+                announcements: "Announcements",
                 upcomingEvents: "Upcoming Events",
                 thisSemester: "This semester",
                 next7Days: "Next 1 month",
-                currentSemester: "Current semester",
+                recent: "Recent updates",
                 thisWeek: "This week",
                 recentAssignments: "Recent Assignments",
                 course: "Course",
@@ -3279,7 +3330,7 @@
                 credits: "Credits",
                 progress: "Progress",
                 grade: "Grade",
-                feed: "Announcement",
+                feed: "Announcements",
                 
                 // Contact Us Page
                 contactDescription: "Get in touch with our support team for any questions, issues, or feedback.",
@@ -3463,7 +3514,471 @@
         const languageSelect = document.getElementById('language-select');
         const settingsLanguageSelect = document.getElementById('settings-language-select');
         
-       
+        // =============================================
+        // ANNOUNCEMENT FEED ELEMENTS
+        // =============================================
+        const postFormContainer = document.getElementById('post-form-container');
+        const postText = document.getElementById('post-text');
+        const imageUpload = document.getElementById('image-upload');
+        const imagePreview = document.getElementById('image-preview');
+        const previewImage = document.getElementById('preview-image');
+        const removeImageBtn = document.getElementById('remove-image');
+        const submitPostBtn = document.getElementById('submit-post');
+        const feedPosts = document.getElementById('feed-posts');
+        const emptyFeed = document.getElementById('empty-feed');
+        const postCount = document.getElementById('post-count');
+        const postUserAvatar = document.getElementById('post-user-avatar');
+        const postUserAvatarText = document.getElementById('post-user-avatar-text');
+        const addVideoBtn = document.getElementById('add-video');
+        const addFileBtn = document.getElementById('add-file');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const announcementsCount = document.getElementById('announcements-count');
+        const announcementsCardTitle = document.getElementById('announcements-card-title');
+        
+        // =============================================
+        // State Management
+        // =============================================
+        let currentUser = null;
+        let currentLanguage = localStorage.getItem('zublab_language') || 'en';
+        let eyeProtectionMode = localStorage.getItem('zublab_eye_protection') === 'true';
+        let fontSize = localStorage.getItem('zublab_font_size') || 'medium';
+        let searchActive = false;
+        
+        // Announcement Feed State
+        let announcements = JSON.parse(localStorage.getItem('zublab_announcements')) || [];
+        let selectedImage = null;
+        let currentFilter = 'all';
+        
+        // =============================================
+        // Helper Functions
+        // =============================================
+        
+        function clearMessages() {
+            loginMessage.className = 'message';
+            registerMessage.className = 'message';
+        }
+        
+        function showLoading(button, loadingEl, textEl) {
+            button.disabled = true;
+            loadingEl.style.display = 'inline-block';
+            textEl.textContent = button.id === 'login-btn' ? 'Logging in...' : 'Creating account...';
+        }
+        
+        function hideLoading(button, loadingEl, textEl, originalText) {
+            button.disabled = false;
+            loadingEl.style.display = 'none';
+            textEl.textContent = originalText;
+        }
+        
+        function showMessage(element, text, type) {
+            element.textContent = text;
+            element.className = `message ${type}`;
+            
+            setTimeout(() => {
+                if (element.textContent === text) {
+                    element.className = 'message';
+                }
+            }, 5000);
+        }
+        
+        function getInitials(name) {
+            if (!name) return 'US';
+            const nameParts = name.split(' ');
+            const initials = nameParts.map(part => part[0]).join('').toUpperCase();
+            return initials.substring(0, 2);
+        }
+        
+        function formatTimeAgo(timestamp) {
+            const now = new Date();
+            const postTime = new Date(timestamp);
+            const diffMs = now - postTime;
+            const diffSec = Math.floor(diffMs / 1000);
+            const diffMin = Math.floor(diffSec / 60);
+            const diffHour = Math.floor(diffMin / 60);
+            const diffDay = Math.floor(diffHour / 24);
+            
+            if (diffSec < 60) {
+                return 'Just now';
+            } else if (diffMin < 60) {
+                return `${diffMin} minute${diffMin !== 1 ? 's' : ''} ago`;
+            } else if (diffHour < 24) {
+                return `${diffHour} hour${diffHour !== 1 ? 's' : ''} ago`;
+            } else if (diffDay < 7) {
+                return `${diffDay} day${diffDay !== 1 ? 's' : ''} ago`;
+            } else {
+                return postTime.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            }
+        }
+        
+        // =============================================
+        // ANNOUNCEMENT FEED FUNCTIONS
+        // =============================================
+        
+        function initializeAnnouncementFeed() {
+            // Update post form avatar
+            if (currentUser) {
+                const initials = getInitials(currentUser.name);
+                postUserAvatarText.textContent = initials;
+                
+                // Show/hide post form based on user role
+                const canPost = currentUser.role === 'admin' || currentUser.role === 'instructor';
+                postFormContainer.style.display = canPost ? 'block' : 'none';
+            }
+            
+            // Load announcements
+            loadAnnouncements();
+            
+            // Update announcement count
+            updateAnnouncementCount();
+            
+            // Add sample announcements for demo if empty
+            if (announcements.length === 0) {
+                addSampleAnnouncements();
+            }
+        }
+        
+        function loadAnnouncements() {
+            // Clear feed
+            feedPosts.innerHTML = '';
+            
+            // Filter announcements
+            let filteredAnnouncements = announcements;
+            
+            if (currentFilter === 'instructor') {
+                filteredAnnouncements = announcements.filter(post => 
+                    post.userRole === 'instructor' || post.userRole === 'admin'
+                );
+            } else if (currentFilter === 'important') {
+                filteredAnnouncements = announcements.filter(post => 
+                    post.important === true
+                );
+            }
+            
+            if (filteredAnnouncements.length === 0) {
+                emptyFeed.style.display = 'block';
+                emptyFeed.querySelector('p').textContent = 
+                    currentFilter === 'all' 
+                    ? 'No announcements yet. Check back later!' 
+                    : `No ${currentFilter} announcements.`;
+                return;
+            }
+            
+            emptyFeed.style.display = 'none';
+            
+            // Sort announcements by timestamp (newest first)
+            const sortedAnnouncements = [...filteredAnnouncements].sort((a, b) => 
+                new Date(b.timestamp) - new Date(a.timestamp)
+            );
+            
+            // Create announcement cards
+            sortedAnnouncements.forEach((announcement, index) => {
+                const announcementCard = createAnnouncementCard(announcement, index);
+                feedPosts.appendChild(announcementCard);
+            });
+        }
+        
+        function createAnnouncementCard(announcement, index) {
+            const announcementCard = document.createElement('div');
+            announcementCard.className = 'post-card';
+            announcementCard.dataset.index = index;
+            
+            const isInstructor = announcement.userRole === 'instructor' || announcement.userRole === 'admin';
+            const userInitials = getInitials(announcement.userName);
+            const timeAgo = formatTimeAgo(announcement.timestamp);
+            const badgeType = announcement.userRole === 'admin' ? 'admin-badge' : 'instructor-badge';
+            const badgeText = announcement.userRole === 'admin' ? 'ADMIN' : 'INSTRUCTOR';
+            
+            announcementCard.innerHTML = `
+                <div class="post-header">
+                    <div class="post-user-info">
+                        <div class="post-user-avatar large">
+                            <div>${userInitials}</div>
+                        </div>
+                        <div class="post-user-details">
+                            <h4>${announcement.userName} ${isInstructor ? `<span class="${badgeType}">${badgeText}</span>` : ''}</h4>
+                            <p class="post-time"><i class="far fa-clock"></i> ${timeAgo}</p>
+                        </div>
+                    </div>
+                    ${currentUser && (currentUser.role === 'admin' || currentUser.email === announcement.userEmail) ? `
+                    <div class="post-menu">
+                        <button class="post-menu-btn">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <div class="post-menu-dropdown">
+                            ${announcement.important ? `
+                            <div class="post-menu-item" data-action="unmark-important" data-index="${index}">
+                                <i class="far fa-star"></i> Unmark as Important
+                            </div>` : `
+                            <div class="post-menu-item" data-action="mark-important" data-index="${index}">
+                                <i class="fas fa-star"></i> Mark as Important
+                            </div>`}
+                            <div class="post-menu-item delete" data-action="delete" data-index="${index}">
+                                <i class="fas fa-trash"></i> Delete Announcement
+                            </div>
+                        </div>
+                    </div>` : ''}
+                </div>
+                <div class="post-content">
+                    ${announcement.important ? `<div style="background: #fff3cd; padding: 10px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid #ffc107;">
+                        <i class="fas fa-exclamation-circle" style="color: #856404; margin-right: 8px;"></i>
+                        <strong style="color: #856404;">Important Announcement</strong>
+                    </div>` : ''}
+                    <div class="post-text">${announcement.text}</div>
+                    ${announcement.image ? `
+                    <div class="post-image">
+                        <img src="${announcement.image}" alt="Announcement image">
+                    </div>` : ''}
+                </div>
+                <div class="post-stats">
+                    <span class="likes-count">${announcement.likes || 0} likes</span>
+                    <span class="views-count">${announcement.views || 0} views</span>
+                </div>
+                <div class="post-actions-bar">
+                    <button class="post-action-btn like-btn ${announcement.likedBy && announcement.likedBy.includes(currentUser?.email) ? 'active' : ''}" data-action="like" data-index="${index}">
+                        <i class="fas fa-thumbs-up"></i> Like
+                    </button>
+                    <button class="post-action-btn" data-action="view" data-index="${index}">
+                        <i class="far fa-eye"></i> Mark as Read
+                    </button>
+                </div>
+            `;
+            
+            return announcementCard;
+        }
+        
+        function addAnnouncement(text, image) {
+            const newAnnouncement = {
+                id: Date.now().toString(),
+                userName: currentUser.name,
+                userEmail: currentUser.email,
+                userRole: currentUser.role,
+                text: text,
+                image: image,
+                important: false,
+                timestamp: new Date().toISOString(),
+                likes: 0,
+                likedBy: [],
+                views: 0,
+                viewedBy: []
+            };
+            
+            announcements.unshift(newAnnouncement);
+            saveAnnouncements();
+            loadAnnouncements();
+            updateAnnouncementCount();
+            
+            // Show success message
+            showNotification('Announcement published successfully! All students can now see it.', 'success');
+        }
+        
+        function addSampleAnnouncements() {
+            const sampleAnnouncements = [
+                {
+                    id: '1',
+                    userName: 'Forid',
+                    userEmail: 'forid@zublab.com',
+                    userRole: 'instructor',
+                    text: 'Welcome to Arabic class! Our first lesson will cover basic greetings and introductions. Please make sure to review the materials before class.',
+                    image: 'https://media.istockphoto.com/id/1340516764/photo/empty-classroom-ready-for-pupils.jpg?s=2048x2048&w=is&k=20&c=Utnq9LnSoVro9b9rl1blTcjI1apDd3oDZOK6JUpplPA=',
+                    important: true,
+                    timestamp: new Date(Date.now() - 3600000).toISOString(),
+                    likes: 12,
+                    likedBy: [],
+                    views: 45,
+                    viewedBy: []
+                },
+                {
+                    id: '2',
+                    userName: 'Mohammed Jubayer',
+                    userEmail: 'jubayer@zublab.com',
+                    userRole: 'instructor',
+                    text: 'English class schedule for this week: Monday 10 AM, Wednesday 2 PM, Friday 11 AM. Don\'t forget to bring your notebooks!',
+                    image: null,
+                    important: false,
+                    timestamp: new Date(Date.now() - 7200000).toISOString(),
+                    likes: 8,
+                    likedBy: [],
+                    views: 38,
+                    viewedBy: []
+                },
+                {
+                    id: '3',
+                    userName: 'Hoassain Ahmed',
+                    userEmail: 'ahmed@zublab.com',
+                    userRole: 'instructor',
+                    text: 'Rohingya language class will have a special cultural session this Friday. We will learn about traditional Rohingya customs and traditions.',
+                    image: null,
+                    important: true,
+                    timestamp: new Date(Date.now() - 86400000).toISOString(),
+                    likes: 15,
+                    likedBy: [],
+                    views: 52,
+                    viewedBy: []
+                },
+                {
+                    id: '4',
+                    userName: 'ZubLab Admin',
+                    userEmail: 'admin@zublab.com',
+                    userRole: 'admin',
+                    text: 'Important: Monthly fees for next month are due by the 25th. Please make sure to complete your payment on time to avoid service interruption.',
+                    image: null,
+                    important: true,
+                    timestamp: new Date(Date.now() - 172800000).toISOString(),
+                    likes: 5,
+                    likedBy: [],
+                    views: 67,
+                    viewedBy: []
+                }
+            ];
+            
+            announcements = sampleAnnouncements;
+            saveAnnouncements();
+            loadAnnouncements();
+            updateAnnouncementCount();
+        }
+        
+        function deleteAnnouncement(index) {
+            if (confirm('Are you sure you want to delete this announcement?')) {
+                announcements.splice(index, 1);
+                saveAnnouncements();
+                loadAnnouncements();
+                updateAnnouncementCount();
+                showNotification('Announcement deleted successfully!', 'success');
+            }
+        }
+        
+        function likeAnnouncement(index) {
+            const announcement = announcements[index];
+            const userEmail = currentUser.email;
+            
+            if (!announcement.likedBy) {
+                announcement.likedBy = [];
+            }
+            
+            const userIndex = announcement.likedBy.indexOf(userEmail);
+            
+            if (userIndex === -1) {
+                // Like the announcement
+                announcement.likedBy.push(userEmail);
+                announcement.likes = (announcement.likes || 0) + 1;
+                showNotification('Announcement liked!', 'info');
+            } else {
+                // Unlike the announcement
+                announcement.likedBy.splice(userIndex, 1);
+                announcement.likes = Math.max(0, (announcement.likes || 1) - 1);
+                showNotification('Announcement unliked!', 'info');
+            }
+            
+            saveAnnouncements();
+            loadAnnouncements();
+        }
+        
+        function markAsRead(index) {
+            const announcement = announcements[index];
+            const userEmail = currentUser.email;
+            
+            if (!announcement.viewedBy) {
+                announcement.viewedBy = [];
+            }
+            
+            if (!announcement.viewedBy.includes(userEmail)) {
+                announcement.viewedBy.push(userEmail);
+                announcement.views = (announcement.views || 0) + 1;
+                showNotification('Marked as read!', 'info');
+                saveAnnouncements();
+                loadAnnouncements();
+            }
+        }
+        
+        function toggleImportant(index) {
+            const announcement = announcements[index];
+            announcement.important = !announcement.important;
+            saveAnnouncements();
+            loadAnnouncements();
+            showNotification(
+                announcement.important 
+                ? 'Announcement marked as important!' 
+                : 'Announcement unmarked as important!', 
+                'info'
+            );
+        }
+        
+        function saveAnnouncements() {
+            localStorage.setItem('zublab_announcements', JSON.stringify(announcements));
+        }
+        
+        function updateAnnouncementCount() {
+            const totalAnnouncements = announcements.length;
+            postCount.textContent = `${totalAnnouncements} announcement${totalAnnouncements !== 1 ? 's' : ''}`;
+            announcementsCount.textContent = totalAnnouncements;
+            
+            // Update dashboard card
+            if (currentUser) {
+                if (currentUser.role === 'student') {
+                    announcementsCardTitle.textContent = 'Announcements';
+                } else if (currentUser.role === 'instructor' || currentUser.role === 'admin') {
+                    announcementsCardTitle.textContent = 'Total Announcements';
+                }
+            }
+        }
+        
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `message ${type}`;
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.zIndex = '10000';
+            notification.style.maxWidth = '300px';
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Check file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Image must be less than 5MB');
+                return;
+            }
+            
+            // Check file type
+            if (!file.type.match('image.*')) {
+                alert('Please select an image file');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                selectedImage = e.target.result;
+                previewImage.src = selectedImage;
+                imagePreview.style.display = 'block';
+                
+                // Enable submit button if there's text
+                if (postText.value.trim()) {
+                    submitPostBtn.disabled = false;
+                }
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        function clearPostForm() {
+            postText.value = '';
+            selectedImage = null;
+            previewImage.src = '';
+            imagePreview.style.display = 'none';
+            submitPostBtn.disabled = true;
+            imageUpload.value = '';
+        }
+        
         // =============================================
         // Back Button Functionality
         // =============================================
@@ -3870,9 +4385,9 @@
                 searchActive = false;
             }
             
-            // Initialize admin feed when grades page is shown
+            // Initialize announcement feed when grades page is shown
             if (pageId === 'grades') {
-                initializeAdminFeed();
+                initializeAnnouncementFeed();
             }
         }
         
@@ -3881,7 +4396,7 @@
                 'dashboard': { title: 'Dashboard', subtitle: 'Welcome to ZubLab Educational Platform' },
                 'courses': { title: 'Courses', subtitle: 'Manage and view your classes' },
                 'assignments': { title: 'Assignments', subtitle: 'View and submit your assignments' },
-                'grades': { title: 'Admin Feed', subtitle: 'Share and view announcements and updates' },
+                'grades': { title: 'Announcements', subtitle: 'View announcements from your instructors' },
                 'calendar': { title: 'Calendar', subtitle: 'View your academic schedule' },
                 'contact': { title: 'Contact Us', subtitle: 'Get in touch with our support team' },
                 'instructors': { title: 'Our Instructors', subtitle: 'Meet our expert teaching team' },
@@ -3942,19 +4457,13 @@
                 if (role === 'student') {
                     document.getElementById('courses-count').textContent = '3';
                     document.getElementById('assignments-count').textContent = '1';
-                    document.getElementById('average-grade').textContent = '88.5%';
+                    document.getElementById('announcements-count').textContent = announcements.length;
                     document.getElementById('events-count').textContent = '0';
                 } else if (role === 'instructor' || role === 'admin') {
                     document.getElementById('courses-count').textContent = '3';
                     document.getElementById('assignments-count').textContent = '12';
-                    document.getElementById('average-grade').textContent = posts.length.toString();
+                    document.getElementById('announcements-count').textContent = announcements.length;
                     document.getElementById('events-count').textContent = '4';
-                    
-                    // Update card title for admin/instructor
-                    const averageGradeCard = document.querySelector('.dashboard-cards .card:nth-child(3) .card-title');
-                    if (averageGradeCard) {
-                        averageGradeCard.textContent = 'Total Posts';
-                    }
                 }
                 
                 if (currentUser.emailNotifications !== undefined && document.getElementById('email-notifications')) {
@@ -3978,6 +4487,118 @@
             backButton.addEventListener('click', goBackHome);
         }
         
+        // =============================================
+        // ANNOUNCEMENT FEED EVENT LISTENERS
+        // =============================================
+        
+        // Post text input
+        postText.addEventListener('input', function() {
+            submitPostBtn.disabled = !this.value.trim() && !selectedImage;
+        });
+        
+        // Image upload
+        imageUpload.addEventListener('change', handleImageUpload);
+        
+        // Remove image
+        removeImageBtn.addEventListener('click', function() {
+            selectedImage = null;
+            previewImage.src = '';
+            imagePreview.style.display = 'none';
+            imageUpload.value = '';
+            
+            // Disable submit button if no text
+            if (!postText.value.trim()) {
+                submitPostBtn.disabled = true;
+            }
+        });
+        
+        // Submit post
+        submitPostBtn.addEventListener('click', function() {
+            const text = postText.value.trim();
+            
+            if (!text && !selectedImage) {
+                showNotification('Please add text or an image to post', 'error');
+                return;
+            }
+            
+            addAnnouncement(text, selectedImage);
+            clearPostForm();
+        });
+        
+        // Filter buttons
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                // Update current filter
+                currentFilter = this.dataset.filter;
+                // Reload announcements with new filter
+                loadAnnouncements();
+            });
+        });
+        
+        // Feed interactions (delegated events)
+        feedPosts.addEventListener('click', function(e) {
+            const postCard = e.target.closest('.post-card');
+            if (!postCard) return;
+            
+            const index = parseInt(postCard.dataset.index);
+            
+            // Like button
+            if (e.target.closest('[data-action="like"]')) {
+                if (!currentUser) {
+                    showNotification('Please login to like announcements', 'error');
+                    return;
+                }
+                likeAnnouncement(index);
+            }
+            
+            // View/Mark as Read button
+            if (e.target.closest('[data-action="view"]')) {
+                if (!currentUser) {
+                    showNotification('Please login to mark announcements as read', 'error');
+                    return;
+                }
+                markAsRead(index);
+            }
+            
+            // Delete button
+            if (e.target.closest('[data-action="delete"]')) {
+                deleteAnnouncement(index);
+            }
+            
+            // Mark as important button
+            if (e.target.closest('[data-action="mark-important"]')) {
+                toggleImportant(index);
+            }
+            
+            // Unmark as important button
+            if (e.target.closest('[data-action="unmark-important"]')) {
+                toggleImportant(index);
+            }
+            
+            // Post menu
+            if (e.target.closest('.post-menu-btn')) {
+                const dropdown = postCard.querySelector('.post-menu-dropdown');
+                dropdown.classList.toggle('show');
+                
+                // Close other dropdowns
+                document.querySelectorAll('.post-menu-dropdown.show').forEach(d => {
+                    if (d !== dropdown) d.classList.remove('show');
+                });
+            }
+        });
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.post-menu')) {
+                document.querySelectorAll('.post-menu-dropdown.show').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                });
+            }
+        });
         
         // =============================================
         // Handle registration form submission
@@ -4464,10 +5085,8 @@
                 currentUser = savedUser;
                 showDashboardPage();
                 
-                // Initialize admin feed if user is admin/instructor
-                if (currentUser.role === 'admin' || currentUser.role === 'instructor') {
-                    initializeAdminFeed();
-                }
+                // Initialize announcement feed
+                initializeAnnouncementFeed();
             } else {
                 showAuthPage();
             }
