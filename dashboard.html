@@ -119,10 +119,117 @@
 
         /* Search Highlight */
         .search-highlight {
-            background-color: yellow !important;
-            color: black !important;
+            background-color: #ffeb3b !important;
+            color: #000 !important;
             padding: 2px 4px;
             border-radius: 3px;
+            font-weight: 600;
+        }
+
+        /* Search Results Styling */
+        .search-result-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .search-result-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .search-result-type {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+        }
+
+        .search-result-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .search-result-content {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .search-result-page {
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .no-search-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray-color);
+        }
+
+        .no-search-results i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+
+        /* Search Results Container */
+        .search-results-container {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            margin-top: 5px;
+        }
+
+        .search-results-container.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .search-results-header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+        }
+
+        .search-results-header h4 {
+            color: var(--dark-color);
+            margin: 0;
+        }
+
+        .search-results-count {
+            background: var(--primary-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .search-results-content {
+            padding: 15px;
         }
 
         /* RTL Support for Arabic and Urdu */
@@ -649,6 +756,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            position: relative;
         }
         
         .search-box {
@@ -2543,6 +2651,20 @@
                     <div class="search-box">
                         <i class="fas fa-search"></i>
                         <input type="text" id="search-input" placeholder="Search classes, assignments...">
+                        <div class="search-results-container" id="search-results-container">
+                            <div class="search-results-header">
+                                <h4>Search Results</h4>
+                                <span class="search-results-count" id="search-results-count">0 results</span>
+                            </div>
+                            <div class="search-results-content" id="search-results-content">
+                                <!-- Search results will be dynamically inserted here -->
+                                <div class="no-search-results" id="no-search-results">
+                                    <i class="fas fa-search"></i>
+                                    <h4>No results found</h4>
+                                    <p>Try searching for something else</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <button class="mobile-menu-btn" id="mobile-menu-btn">
                         <i class="fas fa-bars"></i>
@@ -2553,7 +2675,7 @@
             <!-- Dashboard Content -->
             <div id="dashboard-content" class="page-content active">
                 <div class="dashboard-cards">
-                    <div class="card">
+                    <a href="studentid.html"><div class="card">
                         <div class="card-header">
                             <h3 class="card-title" data-key="enrolledCourses">Active Classes</h3>
                             <div class="card-icon courses">
@@ -2562,9 +2684,9 @@
                         </div>
                         <div class="card-value" id="courses-count">2</div>
                         <div class="card-change" data-key="thisSemester">This semester</div>
-                    </div>
+                    </div></a>
 
-                    <div class="card">
+                    <a href="studentid.html"><div class="card">
                         <div class="card-header">
                             <h3 class="card-title" data-key="assignmentsDue">Assignments Due</h3>
                             <div class="card-icon assignments">
@@ -2573,7 +2695,7 @@
                         </div>
                         <div class="card-value" id="assignments-count">3</div>
                         <div class="card-change" data-key="next7Days">Next 1 month</div>
-                    </div>
+                    </div></a>
 
                     <div class="card">
                         <div class="card-header">
@@ -3479,6 +3601,10 @@
         
         // Search elements
         const searchInput = document.getElementById('search-input');
+        const searchResultsContainer = document.getElementById('search-results-container');
+        const searchResultsContent = document.getElementById('search-results-content');
+        const searchResultsCount = document.getElementById('search-results-count');
+        const noSearchResults = document.getElementById('no-search-results');
         
         // NEW: Contact Form Elements
         const contactForm = document.getElementById('contact-form');
@@ -3543,11 +3669,349 @@
         let eyeProtectionMode = localStorage.getItem('zublab_eye_protection') === 'true';
         let fontSize = localStorage.getItem('zublab_font_size') || 'medium';
         let searchActive = false;
+        let searchTimeout = null;
+        let searchQuery = '';
         
         // Announcement Feed State
         let announcements = JSON.parse(localStorage.getItem('zublab_announcements')) || [];
         let selectedImage = null;
         let currentFilter = 'all';
+        
+        // =============================================
+        // SEARCH FUNCTIONS
+        // =============================================
+        
+        function initializeSearch() {
+            // Add event listener to search input
+            searchInput.addEventListener('input', function(e) {
+                searchQuery = e.target.value.trim().toLowerCase();
+                
+                // Clear previous timeout
+                if (searchTimeout) {
+                    clearTimeout(searchTimeout);
+                }
+                
+                // If search query is empty, hide results
+                if (!searchQuery) {
+                    hideSearchResults();
+                    clearSearchHighlights();
+                    return;
+                }
+                
+                // Show loading in search results
+                searchResultsContent.innerHTML = '<div class="loading" style="margin: 20px auto;"></div>';
+                searchResultsContainer.classList.add('active');
+                
+                // Set timeout for search execution (debouncing)
+                searchTimeout = setTimeout(() => {
+                    performSearch(searchQuery);
+                }, 300);
+            });
+            
+            // Close search results when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!searchInput.contains(e.target) && !searchResultsContainer.contains(e.target)) {
+                    hideSearchResults();
+                }
+            });
+            
+            // Handle search input focus
+            searchInput.addEventListener('focus', function() {
+                if (searchQuery) {
+                    searchResultsContainer.classList.add('active');
+                }
+            });
+        }
+        
+        function performSearch(query) {
+            if (!query) {
+                hideSearchResults();
+                return;
+            }
+            
+            // Clear previous highlights
+            clearSearchHighlights();
+            
+            // Get all searchable content
+            const searchData = collectSearchData();
+            
+            // Filter search results
+            const results = searchData.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query) ||
+                item.type.toLowerCase().includes(query)
+            );
+            
+            // Display search results
+            displaySearchResults(results, query);
+            
+            // Highlight search terms in the current page
+            highlightSearchTerms(query);
+        }
+        
+        function collectSearchData() {
+            const searchData = [];
+            const currentPage = document.querySelector('.page-content.active');
+            
+            // Add dashboard cards
+            if (currentPage && currentPage.id === 'dashboard-content') {
+                const cards = document.querySelectorAll('.card');
+                cards.forEach((card, index) => {
+                    const title = card.querySelector('.card-title')?.textContent || 'Card ' + (index + 1);
+                    const value = card.querySelector('.card-value')?.textContent || '';
+                    const change = card.querySelector('.card-change')?.textContent || '';
+                    
+                    searchData.push({
+                        title: title,
+                        content: value + ' ' + change,
+                        type: 'Dashboard Card',
+                        page: 'dashboard',
+                        element: card
+                    });
+                });
+                
+                // Add assignments from table
+                const tableRows = document.querySelectorAll('#assignments-table tr');
+                tableRows.forEach((row, index) => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length >= 3) {
+                        const course = cells[0].textContent;
+                        const assignment = cells[1].textContent;
+                        const dueDate = cells[2].textContent;
+                        const status = cells[3]?.textContent || '';
+                        
+                        searchData.push({
+                            title: `${course} - ${assignment}`,
+                            content: `Due: ${dueDate} | Status: ${status}`,
+                            type: 'Assignment',
+                            page: 'dashboard',
+                            element: row
+                        });
+                    }
+                });
+            }
+            
+            // Add courses
+            const courses = document.querySelectorAll('.course-card');
+            courses.forEach((course, index) => {
+                const title = course.querySelector('.course-header h3')?.textContent || 'Course ' + (index + 1);
+                const instructor = course.querySelector('.course-header p')?.textContent || '';
+                const description = course.querySelector('.course-body p')?.textContent || '';
+                const progress = course.querySelector('.progress-fill')?.style.width || '0%';
+                
+                searchData.push({
+                    title: title,
+                    content: `Instructor: ${instructor} | ${description} | Progress: ${progress}`,
+                    type: 'Course',
+                    page: 'courses',
+                    element: course
+                });
+            });
+            
+            // Add instructors
+            const instructors = document.querySelectorAll('.instructor-card');
+            instructors.forEach((instructor, index) => {
+                const name = instructor.querySelector('.instructor-info h3')?.textContent || 'Instructor ' + (index + 1);
+                const role = instructor.querySelector('.instructor-info p')?.textContent || '';
+                const bio = instructor.querySelector('.instructor-body p')?.textContent || '';
+                const subjects = Array.from(instructor.querySelectorAll('.subject-tag'))
+                    .map(tag => tag.textContent)
+                    .join(', ');
+                
+                searchData.push({
+                    title: name,
+                    content: `${role} | ${bio} | Subjects: ${subjects}`,
+                    type: 'Instructor',
+                    page: 'instructors',
+                    element: instructor
+                });
+            });
+            
+            // Add announcements
+            announcements.forEach((announcement, index) => {
+                searchData.push({
+                    title: `Announcement from ${announcement.userName}`,
+                    content: announcement.text,
+                    type: announcement.important ? 'Important Announcement' : 'Announcement',
+                    page: 'grades',
+                    element: null,
+                    data: announcement
+                });
+            });
+            
+            // Add contact information
+            const contactCards = document.querySelectorAll('.contact-card');
+            contactCards.forEach((card, index) => {
+                const title = card.querySelector('h4')?.textContent || 'Contact ' + (index + 1);
+                const description = card.querySelector('p')?.textContent || '';
+                const details = Array.from(card.querySelectorAll('.contact-details p'))
+                    .map(p => p.textContent)
+                    .join(' | ');
+                
+                searchData.push({
+                    title: title,
+                    content: `${description} | ${details}`,
+                    type: 'Contact',
+                    page: 'contact',
+                    element: card
+                });
+            });
+            
+            // Add settings options
+            const settingsOptions = document.querySelectorAll('.settings-option');
+            settingsOptions.forEach((option, index) => {
+                const title = option.querySelector('.option-info h4')?.textContent || 'Setting ' + (index + 1);
+                const description = option.querySelector('.option-info p')?.textContent || '';
+                
+                searchData.push({
+                    title: title,
+                    content: description,
+                    type: 'Setting',
+                    page: 'settings',
+                    element: option
+                });
+            });
+            
+            return searchData;
+        }
+        
+        function displaySearchResults(results, query) {
+            // Clear previous results
+            searchResultsContent.innerHTML = '';
+            
+            // Update results count
+            searchResultsCount.textContent = `${results.length} result${results.length !== 1 ? 's' : ''}`;
+            
+            if (results.length === 0) {
+                noSearchResults.style.display = 'block';
+                searchResultsContent.appendChild(noSearchResults);
+                return;
+            }
+            
+            noSearchResults.style.display = 'none';
+            
+            // Display each result
+            results.forEach((result, index) => {
+                const resultItem = createSearchResultItem(result, query, index);
+                searchResultsContent.appendChild(resultItem);
+            });
+            
+            // Show search results container
+            searchResultsContainer.classList.add('active');
+        }
+        
+        function createSearchResultItem(result, query, index) {
+            const item = document.createElement('div');
+            item.className = 'search-result-item';
+            item.dataset.index = index;
+            
+            // Highlight the search term in title and content
+            const highlightedTitle = highlightText(result.title, query);
+            const highlightedContent = highlightText(result.content.substring(0, 150) + (result.content.length > 150 ? '...' : ''), query);
+            
+            item.innerHTML = `
+                <div class="search-result-type">${result.type}</div>
+                <div class="search-result-title">${highlightedTitle}</div>
+                <div class="search-result-content">${highlightedContent}</div>
+                <div class="search-result-page">
+                    <i class="fas fa-folder"></i> ${result.page.charAt(0).toUpperCase() + result.page.slice(1)} Page
+                </div>
+            `;
+            
+            // Add click event to navigate to the item
+            item.addEventListener('click', function() {
+                navigateToSearchResult(result);
+                hideSearchResults();
+                searchInput.value = '';
+            });
+            
+            return item;
+        }
+        
+        function highlightText(text, query) {
+            if (!query) return text;
+            
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="search-highlight">$1</span>');
+        }
+        
+        function highlightSearchTerms(query) {
+            if (!query) return;
+            
+            const currentPage = document.querySelector('.page-content.active');
+            if (!currentPage) return;
+            
+            // Get all text nodes in the current page
+            const walker = document.createTreeWalker(
+                currentPage,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+            
+            const nodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                if (node.textContent.toLowerCase().includes(query)) {
+                    nodes.push(node);
+                }
+            }
+            
+            // Highlight each matching text node
+            nodes.forEach(textNode => {
+                const span = document.createElement('span');
+                span.innerHTML = textNode.textContent.replace(
+                    new RegExp(`(${query})`, 'gi'),
+                    '<span class="search-highlight">$1</span>'
+                );
+                
+                textNode.parentNode.replaceChild(span, textNode);
+            });
+        }
+        
+        function clearSearchHighlights() {
+            const highlights = document.querySelectorAll('.search-highlight');
+            highlights.forEach(highlight => {
+                const parent = highlight.parentNode;
+                const text = document.createTextNode(highlight.textContent);
+                parent.replaceChild(text, highlight);
+                
+                // Normalize the parent node to merge adjacent text nodes
+                parent.normalize();
+            });
+        }
+        
+        function navigateToSearchResult(result) {
+            // Switch to the appropriate page
+            showPageContent(result.page);
+            
+            // Scroll to the element if it exists
+            setTimeout(() => {
+                if (result.element) {
+                    result.element.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                    
+                    // Add a temporary highlight to the element
+                    result.element.style.boxShadow = '0 0 0 3px var(--accent-color)';
+                    result.element.style.transition = 'box-shadow 0.3s ease';
+                    
+                    setTimeout(() => {
+                        result.element.style.boxShadow = '';
+                    }, 2000);
+                }
+                
+                // Highlight the search term again on the new page
+                if (searchQuery) {
+                    highlightSearchTerms(searchQuery);
+                }
+            }, 500);
+        }
+        
+        function hideSearchResults() {
+            searchResultsContainer.classList.remove('active');
+        }
         
         // =============================================
         // Helper Functions
@@ -3779,7 +4243,7 @@
                     userEmail: 'forid@zublab.com',
                     userRole: 'instructor',
                     text: 'Welcome to Arabic class! Our first lesson will cover basic greetings and introductions. Please make sure to review the materials before class.',
-                    image: 'https://media.istockphoto.com/id/1340516764/photo/empty-classroom-ready-for-pupils.jpg?s=2048x2048&w=is&k=20&c=Utnq9LnSoVro9b9rl1blTcjI1apDd3oDZOK6JUpplPA=',
+                    image: null,
                     important: true,
                     timestamp: new Date(Date.now() - 3600000).toISOString(),
                     likes: 12,
@@ -4302,6 +4766,8 @@
             dashboardContainer.style.display = 'flex';
             updateDashboardUserInfo();
             loadUserData();
+            // Initialize search functionality
+            initializeSearch();
         }
         
         function showAuthPage() {
@@ -4383,6 +4849,7 @@
                 searchInput.value = '';
                 clearSearchHighlights();
                 searchActive = false;
+                hideSearchResults();
             }
             
             // Initialize announcement feed when grades page is shown
